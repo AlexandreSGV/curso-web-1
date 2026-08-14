@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consultório Vida</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="limite">
+      <p class="marca">Consultório Vida</p>
+      <h1>Solicitação de atendimento</h1>
+      <p>Agora o formulário responde sem recarregar a página.</p>
+    </div>
+  </header>
+
+  <main class="conteudo-principal limite">
+    <section class="cartao">
+      <h2>Como funciona</h2>
+      <p>Informe o paciente, a especialidade e a data desejada.</p>
+      <p>O JavaScript verificará os campos e mostrará uma mensagem.</p>
+    </section>
+
+    <section class="cartao">
+      <h2>Solicite um atendimento</h2>
+
+      <form id="formulario-atendimento">
+        <div class="campo">
+          <label for="nome">Nome completo</label>
+          <input class="controle" type="text" id="nome" name="nome">
+        </div>
+
+        <div class="campo">
+          <label for="especialidade">Especialidade</label>
+          <select class="controle" id="especialidade" name="especialidade">
+            <option value="">Selecione</option>
+            <option value="Clínica geral">Clínica geral</option>
+            <option value="Dermatologia">Dermatologia</option>
+            <option value="Nutrição">Nutrição</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="data">Data desejada</label>
+          <input class="controle" type="date" id="data" name="data">
+        </div>
+
+        <button class="botao" type="submit">Solicitar horário</button>
+      </form>
+
+      <p id="mensagem-formulario" class="mensagem" aria-live="polite">
+        Preencha os três campos para testar.
+      </p>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="limite">
+      <p>Consultório Vida — exemplo acadêmico de Web 1.</p>
+    </div>
+  </footer>
+</body>
+</html>

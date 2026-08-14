@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Consultório Vida</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="limite">
+      <p class="marca">Consultório Vida</p>
+      <h1>Atendimento com cuidado e organização</h1>
+      <p id="mensagem-atendimento">
+        Preencha o formulário para solicitar um horário.
+      </p>
+    </div>
+  </header>
+
+  <main class="conteudo-principal limite">
+    <section class="cartao">
+      <h2>Antes da consulta</h2>
+      <p>Tenha em mãos um documento e a sua lista de medicamentos.</p>
+      <ul>
+        <li>Chegue com 15 minutos de antecedência.</li>
+        <li>Avise se precisar cancelar o horário.</li>
+        <li>Traga exames recentes, quando houver.</li>
+      </ul>
+    </section>
+
+    <section class="cartao">
+      <h2>Solicite um atendimento</h2>
+      <p>Este formulário é apenas uma demonstração e ainda não salva dados.</p>
+
+      <form>
+        <div class="campo">
+          <label for="nome">Nome completo</label>
+          <input class="controle" type="text" id="nome" name="nome" required>
+        </div>
+
+        <div class="campo">
+          <label for="email">E-mail</label>
+          <input class="controle" type="email" id="email" name="email" required>
+        </div>
+
+        <div class="campo">
+          <label for="telefone">Telefone</label>
+          <input class="controle" type="tel" id="telefone" name="telefone">
+        </div>
+
+        <div class="campo">
+          <label for="especialidade">Especialidade</label>
+          <select class="controle" id="especialidade" name="especialidade" required>
+            <option value="">Selecione</option>
+            <option value="clinica-geral">Clínica geral</option>
+            <option value="dermatologia">Dermatologia</option>
+            <option value="nutricao">Nutrição</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="data">Data desejada</label>
+          <input class="controle" type="date" id="data" name="data" required>
+        </div>
+
+        <div class="campo">
+          <label for="observacoes">Observações</label>
+          <textarea class="controle" id="observacoes" name="observacoes" rows="4"></textarea>
+        </div>
+
+        <button class="botao" type="submit">Solicitar horário</button>
+      </form>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="limite">
+      <p>Consultório Vida — exemplo acadêmico de Web 1.</p>
+    </div>
+  </footer>
+</body>
+</html>

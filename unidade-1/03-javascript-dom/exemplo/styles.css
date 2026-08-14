@@ -1,0 +1,94 @@
+body {
+  margin: 0;
+  background-color: #f3f7f8;
+  color: #18323a;
+  font-family: Arial, sans-serif;
+  line-height: 1.5;
+}
+
+.limite {
+  width: 90%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.cabecalho {
+  padding: 40px 0;
+  background-color: #0f4c5c;
+  color: #ffffff;
+}
+
+.marca,
+.cabecalho h1 {
+  margin: 0;
+}
+
+.conteudo-principal {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 24px;
+  padding: 32px 0;
+}
+
+.cartao {
+  padding: 24px;
+  background-color: #ffffff;
+  border: 1px solid #c5d3d7;
+  border-radius: 8px;
+}
+
+.cartao h2 {
+  margin-top: 0;
+}
+
+form,
+.campo {
+  display: grid;
+  gap: 12px;
+}
+
+label {
+  font-weight: bold;
+}
+
+.controle {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px;
+  color: #18323a;
+  background-color: #ffffff;
+  border: 1px solid #789099;
+  border-radius: 4px;
+  font: inherit;
+}
+
+.botao {
+  padding: 12px 20px;
+  background-color: #006d77;
+  color: #ffffff;
+  border: 0;
+  border-radius: 4px;
+  font: inherit;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.mensagem {
+  min-height: 24px;
+  margin: 20px 0 0;
+  padding: 12px;
+  background-color: #e4f0f2;
+  border-left: 4px solid #006d77;
+}
+
+.rodape {
+  padding: 20px 0;
+  background-color: #dbe7e9;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .conteudo-principal {
+    grid-template-columns: 1fr;
+  }
+}
