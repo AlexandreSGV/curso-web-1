@@ -1,6 +1,6 @@
-# Ambiente, Web, HTTP e Git
+# Ambiente, HTTP e Git: primeira prática
 
-Neste primeiro assunto, você confirmará o ambiente de Web 1 e acompanhará uma página desde o navegador até o servidor local.
+Neste assunto, você confirmará o ambiente de Web 1 e acompanhará uma página desde o navegador até o servidor local.
 
 Ao final, você deverá conseguir:
 

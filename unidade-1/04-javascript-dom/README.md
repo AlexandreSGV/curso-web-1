@@ -33,7 +33,7 @@ executado pelo navegador e poderá acessar a página. Não usaremos TypeScript,
 tipos escritos no código, npm ou ferramentas de compilação.
 
 Se precisar rever a construção da página, consulte o kit de
-[HTML, CSS e Grid](../02-html-css-grid/).
+[HTML, CSS e Grid](../03-html-css-grid/).
 
 ## Documento, elemento e DOM
 
