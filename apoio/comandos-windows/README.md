@@ -1,18 +1,35 @@
-# Comandos do Windows para Web 1
+# Comandos básicos do CMD para Web 1
 
-Esta folha reúne os comandos básicos usados no **PowerShell**. Ela não substitui o tutorial de Git.
+Esta folha reúne os comandos básicos usados no **Prompt de Comando do Windows (CMD)**. Ela não substitui o tutorial de Git.
+
+## Abrir o CMD no Visual Studio Code
+
+No VS Code, escolha **Terminal > New Terminal**.
+
+Se outro shell for aberto:
+
+1. pressione `Ctrl+Shift+P`;
+2. procure `Terminal: Select Default Profile`;
+3. selecione **Command Prompt**;
+4. feche o terminal atual e abra um novo terminal.
+
+O início da linha deve ser semelhante a:
+
+```text
+C:\Users\Aluno\projetos>
+```
 
 ## Descobrir em qual pasta você está
 
-```powershell
-pwd
+```bat
+cd
 ```
 
-O resultado deve mostrar o caminho da pasta atual.
+Quando usado sem outro argumento, `cd` mostra o caminho da pasta atual.
 
 ## Listar arquivos e pastas
 
-```powershell
+```bat
 dir
 ```
 
@@ -20,25 +37,35 @@ Antes de iniciar um servidor, confira se o arquivo `index.php` aparece na lista.
 
 ## Entrar em uma pasta
 
-```powershell
+```bat
 cd teste-php
 ```
 
 Se o nome tiver espaços, use aspas:
 
-```powershell
+```bat
 cd "Meu projeto"
 ```
 
 ## Voltar para a pasta acima
 
-```powershell
+```bat
 cd ..
 ```
 
+## Mudar de unidade e pasta
+
+Para entrar diretamente em uma pasta de outra unidade, use `cd /d`:
+
+```bat
+cd /d D:\projetos
+```
+
+A opção `/d` muda ao mesmo tempo a unidade e a pasta atual.
+
 ## Criar uma pasta
 
-```powershell
+```bat
 mkdir teste-php
 ```
 
@@ -46,26 +73,26 @@ Depois, entre nela com `cd teste-php`.
 
 ## Criar um arquivo vazio
 
-Para criar um arquivo, use:
+Para criar o arquivo somente se ele ainda não existir, use:
 
-```powershell
-New-Item index.php -ItemType File
+```bat
+if not exist index.php type nul > index.php
 ```
 
-Depois, você pode abrir o arquivo no VS Code e adicionar o código necessário.
+A condição `if not exist` evita apagar o conteúdo de um arquivo que já existe. Depois, abra o arquivo no VS Code e adicione o código necessário.
 
 ## Renomear arquivos e pastas
 
 Para renomear um arquivo:
 
-```powershell
-Rename-Item pagina.html index.html
+```bat
+ren pagina.html index.html
 ```
 
 Para renomear uma pasta:
 
-```powershell
-Rename-Item projeto-antigo projeto-web
+```bat
+ren projeto-antigo projeto-web
 ```
 
 O primeiro nome identifica o item atual e o segundo indica o novo nome.
@@ -74,30 +101,30 @@ O primeiro nome identifica o item atual e o segundo indica o novo nome.
 
 Para criar uma cópia de um arquivo:
 
-```powershell
-Copy-Item index.php index-copia.php
+```bat
+copy index.php index-copia.php
 ```
 
 Para copiar uma pasta com todos os arquivos e subpastas:
 
-```powershell
-Copy-Item projeto-web projeto-web-copia -Recurse
+```bat
+xcopy projeto-web projeto-web-copia /E /I
 ```
 
-A opção `-Recurse` inclui todo o conteúdo existente dentro da pasta.
+A opção `/E` inclui as subpastas, mesmo que estejam vazias. A opção `/I` informa que o destino deve ser tratado como uma pasta.
 
 ## Mover arquivos e pastas
 
 Para mover um arquivo para uma pasta:
 
-```powershell
-Move-Item index.php paginas
+```bat
+move index.php paginas
 ```
 
 Para mover uma pasta para dentro de outra:
 
-```powershell
-Move-Item projeto-web projetos
+```bat
+move projeto-web projetos
 ```
 
 Nos exemplos, as pastas de destino `paginas` e `projetos` precisam existir. Caso necessário, crie-as antes com `mkdir`.
@@ -106,29 +133,29 @@ Nos exemplos, as pastas de destino `paginas` e `projetos` precisam existir. Caso
 
 Para excluir um arquivo:
 
-```powershell
-Remove-Item index-copia.php
+```bat
+del index-copia.php
 ```
 
 Para excluir uma pasta vazia:
 
-```powershell
-Remove-Item pasta-vazia
+```bat
+rmdir pasta-vazia
 ```
 
 Para excluir uma pasta que contém arquivos ou outras pastas:
 
-```powershell
-Remove-Item projeto-web-copia -Recurse -Confirm
+```bat
+rmdir /S projeto-web-copia
 ```
 
-A opção `-Recurse` inclui todo o conteúdo da pasta e `-Confirm` solicita confirmação antes da exclusão.
+A opção `/S` inclui todo o conteúdo da pasta. O CMD solicitará uma confirmação antes da exclusão.
 
-> **Atenção:** itens excluídos pelo PowerShell normalmente não são enviados para a Lixeira. Antes de usar `Remove-Item`, confira a pasta atual com `pwd` e os itens existentes com `dir`.
+> **Atenção:** itens excluídos pelo CMD não são enviados para a Lixeira. Antes de usar `del` ou `rmdir`, confira a pasta atual com `cd` e os itens existentes com `dir`.
 
 ## Abrir a pasta atual no VS Code
 
-```powershell
+```bat
 code .
 ```
 
@@ -136,7 +163,7 @@ O ponto representa a pasta atual. Se o comando não funcionar, abra o VS Code e 
 
 ## Limpar a tela do terminal
 
-```powershell
+```bat
 cls
 ```
 
@@ -144,7 +171,7 @@ Esse comando limpa apenas a tela; ele não apaga arquivos.
 
 ## Verificar o PHP
 
-```powershell
+```bat
 php -v
 ```
 
@@ -154,7 +181,7 @@ O resultado deve mostrar a versão instalada do PHP.
 
 Entre primeiro na pasta que contém `index.php` e execute:
 
-```powershell
+```bat
 php -S localhost:8000
 ```
 
@@ -174,15 +201,25 @@ Use esse atalho no terminal em que o servidor está em execução.
 
 Para procurar o executável do PHP no `PATH`, use:
 
-```powershell
-where.exe php
+```bat
+where php
 ```
 
 Se nenhum caminho aparecer, consulte o [guia de preparação do ambiente](../ambiente-web1-windows/). Se aparecer um caminho inesperado, peça orientação antes de alterar instalações existentes.
 
+## Consultar a ajuda de um comando
+
+Use `/?` depois do nome do comando. Por exemplo:
+
+```bat
+dir /?
+```
+
+O CMD mostrará a descrição e as opções disponíveis.
+
 ## Sequência mais usada
 
-```powershell
+```bat
 cd teste-php
 dir
 code .
@@ -193,6 +230,8 @@ Resultado esperado: o VS Code abre a pasta, o terminal inicia o servidor e a pá
 
 ## Referências oficiais
 
-- [Comandos de gerenciamento do PowerShell](https://learn.microsoft.com/powershell/module/microsoft.powershell.management/)
+- [Comandos do Windows](https://learn.microsoft.com/windows-server/administration/windows-commands/windows-commands)
+- [Comando `xcopy`](https://learn.microsoft.com/windows-server/administration/windows-commands/xcopy)
+- [Comando `rmdir`](https://learn.microsoft.com/windows-server/administration/windows-commands/rmdir)
 - [Servidor embutido do PHP](https://www.php.net/manual/en/features.commandline.webserver.php)
 - [Abrir uma pasta no VS Code pelo terminal](https://code.visualstudio.com/docs/setup/windows)
