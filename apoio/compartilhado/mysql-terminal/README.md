@@ -8,9 +8,9 @@ Use esta folha para entrar no MySQL, localizar bancos e tabelas e executar um ar
 
 ### Web 1 - Windows
 
-Abra o PowerShell e execute:
+Abra o Prompt de Comando (CMD) e execute:
 
-```powershell
+```bat
 mysql -u root -p
 ```
 
