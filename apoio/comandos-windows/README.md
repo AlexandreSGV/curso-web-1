@@ -44,6 +44,88 @@ mkdir teste-php
 
 Depois, entre nela com `cd teste-php`.
 
+## Criar um arquivo vazio
+
+Para criar um arquivo, use:
+
+```powershell
+New-Item index.php -ItemType File
+```
+
+Depois, você pode abrir o arquivo no VS Code e adicionar o código necessário.
+
+## Renomear arquivos e pastas
+
+Para renomear um arquivo:
+
+```powershell
+Rename-Item pagina.html index.html
+```
+
+Para renomear uma pasta:
+
+```powershell
+Rename-Item projeto-antigo projeto-web
+```
+
+O primeiro nome identifica o item atual e o segundo indica o novo nome.
+
+## Copiar arquivos e pastas
+
+Para criar uma cópia de um arquivo:
+
+```powershell
+Copy-Item index.php index-copia.php
+```
+
+Para copiar uma pasta com todos os arquivos e subpastas:
+
+```powershell
+Copy-Item projeto-web projeto-web-copia -Recurse
+```
+
+A opção `-Recurse` inclui todo o conteúdo existente dentro da pasta.
+
+## Mover arquivos e pastas
+
+Para mover um arquivo para uma pasta:
+
+```powershell
+Move-Item index.php paginas
+```
+
+Para mover uma pasta para dentro de outra:
+
+```powershell
+Move-Item projeto-web projetos
+```
+
+Nos exemplos, as pastas de destino `paginas` e `projetos` precisam existir. Caso necessário, crie-as antes com `mkdir`.
+
+## Excluir arquivos e pastas
+
+Para excluir um arquivo:
+
+```powershell
+Remove-Item index-copia.php
+```
+
+Para excluir uma pasta vazia:
+
+```powershell
+Remove-Item pasta-vazia
+```
+
+Para excluir uma pasta que contém arquivos ou outras pastas:
+
+```powershell
+Remove-Item projeto-web-copia -Recurse -Confirm
+```
+
+A opção `-Recurse` inclui todo o conteúdo da pasta e `-Confirm` solicita confirmação antes da exclusão.
+
+> **Atenção:** itens excluídos pelo PowerShell normalmente não são enviados para a Lixeira. Antes de usar `Remove-Item`, confira a pasta atual com `pwd` e os itens existentes com `dir`.
+
 ## Abrir a pasta atual no VS Code
 
 ```powershell
