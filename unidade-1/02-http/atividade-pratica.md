@@ -1,4 +1,4 @@
-# Prática: servidor local, HTTP e Git
+# Prática: servidor local e HTTP
 
 Esta atividade complementa a [apostila de HTTP](README.md). Você confirmará o ambiente de Web 1 e acompanhará uma página desde o navegador até o servidor local.
 
@@ -8,7 +8,6 @@ Ao final, você deverá conseguir:
 - explicar a diferença entre navegador e servidor;
 - identificar as partes principais de uma URL local;
 - observar uma requisição `GET` e as respostas `200` e `404`;
-- localizar o tutorial usado para preparar seu repositório da disciplina.
 
 ## Antes de começar
 
@@ -16,7 +15,6 @@ Se algum programa ainda não estiver funcionando, consulte:
 
 - [preparação do ambiente de Web 1 no Windows](../../apoio/ambiente-web1-windows/);
 - [comandos básicos do Windows](../../apoio/comandos-windows/);
-- [tutorial de Git, GitHub e entrega](../../apoio/compartilhado/git-github-entrega/).
 
 Abra um terminal novo e confirme o PHP:
 
@@ -171,12 +169,6 @@ Depois, acesse [http://localhost:8001](http://localhost:8001).
 ### A aba Network está vazia
 
 Mantenha a aba aberta e atualize a página com `Ctrl+R`. Se houver filtros ativos, selecione **All** ou **Doc**.
-
-## Prepare o repositório da disciplina
-
-O procedimento de Git não será repetido aqui. Siga a **Parte 1** do [tutorial de Git, GitHub e entrega](../../apoio/compartilhado/git-github-entrega/).
-
-Ao concluir essa preparação, seu repositório privado deve estar criado, o professor deve ter sido adicionado como colaborador e o primeiro commit deve aparecer no GitHub.
 
 ## Síntese
 
