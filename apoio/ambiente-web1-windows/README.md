@@ -1,10 +1,14 @@
 # Preparação do ambiente de Web 1 no Windows
 
-Este guia prepara o Windows para criar e executar páginas PHP com MySQL. Use o **PowerShell**, inclusive no terminal do Visual Studio Code.
+Este guia prepara o Windows para criar e executar páginas PHP com MySQL. Use o **Prompt de Comando (CMD)**, inclusive no terminal do Visual Studio Code.
 
 Se o computador do laboratório já estiver configurado, não reinstale os programas. Vá direto para a [verificação final](#verificação-final).
 
-Para consultar os comandos durante as aulas, use a [folha de comandos do Windows](../comandos-windows/).
+Para consultar os comandos durante as aulas, use a [folha de comandos do CMD](../comandos-windows/).
+
+## Abrir o CMD no Visual Studio Code
+
+No VS Code, pressione `Ctrl+Shift+P`, procure `Terminal: Select Default Profile` e selecione **Command Prompt**. Feche o terminal atual e escolha **Terminal > New Terminal**. O novo terminal deve mostrar um caminho terminado pelo sinal `>`.
 
 ## O que será instalado
 
@@ -99,9 +103,9 @@ Se a instalação estiver em outra pasta, adicione a pasta que contém `mysql.ex
 
 ## Verificação final
 
-Abra um terminal novo e execute:
+Abra um novo CMD e execute:
 
-```powershell
+```bat
 php -v
 mysql --version
 composer --version
@@ -126,7 +130,7 @@ echo '<p>Versão do PHP: ' . PHP_VERSION . '</p>';
 5. No VS Code, escolha **Terminal > New Terminal**. O terminal deve mostrar o caminho da pasta `teste-php`.
 6. Execute:
 
-```powershell
+```bat
 php -S localhost:8000
 ```
 
@@ -142,10 +146,10 @@ O navegador deve mostrar **Ambiente de Web 1 funcionando** e a versão do PHP. P
 
 Feche e abra o terminal depois de alterar o `PATH`. Para localizar os programas, execute:
 
-```powershell
-where.exe php
-where.exe mysql
-where.exe composer
+```bat
+where php
+where mysql
+where composer
 ```
 
 Cada comando deve mostrar o caminho do executável. Se o PHP encontrado não estiver em `C:\php`, existe outro PHP antes dele no `PATH`; peça orientação antes de apagar ou alterar instalações existentes.
@@ -166,7 +170,7 @@ Confirme se o arquivo se chama `index.php` e se a pasta aberta no VS Code é a m
 
 Encerre outro servidor com `Ctrl+C` ou execute:
 
-```powershell
+```bat
 php -S localhost:8001
 ```
 
