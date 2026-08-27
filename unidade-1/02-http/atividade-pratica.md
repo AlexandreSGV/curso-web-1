@@ -1,6 +1,6 @@
-# Ambiente, HTTP e Git: primeira prática
+# Prática: servidor local, HTTP e Git
 
-Neste assunto, você confirmará o ambiente de Web 1 e acompanhará uma página desde o navegador até o servidor local.
+Esta atividade complementa a [apostila de HTTP](README.md). Você confirmará o ambiente de Web 1 e acompanhará uma página desde o navegador até o servidor local.
 
 Ao final, você deverá conseguir:
 
@@ -26,23 +26,17 @@ php -v
 
 O resultado esperado é uma versão do PHP 8.5. Se o comando não for reconhecido, volte ao guia de ambiente antes de continuar.
 
-## O caminho de uma página na Web
+## Revise o fluxo básico
 
-Quando você abre uma página, dois programas participam da comunicação:
+O navegador atua como cliente: envia uma requisição HTTP. O servidor local do PHP recebe o pedido e devolve uma resposta.
 
-- o **cliente** é o programa que faz o pedido; neste exemplo, o navegador;
-- o **servidor** recebe o pedido e envia uma resposta; neste exemplo, o servidor local do PHP.
+Nesta atividade, você observará:
 
-O fluxo básico é:
+- `GET`, usado para solicitar um recurso;
+- `200 OK`, quando o recurso é enviado com sucesso;
+- `404 Not Found`, quando o recurso não existe.
 
-```text
-navegador  -- requisição HTTP -->  servidor
-navegador  <-- resposta HTTP ----  servidor
-```
-
-O navegador interpreta o conteúdo recebido e apresenta a página. Esse mesmo fluxo acontece em sites públicos, mas nosso primeiro servidor funcionará somente no seu computador.
-
-> **Contexto em uma frase:** a Web tornou comum acessar documentos ligados por hyperlinks usando endereços e o protocolo HTTP. Para programar, o mais importante agora é compreender o fluxo entre cliente e servidor.
+Consulte a [apostila](README.md) se precisar revisar URLs, métodos, códigos de status ou cabeçalhos.
 
 ## Entenda o endereço local
 
@@ -54,33 +48,13 @@ http://localhost:8000/?origem=aula
 
 | Parte | Significado |
 |---|---|
-| `http` | protocolo usado na comunicação |
-| `localhost` | o próprio computador |
-| `8000` | porta em que o servidor está aguardando pedidos |
-| `/` | caminho do recurso solicitado |
-| `?origem=aula` | parâmetro enviado na URL |
+| `http` | Protocolo usado na comunicação |
+| `localhost` | O próprio computador |
+| `8000` | Porta em que o servidor aguarda pedidos |
+| `/` | Caminho do recurso solicitado |
+| `?origem=aula` | Parâmetro enviado na URL |
 
-Uma **porta** ajuda o computador a direcionar a comunicação ao programa correto. Neste assunto, o servidor PHP usará a porta `8000`.
-
-## HTTP essencial
-
-HTTP organiza a troca de mensagens entre cliente e servidor:
-
-1. o navegador envia uma **requisição** (*request*);
-2. o servidor processa o pedido;
-3. o servidor devolve uma **resposta** (*response*).
-
-Cada requisição possui um método. Neste exemplo, o navegador usará:
-
-- `GET`: solicita a representação de um recurso, como uma página;
-- `POST`: envia dados para processamento, como em um formulário. Ele será praticado em outro assunto.
-
-A resposta contém um código de status. Hoje, observe estes dois:
-
-| Código | Significado neste exemplo |
-|---:|---|
-| `200 OK` | o servidor encontrou e enviou o recurso |
-| `404 Not Found` | o servidor não encontrou o recurso solicitado |
+Uma **porta** ajuda o computador a direcionar a comunicação ao programa correto. Nesta atividade, o servidor PHP usará a porta `8000`.
 
 ## Execute o exemplo
 
@@ -217,4 +191,3 @@ Ao concluir essa preparação, seu repositório privado deve estar criado, o pro
 
 - [Servidor embutido do PHP](https://www.php.net/manual/en/features.commandline.webserver.php)
 - [Painel Network do Chrome DevTools](https://developer.chrome.com/docs/devtools/network/)
-- [Semântica do HTTP - RFC 9110](https://www.rfc-editor.org/rfc/rfc9110.html)
