@@ -17,7 +17,7 @@ Você não precisará trabalhar com branches, pull requests, rebase ou outros re
 
 ### 1. Verifique se o Git está funcionando
 
-Abra o terminal indicado para sua disciplina e execute:
+Abra o terminal indicado para sua disciplina — **CMD** em Web 1 ou **Ubuntu/WSL** em Web 2 — e execute:
 
 ```bash
 git --version
