@@ -71,8 +71,6 @@ Todo documento pode começar com esta estrutura:
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Clínica Veterinária</title>
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -146,7 +144,6 @@ Alguns elementos não envolvem conteúdo e não possuem tag de fechamento. Eles 
 
 ```html
 <img src="imagens/cachorro.jpg" alt="Cachorro durante uma consulta">
-<meta charset="UTF-8">
 <input type="text" name="responsavel">
 ```
 
@@ -167,8 +164,6 @@ O `head` contém informações **sobre o documento** e referências a recursos n
 
 ```html
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Clínica veterinária com consultas, vacinas e exames.">
 
   <title>Clínica Veterinária</title>
@@ -182,8 +177,6 @@ O `head` contém informações **sobre o documento** e referências a recursos n
 
 | Elemento | Uso |
 |---|---|
-| `meta charset="UTF-8"` | Define a codificação e permite representar corretamente acentos e outros caracteres |
-| `meta name="viewport"` | Ajusta a área de visualização em celulares e outros dispositivos |
 | `meta name="description"` | Oferece um resumo que mecanismos de busca podem usar |
 | `title` | Define o título exibido na aba e usado como nome do documento |
 | `link rel="stylesheet"` | Conecta um arquivo CSS externo |
@@ -339,18 +332,201 @@ Não use tabelas para montar o layout da página. Para layout, utilize recursos 
 
 ### Formulários
 
-Um formulário reúne controles para receber dados:
+Um formulário reúne campos e outros controles para receber dados. O elemento `form` delimita o formulário:
 
 ```html
-<form action="/agendar" method="post">
-  <label for="nome">Nome do responsável</label>
-  <input id="nome" name="nome" type="text" required>
+<form action="salvar-agendamento.php" method="post">
+  <fieldset>
+    <legend>Dados do responsável</legend>
+
+    <label for="responsavel">Nome</label>
+    <input
+      id="responsavel"
+      name="responsavel"
+      type="text"
+      required
+      maxlength="100"
+    >
+
+    <label for="email">E-mail</label>
+    <input id="email" name="email" type="email" required>
+
+    <label for="telefone">Telefone</label>
+    <input
+      id="telefone"
+      name="telefone"
+      type="tel"
+      placeholder="(81) 99999-9999"
+    >
+  </fieldset>
+
+  <fieldset>
+    <legend>Dados do animal</legend>
+
+    <label for="animal">Nome do animal</label>
+    <input id="animal" name="animal" type="text" required>
+
+    <label for="especie">Espécie</label>
+    <select id="especie" name="especie" required>
+      <option value="">Selecione uma opção</option>
+      <option value="cao">Cão</option>
+      <option value="gato">Gato</option>
+      <option value="ave">Ave</option>
+      <option value="outro">Outro</option>
+    </select>
+
+    <label for="data">Data desejada</label>
+    <input id="data" name="data" type="date" required>
+
+    <label for="idade">Idade aproximada</label>
+    <input id="idade" name="idade" type="number" min="0" max="40">
+  </fieldset>
+
+  <fieldset>
+    <legend>Preferências</legend>
+
+    <p>Período preferido</p>
+
+    <input id="manha" name="periodo" type="radio" value="manha">
+    <label for="manha">Manhã</label>
+
+    <input id="tarde" name="periodo" type="radio" value="tarde">
+    <label for="tarde">Tarde</label>
+
+    <input id="lembrete" name="lembrete" type="checkbox" value="sim">
+    <label for="lembrete">Desejo receber um lembrete</label>
+  </fieldset>
+
+  <label for="observacoes">Observações</label>
+  <textarea id="observacoes" name="observacoes" rows="5"></textarea>
 
   <button type="submit">Solicitar agendamento</button>
 </form>
 ```
 
-O `label` associa um texto ao campo. Essa relação ajuda todas as pessoas, inclusive quem utiliza tecnologia assistiva.
+#### Partes do formulário
+
+| Parte | Função |
+|---|---|
+| `form` | Agrupa os campos e define como os dados serão enviados |
+| `action` | Indica o endereço que receberá os dados |
+| `method` | Define o método HTTP usado no envio, normalmente `get` ou `post` |
+| `label` | Apresenta o nome ou a orientação de um campo |
+| `input` | Cria campos que variam de acordo com o atributo `type` |
+| `select` | Cria uma lista de opções |
+| `textarea` | Cria uma área para texto com várias linhas |
+| `fieldset` | Agrupa controles relacionados |
+| `legend` | Apresenta o título de um `fieldset` |
+| `button` | Cria um botão para enviar ou controlar o formulário |
+
+O atributo `for` do `label` deve possuir o mesmo valor que o `id` do campo:
+
+```html
+<label for="email">E-mail</label>
+<input id="email" name="email" type="email">
+```
+
+Essa associação permite selecionar o campo ao clicar no texto e ajuda leitores de tela a identificarem sua finalidade.
+
+#### `id`, `name` e `value`
+
+Esses atributos possuem funções diferentes:
+
+- `id` identifica o elemento dentro da página e permite associá-lo a um `label`;
+- `name` define o nome usado no envio do dado;
+- `value` representa o valor que será enviado.
+
+Por exemplo:
+
+```html
+<input id="tarde" name="periodo" type="radio" value="tarde">
+<label for="tarde">Tarde</label>
+```
+
+Se essa opção for marcada, o formulário enviará o par `periodo=tarde`. Um campo sem `name` normalmente não terá seu valor enviado.
+
+#### Métodos `get` e `post`
+
+| Método | Uso introdutório |
+|---|---|
+| `get` | Consultas e filtros; os valores aparecem no endereço da página |
+| `post` | Envio de dados que serão processados, como cadastros e agendamentos |
+
+O uso de `post` não torna os dados automaticamente seguros. Informações sensíveis exigem conexão HTTPS, validação no servidor e outros cuidados no back-end.
+
+#### Tipos frequentes de `input`
+
+O atributo `type` modifica o comportamento do campo:
+
+| Tipo | Uso típico |
+|---|---|
+| `text` | Texto curto, como nome ou cidade |
+| `email` | Endereço de e-mail com validação básica do formato |
+| `password` | Oculta visualmente os caracteres; não criptografa os dados |
+| `tel` | Número de telefone |
+| `number` | Valor numérico; pode usar `min`, `max` e `step` |
+| `date` | Escolha de uma data |
+| `radio` | Escolha de apenas uma opção de um grupo |
+| `checkbox` | Opção que pode ser marcada ou desmarcada |
+| `file` | Seleção de um arquivo |
+| `color` | Escolha de uma cor |
+| `range` | Escolha de um valor em uma faixa |
+
+Botões de rádio pertencem ao mesmo grupo quando compartilham o mesmo `name`:
+
+```html
+<input id="cao" name="especie" type="radio" value="cao">
+<label for="cao">Cão</label>
+
+<input id="gato" name="especie" type="radio" value="gato">
+<label for="gato">Gato</label>
+```
+
+Nesse caso, apenas uma espécie poderá ser selecionada. Caixas de seleção são apropriadas quando as escolhas são independentes ou quando várias opções podem ser marcadas. O valor de um `checkbox` normalmente só é enviado quando ele está marcado.
+
+Para enviar arquivos, o formulário precisa usar `method="post"` e `enctype="multipart/form-data"`:
+
+```html
+<form action="enviar-arquivo.php" method="post" enctype="multipart/form-data">
+  <label for="documento">Documento</label>
+  <input id="documento" name="documento" type="file">
+  <button type="submit">Enviar</button>
+</form>
+```
+
+#### Atributos úteis para os campos
+
+| Atributo | Função |
+|---|---|
+| `required` | Torna o preenchimento obrigatório |
+| `placeholder` | Mostra uma dica temporária dentro do campo |
+| `min` e `max` | Definem limites para números ou datas |
+| `minlength` e `maxlength` | Definem quantidades mínima e máxima de caracteres |
+| `checked` | Deixa um `radio` ou `checkbox` inicialmente marcado |
+| `readonly` | Permite visualizar, mas não alterar o valor |
+| `disabled` | Desabilita o controle e impede seu envio |
+
+O `placeholder` é apenas uma dica e não substitui o `label`, pois desaparece quando a pessoa começa a digitar.
+
+#### O elemento `select`
+
+`select` apresenta opções definidas por elementos `option`:
+
+```html
+<label for="unidade">Unidade de atendimento</label>
+<select id="unidade" name="unidade" required>
+  <option value="">Selecione uma unidade</option>
+  <option value="centro">Unidade Centro</option>
+  <option value="jardins">Unidade Jardins</option>
+  <option value="norte">Unidade Norte</option>
+</select>
+```
+
+O texto entre as tags `option` é mostrado à pessoa. O atributo `value` define o dado enviado ao servidor. Se a opção “Unidade Jardins” for escolhida, será enviado `unidade=jardins`.
+
+#### Validação
+
+Atributos como `required`, `type="email"`, `min` e `max` permitem que o navegador faça verificações básicas antes do envio. Essa validação melhora a experiência, mas não substitui a validação no servidor, pois os dados ainda podem ser enviados por outros meios ou alterados.
 
 ## 7. HTML semântico
 
