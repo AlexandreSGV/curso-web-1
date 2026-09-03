@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" role="img" aria-labelledby="title desc">
+  <title id="title">Layout editorial com conteúdo e barra lateral</title>
+  <desc id="desc">Diagrama com header, nav, main dividido entre uma section com articles e um aside, além de footer.</desc>
+  <rect width="900" height="520" rx="24" fill="#f4f7fb"/>
+  <rect x="24" y="24" width="852" height="472" rx="18" fill="#ffffff" stroke="#a9b8cc" stroke-width="3"/>
+  <rect x="48" y="50" width="804" height="64" rx="10" fill="#cfe7ff" stroke="#2878b8" stroke-width="2"/>
+  <text x="450" y="91" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#174c75">&lt;header&gt;</text>
+  <rect x="48" y="126" width="804" height="45" rx="10" fill="#d8f3dc" stroke="#40916c" stroke-width="2"/>
+  <text x="450" y="156" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#245c46">&lt;nav&gt;</text>
+  <rect x="48" y="183" width="804" height="232" rx="12" fill="#fff8dc" stroke="#c79522" stroke-width="2"/>
+  <text x="70" y="215" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#75580e">&lt;main&gt;</text>
+  <rect x="70" y="229" width="536" height="163" rx="10" fill="#ffe8a3" stroke="#bf8612" stroke-width="2"/>
+  <text x="338" y="259" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#72500a">&lt;section&gt;</text>
+  <rect x="92" y="276" width="230" height="92" rx="9" fill="#ffd6a5" stroke="#c96d15" stroke-width="2"/>
+  <rect x="344" y="276" width="240" height="92" rx="9" fill="#ffd6a5" stroke="#c96d15" stroke-width="2"/>
+  <g text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#743b06">
+    <text x="207" y="328">&lt;article&gt;</text>
+    <text x="464" y="328">&lt;article&gt;</text>
+  </g>
+  <rect x="624" y="229" width="206" height="163" rx="10" fill="#f7d6e8" stroke="#a44778" stroke-width="2"/>
+  <text x="727" y="319" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#762c55">&lt;aside&gt;</text>
+  <rect x="48" y="428" width="804" height="46" rx="10" fill="#ded7f7" stroke="#725db5" stroke-width="2"/>
+  <text x="450" y="459" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#483780">&lt;footer&gt;</text>
+</svg>

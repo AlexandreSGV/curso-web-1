@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Prioridades no CSS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="pagina">
+    <h1>Prioridades no CSS</h1>
+    <p class="introducao">
+      Abra o arquivo <code>styles.css</code>, altere a ordem das regras e observe o resultado.
+    </p>
+
+    <section class="grade">
+      <article class="cartao">
+        <h2>1. Seletor mais específico</h2>
+        <p id="aviso-principal" class="mensagem">
+          Este texto fica vermelho porque o seletor de ID é mais específico.
+        </p>
+        <code>p → .mensagem → #aviso-principal</code>
+      </article>
+
+      <article class="cartao">
+        <h2>2. Mesma especificidade</h2>
+        <p class="mesma-prioridade">
+          Este fundo fica verde porque a regra verde aparece depois.
+        </p>
+        <code>.mesma-prioridade → .mesma-prioridade</code>
+      </article>
+
+      <article class="cartao">
+        <h2>3. Contexto aumenta a especificidade</h2>
+        <div class="painel">
+          <p class="nota">
+            Este texto fica azul porque <code>.painel .nota</code> é mais específico que <code>.nota</code>.
+          </p>
+        </div>
+      </article>
+
+      <article class="cartao alerta-important">
+        <h2>4. Exceção: <code>!important</code></h2>
+        <p id="texto-important" class="forcado">
+          O roxo vence o ID por causa de <code>!important</code>.
+        </p>
+        <p class="observacao">Use apenas para estudar o mecanismo; evite como solução habitual.</p>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

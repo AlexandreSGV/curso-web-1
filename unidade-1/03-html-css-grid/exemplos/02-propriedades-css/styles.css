@@ -1,0 +1,126 @@
+:root {
+  color: #23352f;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  background-color: #eef7f4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.cabecalho {
+  min-height: 250px;
+  display: grid;
+  place-items: center;
+  padding: 40px 20px;
+  color: white;
+  text-align: center;
+  background-color: #226b58;
+  background-image: linear-gradient(135deg, #174b3f, #32a889);
+}
+
+.cabecalho h1 {
+  margin: 8px 0;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.1;
+}
+
+.etiqueta {
+  display: inline-block;
+  padding: 5px 12px;
+  border: 1px solid rgb(255 255 255 / 65%);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.conteudo {
+  width: min(980px, 92%);
+  margin: 36px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+}
+
+.figura,
+.demonstracao,
+.lista-propriedades {
+  margin: 0;
+  padding: 24px;
+  border: 2px solid #a9d5c8;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 10px 26px rgb(23 75 63 / 12%);
+}
+
+.figura img {
+  display: block;
+  width: 100%;
+  max-height: 270px;
+  object-fit: cover;
+  border: 5px solid #d6eee7;
+  border-radius: 12px;
+}
+
+.figura figcaption {
+  margin-top: 10px;
+  color: #526a62;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.demonstracao h2,
+.lista-propriedades h2 {
+  margin-top: 0;
+  color: #174b3f;
+}
+
+.destaque {
+  padding-left: 14px;
+  border-left: 5px solid #f0a93b;
+  color: #7a4d08;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.botao {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 11px 18px;
+  border: 2px solid #174b3f;
+  border-radius: 8px;
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+  background: #226b58;
+}
+
+.botao:hover,
+.botao:focus-visible {
+  color: #174b3f;
+  background: #dff4ef;
+}
+
+.lista-propriedades {
+  grid-column: 1 / -1;
+  border-style: dashed;
+  border-width: 3px;
+}
+
+code {
+  color: #0f5e4c;
+  font-weight: 700;
+}
+
+@media (max-width: 720px) {
+  .conteudo {
+    grid-template-columns: 1fr;
+  }
+}
