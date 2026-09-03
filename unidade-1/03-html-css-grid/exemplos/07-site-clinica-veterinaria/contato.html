@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Contato | Clínica Amigo Animal</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="cabecalho">
+    <div class="container">
+      <a class="marca" href="index.html">Clínica Amigo Animal</a>
+      <p>Cuidado veterinário em todas as fases da vida.</p>
+    </div>
+  </header>
+
+  <nav class="menu" aria-label="Navegação principal">
+    <ul class="container">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="servicos.html">Serviços</a></li>
+      <li><a href="contato.html" aria-current="page">Contato</a></li>
+    </ul>
+  </nav>
+
+  <main class="conteudo container">
+    <h1>Contato e agendamento</h1>
+    <p class="introducao-secao">Envie uma solicitação ou utilize um de nossos canais de atendimento.</p>
+
+    <div class="grade-contato">
+      <section class="secao painel">
+        <h2>Como agendar</h2>
+
+        <article>
+          <h3>Etapas do atendimento</h3>
+          <ol>
+            <li>Escolha o serviço desejado.</li>
+            <li>Preencha seus dados e os dados do animal.</li>
+            <li>Aguarde a confirmação da clínica.</li>
+          </ol>
+
+          <section>
+            <h4>Informações do animal</h4>
+            <p>Informe espécie, nome, idade aproximada e o motivo do atendimento.</p>
+
+            <section>
+              <h5>Documentos úteis</h5>
+              <ul>
+                <li>Carteira de vacinação;</li>
+                <li>resultados de exames recentes;</li>
+                <li>lista de medicamentos em uso.</li>
+              </ul>
+
+              <section>
+                <h6>Primeira consulta</h6>
+                <p>Se não possuir esses documentos, o atendimento ainda poderá ser solicitado.</p>
+              </section>
+            </section>
+          </section>
+        </article>
+      </section>
+
+      <section class="secao painel">
+        <h2>Canais de atendimento</h2>
+
+        <article class="canal">
+          <h3>Telefone</h3>
+          <p><a href="tel:+550000000000">(00) 0000-0000</a></p>
+        </article>
+
+        <article class="canal">
+          <h3>E-mail</h3>
+          <p><a href="mailto:contato@amigoanimal.exemplo">contato@amigoanimal.exemplo</a></p>
+        </article>
+
+        <article class="canal">
+          <h3>Endereço</h3>
+          <address>Rua das Acácias, 120<br>Centro — Cidade Exemplo</address>
+        </article>
+      </section>
+    </div>
+
+    <section class="secao formulario-secao">
+      <h2>Solicite um contato</h2>
+      <p>Os campos marcados como obrigatórios precisam ser preenchidos.</p>
+
+      <form action="#" method="post">
+        <fieldset>
+          <legend>Dados do tutor</legend>
+
+          <div class="grade-formulario">
+            <div class="campo campo-largo">
+              <label for="nome">Nome completo</label>
+              <input type="text" id="nome" name="nome" required>
+            </div>
+
+            <div class="campo">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+
+            <div class="campo">
+              <label for="telefone">Telefone</label>
+              <input type="tel" id="telefone" name="telefone">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Atendimento</legend>
+
+          <div class="grade-formulario">
+            <div class="campo">
+              <label for="animal">Nome do animal</label>
+              <input type="text" id="animal" name="animal" required>
+            </div>
+
+            <div class="campo">
+              <label for="especie">Espécie</label>
+              <select id="especie" name="especie" required>
+                <option value="">Selecione</option>
+                <option value="cao">Cão</option>
+                <option value="gato">Gato</option>
+                <option value="outro">Outro animal</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="servico">Serviço</label>
+              <select id="servico" name="servico" required>
+                <option value="">Selecione</option>
+                <option value="consulta">Consulta clínica</option>
+                <option value="vacinacao">Vacinação</option>
+                <option value="exame">Exame</option>
+              </select>
+            </div>
+
+            <div class="campo">
+              <label for="data">Data desejada</label>
+              <input type="date" id="data" name="data">
+            </div>
+
+            <div class="campo campo-largo">
+              <label for="mensagem">Mensagem</label>
+              <textarea id="mensagem" name="mensagem" rows="5" placeholder="Conte brevemente o motivo do atendimento"></textarea>
+            </div>
+          </div>
+        </fieldset>
+
+        <label class="confirmacao">
+          <input type="checkbox" name="confirmacao" required>
+          Confirmo que os dados informados estão corretos.
+        </label>
+
+        <button class="botao" type="submit">Enviar solicitação</button>
+      </form>
+
+      <p class="nota-formulario">Este formulário faz parte de um exemplo de HTML e CSS e não envia dados para uma clínica real.</p>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="container rodape-conteudo">
+      <p><strong>Clínica Amigo Animal</strong><br>Rua das Acácias, 120 — Centro</p>
+      <p>Segunda a sexta: 8h às 18h<br>Sábado: 8h às 12h</p>
+    </div>
+  </footer>
+</body>
+</html>

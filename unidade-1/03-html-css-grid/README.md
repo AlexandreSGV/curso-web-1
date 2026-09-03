@@ -1,6 +1,6 @@
 # HTML e CSS: estrutura, estilo e layout
 
-> Esta apostila apresenta os fundamentos e os exemplos intermediários. O site final da clínica veterinária está planejado na [Seção 16](#16-projeto-final-site-da-clínica-veterinária), mas seu código será criado em outra iteração.
+> Esta apostila apresenta os fundamentos, exemplos intermediários e um [exemplo final](#16-exemplo-final-site-da-clínica-veterinária) que reúne HTML semântico e CSS Grid.
 
 Uma página Web pode ser comparada a uma construção:
 
@@ -27,7 +27,7 @@ Essa comparação ajuda no início, mas cada tecnologia pode participar de taref
 13. [Propriedades frequentes](#13-propriedades-frequentes)
 14. [Box model](#14-box-model)
 15. [Posicionamento e Grid](#15-posicionamento-e-grid)
-16. [Projeto final: site da clínica veterinária](#16-projeto-final-site-da-clínica-veterinária)
+16. [Exemplo final: site da clínica veterinária](#16-exemplo-final-site-da-clínica-veterinária)
 17. [Extras: transições e animações](#17-extras-transições-e-animações)
 18. [O que você precisa guardar](#18-o-que-você-precisa-guardar)
 
@@ -1127,69 +1127,11 @@ Nesse caso, a grade passa de três colunas para uma quando a área disponível t
 
 Veja a grade completa em [`exemplos/05-grid-basico`](exemplos/05-grid-basico/).
 
-## 16. Projeto final: site da clínica veterinária
+## 16. Exemplo final: site da clínica veterinária
 
-> **Espaço reservado.** O código deste projeto não faz parte deste rascunho e será desenvolvido na próxima iteração.
+O exemplo final reúne os principais conceitos da apostila em um site estático com três páginas. A página inicial organiza `section` e `article` com Grid; a página de serviços apresenta uma tabela; e a página de contato utiliza títulos, listas, formulário e `select`.
 
-O projeto reunirá HTML semântico, CSS externo, box model e Grid em um site com três páginas:
-
-```text
-exemplo-final-clinica/
-├── index.html
-├── servicos.html
-├── contato.html
-├── css/
-│   └── styles.css
-└── imagens/
-```
-
-### Estrutura compartilhada
-
-Todas as páginas terão:
-
-- `header` com identificação da clínica;
-- `nav` com links para Início, Serviços e Contato;
-- `main` específico de cada página;
-- `footer` com informações institucionais;
-- um único arquivo CSS compartilhado.
-
-### Página inicial
-
-O `main` terá três `section`. Cada seção reunirá de dois a três `article`:
-
-1. serviços em destaque;
-2. orientações e cuidados;
-3. notícias ou informações da clínica.
-
-Os artigos serão organizados com Grid. A página mostrará como semântica e layout são responsabilidades complementares: `section` e `article` descrevem o conteúdo; o CSS decide quantas colunas serão usadas.
-
-### Página de serviços
-
-A página apresentará:
-
-- título e introdução;
-- tabela com serviço, explicação, duração e preço;
-- uso correto de `caption`, `thead`, `tbody`, `th` e `td`;
-- estilos que preservem a leitura da tabela.
-
-### Página de contato
-
-A página utilizará:
-
-- níveis de títulos `h1` a `h6` em uma demonstração coerente de hierarquia;
-- lista ordenada com etapas do agendamento;
-- lista não ordenada com canais ou horários;
-- links, parágrafos, endereço e outros elementos apresentados na apostila.
-
-### Pontos que serão explicados após a implementação
-
-- árvore de arquivos;
-- reaproveitamento do cabeçalho, menu e rodapé;
-- navegação entre as páginas;
-- escolha das tags semânticas;
-- definição das colunas do Grid;
-- aplicação do box model nos cartões;
-- adaptação básica para tela estreita.
+As páginas compartilham o mesmo CSS e usam `header`, `nav`, `main`, `footer` e outras tags semânticas. Explore os arquivos em [`exemplos/07-site-clinica-veterinaria`](exemplos/07-site-clinica-veterinaria/) e comece abrindo o [`index.html`](exemplos/07-site-clinica-veterinaria/index.html).
 
 ## 17. Extras: transições e animações
 
@@ -1238,6 +1180,7 @@ Movimento deve comunicar estado ou orientar a atenção. Animações excessivas 
 | [`04-posicionamento`](exemplos/04-posicionamento/) | `static`, `relative`, `absolute`, `sticky` e `fixed` |
 | [`05-grid-basico`](exemplos/05-grid-basico/) | Contêiner, colunas, `fr`, `gap` e item expandido |
 | [`06-extras-css`](exemplos/06-extras-css/) | Transição, transformação e animação com `@keyframes` |
+| [`07-site-clinica-veterinaria`](exemplos/07-site-clinica-veterinaria/) | Site final com três páginas, HTML semântico, formulário, tabela e Grid |
 
 ## Referências para aprofundamento
 
