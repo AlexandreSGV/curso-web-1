@@ -1,0 +1,99 @@
+:root {
+  color: #263c35;
+  font-family: Arial, sans-serif;
+  background: #eef7f4;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.cabecalho {
+  padding: 36px 5%;
+  color: white;
+  background: #226b58;
+}
+
+.cabecalho h1,
+.cabecalho p {
+  margin: 5px 0;
+}
+
+.conteudo {
+  width: min(1000px, 92%);
+  margin: 30px auto;
+}
+
+.explicacao {
+  margin-bottom: 22px;
+  padding: 20px;
+  border-left: 6px solid #2d8c73;
+  background: white;
+}
+
+.explicacao h2 {
+  margin-top: 0;
+}
+
+pre {
+  overflow-x: auto;
+  padding: 16px;
+  border-radius: 9px;
+  color: #e8f6f2;
+  background: #183b32;
+}
+
+/* O elemento com esta classe se torna o grid container. */
+.grade {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+/* Cada article é um grid item. */
+.cartao {
+  min-height: 170px;
+  padding: 22px;
+  border: 2px solid #a6d5c8;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 7px 18px rgb(34 107 88 / 10%);
+}
+
+.cartao span {
+  color: #52776c;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.cartao h2 {
+  color: #205c4c;
+  font-size: 1.15rem;
+}
+
+.cartao strong {
+  color: #d07618;
+  font-size: 2.2rem;
+}
+
+/* Este item ocupa duas das três colunas. */
+.destaque {
+  grid-column: span 2;
+  background: #dff4ef;
+}
+
+/* Em telas estreitas, usamos apenas uma coluna. */
+@media (max-width: 680px) {
+  .grade {
+    grid-template-columns: 1fr;
+  }
+
+  .destaque {
+    grid-column: auto;
+  }
+}

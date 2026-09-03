@@ -1,0 +1,106 @@
+:root {
+  color: #25324a;
+  font-family: Arial, sans-serif;
+  background: #edf2f7;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.pagina {
+  width: min(960px, 92%);
+  margin: 40px auto;
+}
+
+h1 {
+  color: #183153;
+}
+
+.introducao {
+  margin-bottom: 24px;
+}
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.cartao {
+  padding: 22px;
+  border: 1px solid #cad5e2;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 6px 18px rgb(34 50 74 / 10%);
+}
+
+/* Exemplo 1: tag < classe < ID. */
+p {
+  color: #166534;
+}
+
+.mensagem {
+  color: #b45309;
+}
+
+#aviso-principal {
+  color: #b91c1c;
+  font-weight: 700;
+}
+
+/* Exemplo 2: como os seletores são iguais, a última regra vence. */
+.mesma-prioridade {
+  padding: 12px;
+  background: #fee2e2;
+}
+
+.mesma-prioridade {
+  background: #dcfce7;
+}
+
+/* Exemplo 3: dois seletores de classe são mais específicos que um. */
+.nota {
+  color: #7c3aed;
+}
+
+.painel .nota {
+  color: #1d4ed8;
+  font-weight: 700;
+}
+
+/* Exemplo 4: !important altera a prioridade normal da declaração. */
+#texto-important {
+  color: #b91c1c;
+}
+
+.forcado {
+  color: #6d28d9 !important;
+  font-weight: 700;
+}
+
+.alerta-important {
+  border-left: 6px solid #f59e0b;
+}
+
+.observacao {
+  color: #6b4b00;
+  font-size: 0.9rem;
+}
+
+code {
+  padding: 2px 5px;
+  border-radius: 4px;
+  color: #5b21b6;
+  background: #f3e8ff;
+}
+
+@media (max-width: 680px) {
+  .grade {
+    grid-template-columns: 1fr;
+  }
+}

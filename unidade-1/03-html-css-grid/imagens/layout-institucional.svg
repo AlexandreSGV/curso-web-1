@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" role="img" aria-labelledby="title desc">
+  <title id="title">Layout institucional em uma coluna</title>
+  <desc id="desc">Diagrama com header, nav, main, uma section de destaque, três articles e footer.</desc>
+  <rect width="900" height="520" rx="24" fill="#f4f7fb"/>
+  <rect x="24" y="24" width="852" height="472" rx="18" fill="#ffffff" stroke="#a9b8cc" stroke-width="3"/>
+  <rect x="48" y="50" width="804" height="70" rx="10" fill="#cfe7ff" stroke="#2878b8" stroke-width="2"/>
+  <text x="450" y="92" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" font-weight="700" fill="#174c75">&lt;header&gt;</text>
+  <rect x="48" y="132" width="804" height="48" rx="10" fill="#d8f3dc" stroke="#40916c" stroke-width="2"/>
+  <text x="450" y="164" text-anchor="middle" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#245c46">&lt;nav&gt;</text>
+  <rect x="48" y="192" width="804" height="222" rx="12" fill="#fff8dc" stroke="#c79522" stroke-width="2"/>
+  <text x="72" y="225" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#75580e">&lt;main&gt;</text>
+  <rect x="72" y="240" width="756" height="60" rx="9" fill="#ffe8a3" stroke="#bf8612" stroke-width="2"/>
+  <text x="450" y="277" text-anchor="middle" font-family="Arial, sans-serif" font-size="19" font-weight="700" fill="#72500a">&lt;section&gt; destaque &lt;/section&gt;</text>
+  <rect x="72" y="316" width="236" height="72" rx="9" fill="#ffd6a5" stroke="#c96d15" stroke-width="2"/>
+  <rect x="332" y="316" width="236" height="72" rx="9" fill="#ffd6a5" stroke="#c96d15" stroke-width="2"/>
+  <rect x="592" y="316" width="236" height="72" rx="9" fill="#ffd6a5" stroke="#c96d15" stroke-width="2"/>
+  <g text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#743b06">
+    <text x="190" y="359">&lt;article&gt;</text>
+    <text x="450" y="359">&lt;article&gt;</text>
+    <text x="710" y="359">&lt;article&gt;</text>
+  </g>
+  <rect x="48" y="428" width="804" height="46" rx="10" fill="#ded7f7" stroke="#725db5" stroke-width="2"/>
+  <text x="450" y="459" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="700" fill="#483780">&lt;footer&gt;</text>
+</svg>

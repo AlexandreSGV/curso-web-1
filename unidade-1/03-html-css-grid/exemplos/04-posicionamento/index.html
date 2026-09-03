@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Posicionamento no CSS</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body id="topo">
+  <header class="cabecalho">
+    <h1>Posicionamento no CSS</h1>
+    <p>Compare o fluxo normal com <code>relative</code>, <code>absolute</code>, <code>sticky</code> e <code>fixed</code>.</p>
+  </header>
+
+  <main class="conteudo">
+    <section class="exemplo">
+      <h2>1. Fluxo normal e <code>static</code></h2>
+      <p>Os elementos aparecem na ordem do HTML. Este é o comportamento padrão.</p>
+      <div class="linha-fluxo">
+        <div class="bloco">Primeiro</div>
+        <div class="bloco">Segundo</div>
+        <div class="bloco">Terceiro</div>
+      </div>
+    </section>
+
+    <section class="exemplo">
+      <h2>2. <code>relative</code></h2>
+      <p>A segunda caixa foi deslocada, mas seu espaço original continua reservado.</p>
+      <div class="linha-fluxo">
+        <div class="bloco">Primeiro</div>
+        <div class="bloco deslocado">Deslocado</div>
+        <div class="bloco">Terceiro</div>
+      </div>
+    </section>
+
+    <section class="exemplo">
+      <h2>3. <code>absolute</code></h2>
+      <p>O selo sai do fluxo e usa este cartão posicionado como referência.</p>
+      <article class="cartao-produto">
+        <span class="selo">Novo</span>
+        <h3>Consulta preventiva</h3>
+        <p>Avaliação geral, pesagem e orientações de cuidado.</p>
+      </article>
+    </section>
+
+    <section class="exemplo">
+      <h2>4. <code>sticky</code></h2>
+      <p>Role apenas a área abaixo. O título permanece no topo do contêiner.</p>
+      <div class="area-rolagem" tabindex="0">
+        <h3 class="titulo-sticky">Orientações importantes</h3>
+        <p>Leve a carteirinha de vacinação do animal.</p>
+        <p>Informe medicamentos usados recentemente.</p>
+        <p>Avise sobre alergias conhecidas.</p>
+        <p>Chegue com alguns minutos de antecedência.</p>
+        <p>Mantenha cães com guia e gatos em caixa de transporte.</p>
+        <p>Em caso de dúvida, converse com a equipe.</p>
+      </div>
+    </section>
+
+    <section class="exemplo">
+      <h2>5. <code>fixed</code></h2>
+      <p>O botão “Voltar ao topo” permanece preso à janela enquanto a página é rolada.</p>
+    </section>
+  </main>
+
+  <a class="voltar-topo" href="#topo">↑ Voltar ao topo</a>
+</body>
+</html>

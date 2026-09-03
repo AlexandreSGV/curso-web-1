@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid básico</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="cabecalho">
+    <h1>Grid básico</h1>
+    <p>Um contêiner, três colunas e um espaçamento entre os itens.</p>
+  </header>
+
+  <main class="conteudo">
+    <section class="explicacao">
+      <h2>Três instruções essenciais</h2>
+      <pre><code>.grade {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}</code></pre>
+    </section>
+
+    <section class="grade" aria-label="Exemplo de cartões organizados em grade">
+      <article class="cartao destaque">
+        <span>Item 1</span>
+        <h2>Atendimentos de hoje</h2>
+        <strong>18</strong>
+      </article>
+      <article class="cartao">
+        <span>Item 2</span>
+        <h2>Vacinas</h2>
+        <strong>7</strong>
+      </article>
+      <article class="cartao">
+        <span>Item 3</span>
+        <h2>Retornos</h2>
+        <strong>4</strong>
+      </article>
+      <article class="cartao">
+        <span>Item 4</span>
+        <h2>Exames</h2>
+        <strong>6</strong>
+      </article>
+      <article class="cartao">
+        <span>Item 5</span>
+        <h2>Banho e tosa</h2>
+        <strong>9</strong>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

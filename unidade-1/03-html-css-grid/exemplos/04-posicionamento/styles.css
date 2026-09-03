@@ -1,0 +1,155 @@
+:root {
+  color: #273548;
+  font-family: Arial, sans-serif;
+  line-height: 1.55;
+  background: #eef2f6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+}
+
+.cabecalho {
+  padding: 42px 5%;
+  color: white;
+  background: #183153;
+}
+
+.cabecalho h1,
+.cabecalho p {
+  margin: 5px 0;
+}
+
+.cabecalho code {
+  color: #d7ebff;
+}
+
+.conteudo {
+  width: min(920px, 92%);
+  margin: 32px auto 120px;
+}
+
+.exemplo {
+  min-height: 230px;
+  margin-bottom: 26px;
+  padding: 24px;
+  border: 1px solid #c7d3e0;
+  border-radius: 14px;
+  background: white;
+  box-shadow: 0 7px 20px rgb(24 49 83 / 9%);
+}
+
+.exemplo h2 {
+  margin-top: 0;
+  color: #174c75;
+}
+
+code {
+  color: #6d28d9;
+}
+
+.linha-fluxo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 25px;
+  border: 2px dashed #9babc0;
+  background: #f8fafc;
+}
+
+.bloco {
+  width: 130px;
+  padding: 20px 10px;
+  border: 2px solid #2878b8;
+  border-radius: 8px;
+  color: #174c75;
+  text-align: center;
+  font-weight: 700;
+  background: #cfe7ff;
+}
+
+.deslocado {
+  position: relative;
+  top: 32px;
+  left: 18px;
+  border-color: #c96d15;
+  color: #743b06;
+  background: #ffd6a5;
+}
+
+.cartao-produto {
+  position: relative;
+  width: min(430px, 100%);
+  min-height: 150px;
+  padding: 28px;
+  border: 2px solid #70b49f;
+  border-radius: 14px;
+  background: #e3f6f0;
+}
+
+.cartao-produto h3 {
+  margin-top: 0;
+  color: #205c4c;
+}
+
+.selo {
+  position: absolute;
+  top: -14px;
+  right: -12px;
+  z-index: 1;
+  padding: 7px 12px;
+  border-radius: 999px;
+  color: white;
+  font-weight: 700;
+  background: #b91c1c;
+  box-shadow: 0 4px 9px rgb(82 15 15 / 25%);
+}
+
+.area-rolagem {
+  height: 190px;
+  overflow-y: auto;
+  border: 2px solid #9babc0;
+  border-radius: 9px;
+  background: #f8fafc;
+}
+
+.area-rolagem p {
+  margin: 18px;
+}
+
+.titulo-sticky {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin: 0;
+  padding: 14px 18px;
+  color: white;
+  background: #2878b8;
+}
+
+.voltar-topo {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 10;
+  padding: 11px 15px;
+  border-radius: 9px;
+  color: white;
+  font-weight: 700;
+  text-decoration: none;
+  background: #183153;
+  box-shadow: 0 5px 16px rgb(24 49 83 / 28%);
+}
+
+.voltar-topo:hover,
+.voltar-topo:focus-visible {
+  background: #2878b8;
+}

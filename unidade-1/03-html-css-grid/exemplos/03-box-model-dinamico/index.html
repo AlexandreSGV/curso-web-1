@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratório do box model</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="cabecalho" id="topo">
+    <h1>Laboratório do box model</h1>
+    <p>Altere os controles e observe como cada camada ocupa espaço.</p>
+  </header>
+
+  <main class="laboratorio">
+    <form class="controles" id="controles">
+      <h2>Controles</h2>
+
+      <label for="conteudo">Conteúdo</label>
+      <input id="conteudo" type="text" value="Conteúdo da caixa">
+
+      <div class="duas-colunas">
+        <label>
+          Cor do fundo
+          <input id="cor-fundo" type="color" value="#b9dcfa">
+        </label>
+        <label>
+          Cor do texto
+          <input id="cor-texto" type="color" value="#174c75">
+        </label>
+        <label>
+          Cor da borda
+          <input id="cor-borda" type="color" value="#2878b8">
+        </label>
+        <label>
+          Tipo da borda
+          <select id="tipo-borda">
+            <option value="solid">solid</option>
+            <option value="dashed">dashed</option>
+            <option value="dotted">dotted</option>
+            <option value="double">double</option>
+          </select>
+        </label>
+      </div>
+
+      <label for="largura">Largura: <output id="valor-largura" for="largura">280px</output></label>
+      <input id="largura" type="range" min="120" max="420" value="280">
+
+      <label for="altura">Altura: <output id="valor-altura" for="altura">140px</output></label>
+      <input id="altura" type="range" min="60" max="240" value="140">
+
+      <label for="margem">Margem: <output id="valor-margem" for="margem">24px</output></label>
+      <input id="margem" type="range" min="0" max="60" value="24">
+
+      <label for="padding">Padding: <output id="valor-padding" for="padding">24px</output></label>
+      <input id="padding" type="range" min="0" max="60" value="24">
+
+      <label for="borda">Espessura da borda: <output id="valor-borda" for="borda">6px</output></label>
+      <input id="borda" type="range" min="0" max="20" value="6">
+
+      <label for="box-sizing">Cálculo de largura e altura</label>
+      <select id="box-sizing">
+        <option value="content-box">content-box</option>
+        <option value="border-box">border-box</option>
+      </select>
+
+      <button type="reset">Restaurar valores</button>
+    </form>
+
+    <section class="visualizacao" aria-labelledby="titulo-visualizacao">
+      <h2 id="titulo-visualizacao">Resultado</h2>
+      <div class="legenda" aria-label="Legenda das camadas">
+        <span class="legenda-margem">margin</span>
+        <span class="legenda-borda">border</span>
+        <span class="legenda-padding">padding</span>
+        <span class="legenda-conteudo">content</span>
+      </div>
+
+      <div class="area-externa">
+        <div id="caixa-alvo" class="caixa-alvo">
+          <span id="conteudo-caixa" class="conteudo-caixa">Conteúdo da caixa</span>
+        </div>
+      </div>
+
+      <p id="medidas" class="medidas" aria-live="polite"></p>
+      <p class="explicacao">
+        Em <code>content-box</code>, largura e altura medem apenas o conteúdo. Em
+        <code>border-box</code>, elas já incluem padding e borda.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

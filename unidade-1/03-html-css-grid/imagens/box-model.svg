@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520" role="img" aria-labelledby="title desc">
+  <title id="title">Camadas do box model</title>
+  <desc id="desc">Quatro retângulos encaixados representam margin, border, padding e content.</desc>
+  <rect width="900" height="520" rx="24" fill="#f4f7fb"/>
+  <text x="450" y="47" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#183153">Box model</text>
+  <rect x="70" y="72" width="760" height="396" rx="20" fill="#ffe7a3" stroke="#ba7c00" stroke-width="3" stroke-dasharray="10 8"/>
+  <text x="95" y="108" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#75500a">margin</text>
+  <rect x="145" y="126" width="610" height="288" rx="16" fill="#ef8d78" stroke="#9d2b17" stroke-width="3"/>
+  <text x="169" y="161" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#651c10">border</text>
+  <rect x="205" y="181" width="490" height="180" rx="13" fill="#b9e6c3" stroke="#327a43" stroke-width="3"/>
+  <text x="228" y="216" font-family="Arial, sans-serif" font-size="21" font-weight="700" fill="#235830">padding</text>
+  <rect x="290" y="234" width="320" height="80" rx="10" fill="#b9dcfa" stroke="#2878b8" stroke-width="3"/>
+  <text x="450" y="283" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" font-weight="700" fill="#174c75">content</text>
+  <g font-family="Arial, sans-serif" font-size="17" fill="#334155">
+    <text x="95" y="496">De fora para dentro: margem → borda → preenchimento → conteúdo.</text>
+  </g>
+</svg>
