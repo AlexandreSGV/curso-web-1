@@ -1,6 +1,6 @@
 # HTML e CSS: estrutura, estilo e layout
 
-> **Rascunho para avaliação.** Esta versão apresenta os fundamentos e os exemplos intermediários. O site final da clínica veterinária está planejado na [Seção 16](#16-projeto-final-site-da-clínica-veterinária), mas seu código será criado em outra iteração.
+> Esta apostila apresenta os fundamentos e os exemplos intermediários. O site final da clínica veterinária está planejado na [Seção 16](#16-projeto-final-site-da-clínica-veterinária), mas seu código será criado em outra iteração.
 
 Uma página Web pode ser comparada a uma construção:
 
