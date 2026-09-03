@@ -66,9 +66,17 @@ button:focus-visible {
 }
 
 .pata {
+  display: inline-block;
   margin: 22px 0;
   font-size: 4rem;
-  animation: balancar 1.8s ease-in-out infinite alternate;
+  cursor: pointer;
+}
+
+.pata:hover,
+.pata:focus-visible {
+  outline: 3px solid #a6d5c8;
+  outline-offset: 6px;
+  transform: translateY(-8px) rotate(18deg) scale(1.25);
 }
 
 @keyframes pulsar {
@@ -83,29 +91,8 @@ button:focus-visible {
   }
 }
 
-@keyframes balancar {
-  from {
-    transform: rotate(-12deg);
-  }
-
-  to {
-    transform: rotate(12deg);
-  }
-}
-
 @media (max-width: 720px) {
   .grade {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    scroll-behavior: auto !important;
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
   }
 }

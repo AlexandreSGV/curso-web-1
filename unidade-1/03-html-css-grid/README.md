@@ -1144,7 +1144,7 @@ Depois dos fundamentos, o CSS também pode alterar valores suavemente e criar mo
 | `@keyframes` | Define etapas de uma animação |
 | `animation` | Aplica os quadros-chave, duração e repetição |
 
-Esta seção é apenas uma introdução. Veja os efeitos e o cuidado com `prefers-reduced-motion` em [`exemplos/06-extras-css`](exemplos/06-extras-css/).
+Esta seção é apenas uma introdução. Veja separadamente uma transição, uma transformação e uma animação com quadros-chave em [`exemplos/06-extras-css`](exemplos/06-extras-css/).
 
 Movimento deve comunicar estado ou orientar a atenção. Animações excessivas podem distrair, prejudicar o uso e causar desconforto.
 
