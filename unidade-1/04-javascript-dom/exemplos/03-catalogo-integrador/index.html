@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Biblioteca — atividade integradora</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <p>Web 1 · Atividade integradora resolvida</p>
+    <h1>Catálogo da biblioteca</h1>
+    <p>Formulário, eventos, DOM, JSON e uma API local em PHP.</p>
+  </header>
+  <main>
+    <noscript>Ative o JavaScript para atualizar a lista sem sair desta página.</noscript>
+    <section aria-labelledby="titulo-busca">
+      <h2 id="titulo-busca">Buscar livros</h2>
+      <form id="formulario-busca" action="api/livros.php" method="get">
+        <label for="busca">Parte do título ou do nome do autor</label>
+        <input id="busca" name="busca" type="search" minlength="2" maxlength="60" required aria-describedby="ajuda-busca contador">
+        <p id="ajuda-busca">Digite de 2 a 60 caracteres. Experimente JavaScript, PHP, Ana ou abacaxi.</p>
+        <p id="contador">0 caracteres digitados.</p>
+        <button id="botao-buscar" type="submit">Buscar livros</button>
+        <button id="botao-restaurar" type="button" disabled>Restaurar a última busca no campo</button>
+      </form>
+      <p id="mensagem" role="status">Digite uma busca para começar.</p>
+      <ul id="livros"></ul>
+    </section>
+    <section aria-labelledby="titulo-json">
+      <h2 id="titulo-json">Observando a serialização</h2>
+      <p>Ao buscar, o critério vira texto JSON com JSON.stringify(). O botão de restauração usa JSON.parse() e preenche o campo novamente, sem fazer outra consulta.</p>
+      <pre id="json-busca">Nenhuma busca realizada.</pre>
+      <p>Esse texto fica apenas na memória desta página; recarregar apaga o histórico.</p>
+    </section>
+  </main>
+  <footer>Catálogo fictício: os livros estão em um array PHP. Não há banco de dados nem cadastro neste exemplo.</footer>
+</body>
+</html>
