@@ -1,0 +1,118 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #edf7f3;
+  color: #172f40;
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+}
+
+header, main, footer {
+  max-width: 850px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+section {
+  margin-bottom: 24px;
+  padding: 24px;
+  background: white;
+  border: 1px solid #cad4db;
+  border-radius: 8px;
+}
+
+form {
+  display: grid;
+  gap: 8px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input, select, textarea, button {
+  max-width: 100%;
+  padding: 10px;
+  font: inherit;
+  border: 1px solid #697f8f;
+  border-radius: 4px;
+}
+
+button {
+  background: #155846;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  background: #596976;
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 3px solid #b44d00;
+  outline-offset: 3px;
+}
+
+ul {
+  padding-left: 24px;
+}
+
+li {
+  border-bottom: 1px solid #cad4db;
+  padding-bottom: 12px;
+}
+
+pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  padding: 16px;
+  background: #edf2f5;
+  color: #172f40;
+}
+
+.erro {
+  color: #9a1b16;
+  font-weight: bold;
+}
+
+a {
+  color: #155846;
+}
+
+[hidden] {
+  display: none;
+}
+
+.missoes {
+  padding: 0;
+  list-style: none;
+}
+
+.missoes li {
+  margin: 12px 0;
+  padding: 16px;
+  border: 1px solid #cad4db;
+  border-radius: 6px;
+}
+
+.nome-missao {
+  display: block;
+  margin-bottom: 10px;
+  overflow-wrap: anywhere;
+}
+
+.missoes button {
+  margin: 4px;
+}
+
+.concluida {
+  background: #dff2e7;
+}
+
+.concluida .nome-missao {
+  text-decoration: line-through;
+}

@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Monte seu lanche</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <p>Web 1 · Sintaxe e formulários</p>
+    <h1>Monte seu lanche</h1>
+    <p>Escolha o sanduíche, acrescente uma bebida e descubra o total.</p>
+  </header>
+  <main>
+    <noscript>Ative o JavaScript para calcular o pedido.</noscript>
+    <section aria-labelledby="titulo-pedido">
+      <h2 id="titulo-pedido">O que vai ser hoje?</h2>
+      <form id="formulario-pedido">
+        <label for="lanche">Sanduíche</label>
+        <select id="lanche" required>
+          <option value="16">Clássico — R$ 16,00</option>
+          <option value="22">Especial — R$ 22,00</option>
+          <option value="28">Duplo — R$ 28,00</option>
+        </select>
+        <label for="quantidade">Quantidade (1 a 10)</label>
+        <input id="quantidade" type="number" min="1" max="10" step="1" value="1" required>
+        <label class="opcao" for="bebida"><input id="bebida" type="checkbox"> Acrescentar uma bebida de R$ 6,00 a cada lanche</label>
+        <p>Promoção fictícia: pedidos com 3 ou mais lanches recebem 10% de desconto no total.</p>
+        <button type="submit">Calcular pedido</button>
+      </form>
+      <p id="mensagem" role="status">Preencha as opções e calcule.</p>
+      <article id="resultado" hidden>
+        <h3>Resumo do pedido</h3>
+        <dl>
+          <dt>Subtotal</dt><dd id="subtotal"></dd>
+          <dt>Desconto</dt><dd id="desconto"></dd>
+          <dt>Total</dt><dd id="total"></dd>
+        </dl>
+      </article>
+    </section>
+  </main>
+  <footer>Simulação para estudo. Nenhum pedido ou pagamento é enviado.</footer>
+</body>
+</html>
