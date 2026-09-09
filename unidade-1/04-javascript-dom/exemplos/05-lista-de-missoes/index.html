@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Lista de missões</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <p>Web 1 · Criar, alterar e remover elementos</p>
+    <h1>Suas missões de hoje</h1>
+    <p>Transforme pequenas tarefas em conquistas e acompanhe seu progresso.</p>
+  </header>
+  <main>
+    <noscript>Ative o JavaScript para criar e concluir missões.</noscript>
+    <section aria-labelledby="titulo-lista">
+      <h2 id="titulo-lista">Uma missão de cada vez</h2>
+      <form id="formulario-missao">
+        <label for="missao">Nova missão (3 a 80 caracteres)</label>
+        <input id="missao" type="text" minlength="3" maxlength="80" required>
+        <button type="submit">Adicionar missão</button>
+      </form>
+      <p id="mensagem" role="status">Duas missões de exemplo estão prontas para começar.</p>
+      <p id="progresso" role="status"></p>
+      <ul id="missoes" class="missoes"></ul>
+    </section>
+  </main>
+  <footer>As missões ficam apenas nesta página. Recarregar restaura os exemplos iniciais.</footer>
+</body>
+</html>

@@ -2,14 +2,14 @@
 
 O HTML organiza o conteúdo, o CSS cuida da apresentação e o JavaScript permite responder ao usuário e modificar a página. Nesta apostila, vamos usar JavaScript no **front-end, executado pelo navegador**.
 
-Você já estudou programação em JavaScript. Portanto, a revisão de sintaxe será breve; a novidade é conectar o código à página e aos serviços acessados pela Web.
+A apresentação da sintaxe será breve, com foco em conectar o código à página e aos serviços acessados pela Web.
 
 Ao final, você deverá conseguir ler e validar campos, tratar eventos, atualizar o DOM, converter dados em JSON e apresentar respostas de APIs. Não usaremos frameworks, ferramentas de compilação nem recursos avançados da linguagem.
 
 ## Índice
 
 1. [JavaScript no front-end](#1-javascript-no-front-end)
-2. [Revisão rápida da sintaxe](#2-revisão-rápida-da-sintaxe)
+2. [Sintaxe básica de JavaScript](#2-sintaxe-básica-de-javascript)
 3. [DOM: encontrando e alterando elementos](#3-dom-encontrando-e-alterando-elementos)
 4. [Escutando e tratando eventos](#4-escutando-e-tratando-eventos)
 5. [Lendo e validando formulários](#5-lendo-e-validando-formulários)
@@ -63,9 +63,9 @@ document.querySelector("#mensagem").textContent = "Agora a página foi alterada 
 
 Abra o console com `F12` e recarregue. Uma mensagem aparece no console; a outra, na própria página. São lugares diferentes.
 
-## 2. Revisão rápida da sintaxe
+## 2. Sintaxe básica de JavaScript
 
-Esta seção é uma consulta de sintaxe, não uma nova introdução à lógica. Os trechos abaixo são independentes.
+Esta seção reúne as principais estruturas e alguns detalhes da sintaxe de JavaScript. Os trechos abaixo são independentes.
 
 ### Variáveis, valores e operações
 
@@ -156,6 +156,12 @@ Um array reúne itens; um objeto reúne propriedades de um item. `livros[0]` ace
 
 Nas funções, usamos `function`, nome, parâmetros entre parênteses e corpo entre chaves. `return` devolve um resultado ou encerra a função. Vamos preferir funções com nome para facilitar a leitura dos exemplos.
 
+### Experimente: monte seu lanche
+
+O [simulador de pedido](exemplos/04-monte-seu-lanche/) reúne conversões com `Number()`, cálculos, `const`, `let`, condições e funções. Escolha o sanduíche, a quantidade e uma bebida opcional; o JavaScript calcula o subtotal e aplica uma promoção fictícia.
+
+No [script.js](exemplos/04-monte-seu-lanche/script.js), localize `calcularPedido()` e altere a quantidade mínima para receber desconto. Você verá os efeitos da condição no resultado apresentado pela página.
+
 ## 3. DOM: encontrando e alterando elementos
 
 **DOM** significa *Document Object Model*: a representação da página como objetos que o JavaScript pode acessar. `document` é nossa entrada para localizar os elementos.
@@ -214,6 +220,12 @@ for (const titulo of titulos) {
 
 Nos exemplos, dados de formulários e APIs entram na página por `textContent`, não por `innerHTML`. Assim, um texto que contenha `<script>` é tratado como texto, não como marcação a interpretar. Isso evita uma fonte comum de injeção de HTML. [MDN — innerHTML](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML).
 
+### Experimente: lista de missões
+
+Na [lista de missões](exemplos/05-lista-de-missoes/), adicione tarefas, marque as concluídas e remova itens. O [código](exemplos/05-lista-de-missoes/script.js) cria os elementos com `createElement()`, muda classes com `classList` e retira elementos com `remove()`.
+
+Cada botão está diretamente dentro de um `li`; `parentElement` localiza esse elemento pai. A função `atualizarProgresso()` percorre os itens atuais com `querySelectorAll()` e `for...of`. Observe como o contador se ajusta ao concluir, reabrir ou remover uma missão, inclusive quando a lista fica vazia.
+
 ## 4. Escutando e tratando eventos
 
 Um evento informa que algo aconteceu na página. O código registra uma função para tratar essa ocorrência.
@@ -256,6 +268,12 @@ document.querySelector("#cidade").addEventListener("change", informarEscolha);
 `evento.target` identifica o elemento onde o evento se originou. Nesse exemplo, é o `select` de cidades.
 
 Para formulários, ouviremos `submit` no próprio `form`, não somente `click` no botão. `evento.preventDefault()` cancela a ação padrão de enviar o formulário e navegar para sua resposta; nossa função passa a cuidar do que acontecerá. Ele não valida campos nem envia dados por conta própria.
+
+### Experimente: adivinhe o número
+
+No [jogo de adivinhação](exemplos/06-jogo-adivinhacao/), cada `submit` verifica um palpite e cada `click` em **Novo jogo** reinicia a partida. O [script](exemplos/06-jogo-adivinhacao/script.js) guarda o número secreto, a quantidade de tentativas e a situação da partida em variáveis.
+
+Tente jogar também com Enter. Depois localize as condições que produzem as dicas de maior ou menor, a vitória e o fim das tentativas. O README mostra como fixar temporariamente o número secreto para testar cada caminho.
 
 ## 5. Lendo e validando formulários
 
@@ -312,6 +330,12 @@ Observe os detalhes:
 
 **Validar não é salvar.** Esse exemplo só confere valores e mostra uma mensagem. Também não é suficiente para proteger uma aplicação: o usuário pode alterar ou contornar o JavaScript. Quando houver envio a um servidor, o PHP deverá validar novamente. [MDN — validação de formulários](https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Form_validation).
 
+### Experimente: valide as opções do pedido
+
+Volte ao [exemplo da lanchonete](exemplos/04-monte-seu-lanche/). Seu formulário usa `select`, `input` numérico e checkbox. Compare a leitura de `.value` com `.checked` e tente quantidades vazias, fracionadas ou fora de 1 a 10.
+
+O HTML fornece a primeira validação e o JavaScript também verifica os valores antes de calcular. Ao alterar uma opção, o resumo anterior é ocultado até fazer um novo cálculo, evitando apresentar um total que já não corresponde aos campos.
+
 ## 6. Objetos, texto JSON e conversões
 
 JSON é um formato de **texto** para representar dados. É comum uma API enviar JSON e o JavaScript convertê-lo em dados que podem ser acessados no programa. Não é exclusivo de JavaScript: PHP e outras linguagens também trabalham com ele.
@@ -346,6 +370,12 @@ JSON pode representar objetos, arrays e valores simples. Nas APIs desta apostila
 | `resposta.json()` | Corpo de uma resposta HTTP | Leitura e conversão do JSON para a etapa seguinte do processamento |
 
 `resposta.json()` já realiza a conversão: não aplique `JSON.parse()` outra vez sobre o objeto recebido. E serializar não envia nem armazena dados automaticamente.
+
+### Experimente: ficha de personagem em JSON
+
+Na [ficha de personagem](exemplos/07-ficha-personagem-json/), preencha nome, classe e nível. O botão de geração cria um objeto e o transforma em texto com `JSON.stringify()`. Edite esse texto e use **Importar JSON** para recuperar os valores com `JSON.parse()`.
+
+O [código](exemplos/07-ficha-personagem-json/script.js) distingue dois problemas: uma aspa ausente torna o JSON inválido; já o nível `99` é um número válido em JSON, mas não atende à regra da ficha. Um pequeno `try/catch` mostra uma mensagem quando a leitura do texto falha, sem interromper o uso da página. Corrija o texto e tente novamente.
 
 ## 7. Chamando APIs
 
@@ -501,7 +531,9 @@ As instruções detalhadas estão no [README do exemplo](exemplos/03-catalogo-in
 
 ## 11. Executando e investigando erros
 
-Os exemplos não exigem npm nem framework. Para servir os três com o mesmo comando, tenha o PHP CLI instalado e abra o terminal na pasta `unidade-1/04-javascript-dom/exemplos`:
+Os exemplos não exigem npm nem framework. Os exemplos **04 a 07** funcionam sem servidor e sem internet: abra o `index.html` da respectiva pasta diretamente no navegador. Consulte o [índice dos sete exemplos](exemplos/README.md) para escolher pelo assunto.
+
+Para servir todos pelo mesmo endereço local, incluindo a API PHP do catálogo, tenha o PHP CLI instalado e abra o terminal na pasta `unidade-1/04-javascript-dom/exemplos`:
 
 ```bat
 php -S localhost:8000
@@ -512,6 +544,10 @@ Mantenha o terminal aberto e acesse:
 - [JSONPlaceholder](http://localhost:8000/01-jsonplaceholder/)
 - [OpenWeatherMap](http://localhost:8000/02-openweathermap/)
 - [Catálogo integrador](http://localhost:8000/03-catalogo-integrador/)
+- [Monte seu lanche](http://localhost:8000/04-monte-seu-lanche/)
+- [Lista de missões](http://localhost:8000/05-lista-de-missoes/)
+- [Jogo de adivinhação](http://localhost:8000/06-jogo-adivinhacao/)
+- [Ficha de personagem em JSON](http://localhost:8000/07-ficha-personagem-json/)
 
 Pare o servidor com `Ctrl+C`. O servidor embutido é para estudo local, não para publicar uma aplicação em produção. Se precisar preparar o PHP, consulte o [guia de ambiente da disciplina](../../apoio/ambiente-web1-windows/).
 
@@ -555,7 +591,7 @@ Uma API em outro domínio precisa permitir a leitura pelo navegador, por meio de
 | `resposta.ok` | Verificar se o status HTTP indica sucesso |
 | `resposta.json()` | Ler e converter o JSON da resposta |
 
-O objetivo é reconhecer o caminho **interação do usuário → leitura e validação → operação → atualização da página**, conseguindo identificar onde cada parte está implementada. Use os três exemplos para mudar uma regra, um campo e uma forma de apresentação antes de criar sua própria versão.
+O objetivo é reconhecer o caminho **interação do usuário → leitura e validação → operação → atualização da página**, conseguindo identificar onde cada parte está implementada. Use os exemplos para mudar uma regra, um campo e uma forma de apresentação antes de criar sua própria versão.
 
 ## Referências
 

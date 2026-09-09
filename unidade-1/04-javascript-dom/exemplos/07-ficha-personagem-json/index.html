@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Ficha de personagem em JSON</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <p>Web 1 · Objetos, formulários e JSON</p>
+    <h1>Crie seu personagem</h1>
+    <p>Transforme uma ficha em texto JSON e recupere os dados a partir desse texto.</p>
+  </header>
+  <main>
+    <noscript>Ative o JavaScript para gerar e importar a ficha.</noscript>
+    <section aria-labelledby="titulo-ficha">
+      <h2 id="titulo-ficha">1. Monte a ficha</h2>
+      <form id="formulario-ficha">
+        <label for="nome">Nome (2 a 30 caracteres)</label>
+        <input id="nome" type="text" minlength="2" maxlength="30" value="Luna" required>
+        <label for="classe">Classe</label>
+        <select id="classe" required>
+          <option value="Explorador">Explorador</option>
+          <option value="Criador">Criador</option>
+          <option value="Guardião">Guardião</option>
+        </select>
+        <label for="nivel">Nível (1 a 20)</label>
+        <input id="nivel" type="number" min="1" max="20" step="1" value="1" required>
+        <button type="submit">Gerar ficha e JSON</button>
+      </form>
+    </section>
+    <section aria-labelledby="titulo-json">
+      <h2 id="titulo-json">2. Edite o texto JSON</h2>
+      <label for="texto-json">Dados do personagem</label>
+      <textarea id="texto-json" rows="8" spellcheck="false" aria-describedby="ajuda-json"></textarea>
+      <p id="ajuda-json">Gere uma ficha, mude o nome ou o nível no JSON e importe. Experimente retirar uma aspa para observar o erro.</p>
+      <button id="botao-importar" type="button">Importar JSON</button>
+    </section>
+    <p id="mensagem" role="status">Gere a primeira ficha para começar.</p>
+    <article id="cartao" class="cartao-personagem" hidden>
+      <h2 id="nome-personagem"></h2>
+      <p id="detalhes-personagem"></p>
+    </article>
+  </main>
+  <footer>Os dados ficam apenas nesta página. Copie o texto JSON se quiser guardá-lo antes de recarregar.</footer>
+</body>
+</html>

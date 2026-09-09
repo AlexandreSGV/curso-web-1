@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Adivinhe o número</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <p>Web 1 · Eventos, condições e estado da página</p>
+    <h1>Adivinhe o número</h1>
+    <p>Um número de 1 a 20 foi sorteado. Você tem 5 tentativas para descobri-lo.</p>
+  </header>
+  <main>
+    <noscript>Ative o JavaScript para jogar.</noscript>
+    <section aria-labelledby="titulo-jogo">
+      <h2 id="titulo-jogo">Qual é o seu palpite?</h2>
+      <form id="formulario-palpite">
+        <label for="palpite">Um número inteiro de 1 a 20</label>
+        <input id="palpite" type="number" min="1" max="20" step="1" required>
+        <button id="botao-jogar" type="submit">Tentar</button>
+      </form>
+      <p id="mensagem" role="status">Digite um palpite para começar.</p>
+      <p id="tentativas">Tentativas restantes: 5.</p>
+      <h3>Seus palpites</h3>
+      <ol id="historico"></ol>
+      <button id="botao-reiniciar" type="button">Novo jogo</button>
+    </section>
+  </main>
+  <footer>Cada palpite válido consome uma tentativa, mesmo se o número já tiver sido usado.</footer>
+</body>
+</html>
