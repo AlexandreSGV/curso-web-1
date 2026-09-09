@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Tempo atual — OpenWeatherMap</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <p>Web 1 · JavaScript no navegador</p>
+    <h1>Tempo atual</h1>
+    <p>Uma consulta com parâmetros e leitura de um objeto com dados meteorológicos.</p>
+  </header>
+  <main>
+    <noscript>Ative o JavaScript para executar este exemplo.</noscript>
+    <section aria-labelledby="titulo-consulta">
+      <h2 id="titulo-consulta">Consultar uma cidade</h2>
+      <form id="formulario-tempo">
+        <label for="cidade">Cidade</label>
+        <select id="cidade" name="cidade" required>
+          <option value="">Selecione uma cidade</option>
+          <option value="recife">Recife</option>
+          <option value="sao-paulo">São Paulo</option>
+          <option value="curitiba">Curitiba</option>
+        </select>
+        <p id="coordenadas">As coordenadas aproximadas da cidade aparecerão aqui.</p>
+        <label for="chave">Sua chave de teste da OpenWeatherMap</label>
+        <input id="chave" type="password" autocomplete="off" required aria-describedby="aviso-chave">
+        <p id="aviso-chave">A chave fica nesta página durante o uso e é enviada à OpenWeatherMap. O campo de senha não a torna secreta no navegador. Não publique sua chave no Git.</p>
+        <button id="botao-consultar" type="submit">Consultar tempo</button>
+      </form>
+      <p id="mensagem" role="status">Selecione a cidade e informe uma chave habilitada para Current Weather Data.</p>
+      <article id="resultado" hidden>
+        <h3 id="local"></h3>
+        <p id="descricao"></p>
+        <dl>
+          <dt>Temperatura</dt><dd id="temperatura"></dd>
+          <dt>Umidade</dt><dd id="umidade"></dd>
+        </dl>
+      </article>
+    </section>
+  </main>
+  <footer>Dados: <a href="https://openweathermap.org/">OpenWeatherMap</a>. Consulte as condições e os limites da sua conta antes de usar.</footer>
+</body>
+</html>

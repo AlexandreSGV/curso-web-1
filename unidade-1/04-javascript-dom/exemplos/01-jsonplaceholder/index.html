@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Publicações — JSONPlaceholder</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header>
+    <p>Web 1 · JavaScript no navegador</p>
+    <h1>Publicações de uma API</h1>
+    <p>Consulte publicações e simule o envio de uma nova publicação.</p>
+  </header>
+  <main>
+    <noscript>Ative o JavaScript para executar este exemplo.</noscript>
+    <section aria-labelledby="titulo-consulta">
+      <h2 id="titulo-consulta">1. Consultar com GET</h2>
+      <form id="formulario-consulta">
+        <label for="usuario">Número do usuário</label>
+        <input id="usuario" name="usuario" type="number" min="1" step="1" value="1" required>
+        <p>Experimente 1 ou 2. O número 999 permite observar uma lista vazia.</p>
+        <button id="botao-consultar" type="submit">Consultar publicações</button>
+      </form>
+      <p id="mensagem-consulta" role="status">Escolha um usuário e clique em consultar.</p>
+      <ul id="publicacoes"></ul>
+    </section>
+    <section aria-labelledby="titulo-envio">
+      <h2 id="titulo-envio">2. Enviar JSON com POST</h2>
+      <p>Esta API simula o cadastro: o conteúdo não é salvo permanentemente nem aparece na consulta acima.</p>
+      <form id="formulario-publicacao">
+        <label for="titulo">Título (3 a 100 caracteres)</label>
+        <input id="titulo" name="titulo" type="text" minlength="3" maxlength="100" required>
+        <label for="texto">Texto (10 a 500 caracteres)</label>
+        <textarea id="texto" name="texto" minlength="10" maxlength="500" rows="4" required></textarea>
+        <button id="botao-enviar" type="submit">Simular publicação</button>
+      </form>
+      <p id="mensagem-envio" role="status">Use apenas informações fictícias: o conteúdo será enviado a um serviço externo.</p>
+      <h3>Texto JSON enviado</h3>
+      <pre id="json-enviado">Nenhum envio realizado.</pre>
+      <h3>Dados devolvidos pela API</h3>
+      <pre id="json-recebido">Nenhuma resposta recebida.</pre>
+    </section>
+  </main>
+  <footer><a href="https://jsonplaceholder.typicode.com/guide/">Documentação do JSONPlaceholder</a> · Exemplo didático, sem chave de acesso.</footer>
+</body>
+</html>
