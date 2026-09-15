@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <title>Calculadora com GET</title>
+  <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<main>
+  <h1>Calculadora com GET</h1>
+  <p>Informe dois valores. O navegador coloca os dados na URL.</p>
+  <form action="calcular.php" method="get">
+    <label for="a">Primeiro valor</label>
+    <input type="number" id="a" name="a" step="any" required>
+
+    <label for="b">Segundo valor</label>
+    <input type="number" id="b" name="b" step="any" required>
+
+    <button type="submit">Somar</button>
+  </form>
+  <p><a href="calcular.php?a=10&b=5">Experimente pela URL: 10 + 5</a></p>
+</main>
+</body>
+</html>
