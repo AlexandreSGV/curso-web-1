@@ -33,6 +33,10 @@ Algumas características:
 
 No uso Web, o servidor encaminha o arquivo ao interpretador PHP e envia ao cliente a saída produzida. [Manual do PHP — Introdução](https://www.php.net/manual/pt_BR/introduction.php).
 
+No **back-end, do lado do servidor**, o PHP recebe os dados das requisições, valida entradas, realiza o processamento e aplica as **regras de negócio** da aplicação. Por exemplo, uma regra pode impedir o empréstimo de um livro indisponível. O PHP também pode acessar o banco de dados para consultar, cadastrar, atualizar e excluir informações.
+
+Após esse processamento, o PHP prepara a resposta que o servidor envia ao cliente. Ele pode **gerar HTML para compor as páginas do front-end** ou **enviar dados em JSON** para uma interface utilizar. O navegador apresenta essas páginas e executa o JavaScript responsável pelas interações.
+
 ### Onde cada parte executa?
 
 | Tecnologia | Papel nos exemplos |
