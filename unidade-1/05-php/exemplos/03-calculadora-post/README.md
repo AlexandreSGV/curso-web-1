@@ -4,10 +4,10 @@ Siga as [instruções de execução](../) e abra [o formulário POST](http://loc
 
 O [index.html](index.html) usa `method="post"` e `action="calcular.php"`. Os campos `name="a"` e `name="b"` chegam ao [calcular.php](calcular.php) em `$_POST`.
 
-O PHP verifica o método, valida os valores, converte para `float`, soma e devolve uma página HTML. A calculadora aceita zero, negativos e decimais; valores ausentes ou inválidos recebem status `400`.
+O PHP lê os dois valores, converte para `float`, soma e devolve uma página HTML. Experimente `10` e `5`: o resultado será `15`. Depois teste zero, negativos e decimais.
 
 Abra **Rede/Network** antes de enviar. Observe o método POST, os dados no corpo da requisição e a resposta com status `200`. Os campos não ficam na URL; isso não significa que estejam criptografados pelo método POST.
 
-Ao abrir diretamente [calcular.php](http://localhost:8000/03-calculadora-post/calcular.php) pela barra de endereço, o navegador faz GET. O exemplo responde com `405`, `Allow: POST` e uma orientação para enviar o formulário.
+Comece pelo `index.html` e envie o formulário: esse envio fornece os valores que a action espera receber em `$_POST`.
 
-Compare o código com a [versão GET](../02-calculadora-get/): mudam o método aceito e o array usado para ler os dados. O processamento da soma permanece igual.
+Compare o código com a [versão GET](../02-calculadora-get/): mudam o `method` do formulário e o array usado para ler os dados. O processamento da soma permanece igual.

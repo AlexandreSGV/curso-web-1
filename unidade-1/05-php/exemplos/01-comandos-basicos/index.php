@@ -1,6 +1,4 @@
 <?php
-header('Content-Type: text/html; charset=utf-8');
-
 $nome = 'Ana';
 $quantidade = 3;
 $preco = 12.50;
@@ -22,7 +20,7 @@ function calcularTotal($preco, $quantidade)
 }
 
 $total = calcularTotal($preco, $quantidade);
-require __DIR__ . '/consulta-api.php';
+require 'consulta-api.php';
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -40,7 +38,7 @@ require __DIR__ . '/consulta-api.php';
     <p><?php echo "Olá, $nome!"; ?></p>
     <p><?= NOME_LOJA ?></p>
     <p><?php echo 'Quantidade: ' . $quantidade; ?></p>
-    <p>Total calculado pela função: R$ <?= number_format($total, 2, ',', '.') ?></p>
+    <p>Total calculado pela função: <?= $total ?></p>
     <p>Valor e tipo de uma variável, usando <code>var_dump()</code>:</p>
     <pre><?php var_dump($disponivel); ?></pre>
   </section>
@@ -62,8 +60,8 @@ require __DIR__ . '/consulta-api.php';
       <tbody>
         <?php foreach ($produto as $campo => $valor): ?>
           <tr>
-            <th scope="row"><?= htmlspecialchars($campo) ?></th>
-            <td><?= htmlspecialchars((string) $valor) ?></td>
+            <th scope="row"><?= $campo ?></th>
+            <td><?= $valor ?></td>
           </tr>
         <?php endforeach; ?>
       </tbody>
@@ -75,7 +73,7 @@ require __DIR__ . '/consulta-api.php';
     <p>Quantidade de cores: <?= count($cores) ?></p>
     <ul>
       <?php foreach ($cores as $cor): ?>
-        <li><?= htmlspecialchars($cor) ?></li>
+        <li><?= $cor ?></li>
       <?php endforeach; ?>
     </ul>
     <p>Contagem com <code>for</code>:
@@ -88,14 +86,10 @@ require __DIR__ . '/consulta-api.php';
   <section>
     <h2>JSONPlaceholder: consulta feita pelo servidor</h2>
     <p>O consulta-api.php faz uma requisição GET e converte o JSON em array.</p>
-    <?php if ($publicacao !== null): ?>
-      <article>
-        <h3><?= htmlspecialchars($publicacao['title']) ?></h3>
-        <p><?= htmlspecialchars($publicacao['body']) ?></p>
-      </article>
-    <?php else: ?>
-      <p><?= htmlspecialchars($erroApi) ?></p>
-    <?php endif; ?>
+    <article>
+      <h3><?= $publicacao['title'] ?></h3>
+      <p><?= $publicacao['body'] ?></p>
+    </article>
   </section>
 </main>
 </body>

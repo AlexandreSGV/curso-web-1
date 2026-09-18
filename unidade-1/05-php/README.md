@@ -180,7 +180,7 @@ echo $numero + 2; // 14.5
 
 `return` devolve um valor para quem chamou a função. `echo` escreve na resposta. São ações diferentes. Variáveis criadas dentro de uma função pertencem ao seu escopo; passe os dados necessários pelos parâmetros.
 
-`(int)`, `(float)` e `(string)` convertem valores. **Converter não é validar:** `(int) 'abc'` resulta em `0`, por exemplo. Para dados recebidos do usuário, primeiro verifique se o conteúdo é adequado.
+`(int)`, `(float)` e `(string)` convertem valores. Nas calculadoras, usaremos `(float)` para transformar os números enviados pelo formulário em valores numéricos.
 
 Para investigar valores durante o estudo:
 
@@ -262,8 +262,8 @@ $produto = ['nome' => 'Caderno', 'categoria' => 'Material escolar'];
   <tbody>
     <?php foreach ($produto as $campo => $valor): ?>
       <tr>
-        <th><?= htmlspecialchars($campo) ?></th>
-        <td><?= htmlspecialchars($valor) ?></td>
+        <th><?= $campo ?></th>
+        <td><?= $valor ?></td>
       </tr>
     <?php endforeach; ?>
   </tbody>
@@ -272,13 +272,7 @@ $produto = ['nome' => 'Caderno', 'categoria' => 'Material escolar'];
 
 `foreach (...):` e `endforeach;` são uma sintaxe alternativa às chaves, útil quando há HTML entre os trechos de PHP. Também existem `if (...): ... endif;` e `for (...): ... endfor;`.
 
-### Apresentar um texto é diferente de executar HTML
-
-Se um texto contiver `<strong>Olá</strong>`, imprimi-lo diretamente pode transformá-lo em marcação. `htmlspecialchars()` permite mostrar esse conteúdo como texto, escapando caracteres com significado no HTML.
-
-Use esse cuidado ao apresentar textos recebidos de formulários, URLs e APIs. Ele **não valida o conteúdo** e não substitui as regras de preenchimento. Também não deve ser aplicado sobre a resposta JSON inteira: cada formato tem sua própria forma de codificação.
-
-O [exemplo de comandos básicos](exemplos/01-comandos-basicos/index.php) apresenta uma tabela completa com `foreach`, títulos de coluna e valores escapados. Alterar o array e recarregar a página altera a tabela recebida pelo navegador.
+O [exemplo de comandos básicos](exemplos/01-comandos-basicos/index.php) apresenta uma tabela com `foreach`: a cada repetição, uma nova linha exibe a chave e o valor do array. Alterar o array e recarregar a página altera a tabela recebida pelo navegador.
 
 ## 6. Recebendo e validando dados
 
@@ -288,47 +282,36 @@ PHP disponibiliza arrays especiais para acessar os dados da requisição:
 |---|---|
 | `$_GET` | Parâmetros da URL, depois de `?` |
 | `$_POST` | Campos enviados no corpo de um formulário com POST |
-| `$_SERVER['REQUEST_METHOD']` | Método da requisição, como `GET` ou `POST` |
 
-Essas variáveis são chamadas de **superglobais**. Seus valores podem ser acessados também dentro de funções, mas continuaremos passando parâmetros nas funções de cálculo para deixar as entradas claras.
+Essas variáveis são chamadas de **superglobais**. Para ler um campo, usamos sua chave:
 
 ```php
-$a = $_GET['a'] ?? '';
+$nome = $_POST['nome'];
 ```
 
-`??` fornece um valor padrão quando a chave não existe ou seu valor é `null`. Aqui, se `a` não chegou, usamos uma string vazia. Isso evita o aviso de chave inexistente.
-
-Campos de formulários comuns chegam como **texto**, mesmo quando o HTML usa `type="number"`. A requisição também pode ser montada manualmente. Por isso, valide no servidor:
+Campos de formulários comuns chegam como **texto**, mesmo quando o HTML usa `type="number"`. Para calcular, podemos converter o valor:
 
 ```php
-$a = $_GET['a'] ?? '';
+$a = (float) $_GET['a'];
+```
 
-if (!is_numeric($a)) {
-    http_response_code(400);
-    exit('Informe um número válido.');
+Na URL, escreva decimais com ponto, como `a=2.5`. Nos exemplos de calculadora, envie os dois números pelo formulário ou pelos parâmetros indicados.
+
+### Uma validação simples
+
+Na action de um formulário POST com um campo `name="nome"`, podemos conferir se o texto foi preenchido:
+
+```php
+$nome = $_POST['nome'];
+
+if ($nome === '') {
+    echo 'Preencha o nome.';
+} else {
+    echo 'Olá, ' . $nome;
 }
-
-$a = (float) $a;
 ```
 
-`is_numeric()` verifica se há um número ou texto numérico. Depois da validação, `(float)` prepara o valor para o cálculo. Na URL, escreva decimais com ponto, como `a=2.5`.
-
-Não use `empty($a)` para decidir se um número foi preenchido: a string `'0'` também é considerada vazia por essa função. **Zero é uma entrada válida na calculadora.**
-
-Para um texto obrigatório, verifique o tipo e os espaços:
-
-```php
-$nome = $_POST['nome'] ?? '';
-
-if (!is_string($nome) || trim($nome) === '') {
-    http_response_code(400);
-    exit('Informe um nome.');
-}
-
-$nome = trim($nome);
-```
-
-`required` e outros atributos HTML ajudam o usuário a preencher o formulário. A validação em PHP verifica o que realmente chegou ao servidor.
+Aqui, o foco é usar uma condição para validar um campo. O atributo `required` faz uma conferência no navegador; este `if` faz a conferência no servidor.
 
 ## 7. Calculadora com GET
 
@@ -344,15 +327,9 @@ O núcleo de `calcular.php` é:
 
 ```php
 <?php
-$a = $_GET['a'] ?? '';
-$b = $_GET['b'] ?? '';
-
-if (!is_numeric($a) || !is_numeric($b)) {
-    http_response_code(400);
-    exit('Informe dois números válidos.');
-}
-
-$resultado = (float) $a + (float) $b;
+$a = (float) $_GET['a'];
+$b = (float) $_GET['b'];
+$resultado = $a + $b;
 echo 'Resultado: ' . $resultado;
 ```
 
@@ -376,7 +353,7 @@ Também é possível gerar essa URL com um formulário:
 
 GET é adequado para consultas e cálculos sem alteração de dados persistentes. O endereço pode ser guardado ou compartilhado, e seus parâmetros ficam visíveis na URL.
 
-**Experimente:** abra a [calculadora GET](exemplos/02-calculadora-get/). Compare o [formulário](exemplos/02-calculadora-get/index.html) com o [processamento em PHP](exemplos/02-calculadora-get/calcular.php). A versão completa também verifica o método e rejeita resultados fora do limite numérico com `is_finite()`.
+**Experimente:** abra a [calculadora GET](exemplos/02-calculadora-get/). Compare o [formulário](exemplos/02-calculadora-get/index.html) com o [processamento em PHP](exemplos/02-calculadora-get/calcular.php). Localize a leitura dos dois valores, a soma e a apresentação do resultado.
 
 ## 8. Formulário e action com POST
 
@@ -394,21 +371,17 @@ Na versão POST, o cálculo continua igual. O formulário passa a usar:
 </form>
 ```
 
-No PHP, verificamos o método e lemos `$_POST`:
+No PHP, lemos `$_POST` e fazemos a mesma soma:
 
 ```php
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Allow: POST');
-    http_response_code(405);
-    exit('Envie o formulário pelo método POST.');
-}
-
-$a = $_POST['a'] ?? '';
-$b = $_POST['b'] ?? '';
-// A validação e a soma continuam iguais às da versão GET.
+<?php
+$a = (float) $_POST['a'];
+$b = (float) $_POST['b'];
+$resultado = $a + $b;
+echo 'Resultado: ' . $resultado;
 ```
 
-`$_SERVER['REQUEST_METHOD']` permite distinguir o envio do formulário de uma visita feita digitando o endereço no navegador. O cabeçalho `Allow` informa qual método esse arquivo aceita.
+O nome do arquivo indicado em `action` continua sendo `calcular.php`. O que muda é `method="post"` no formulário e o uso de `$_POST` no processamento.
 
 Os campos POST são enviados no **corpo da requisição**. Eles não aparecem na URL, mas continuam acessíveis nas ferramentas de desenvolvimento do navegador. POST não criptografa os dados; a proteção da comunicação depende de HTTPS.
 
@@ -421,25 +394,23 @@ Os campos POST são enviados no **corpo da requisição**. Eles não aparecem na
 
 O array `$_GET` lê os parâmetros da URL **mesmo se a requisição for POST**. Já `$_POST` recebe os campos dos formatos de formulário usuais; um corpo JSON precisa ser lido e convertido separadamente. [Manual do PHP — GET](https://www.php.net/manual/en/reserved.variables.get.php) e [POST](https://www.php.net/manual/en/reserved.variables.post.php).
 
-**Experimente:** execute a [calculadora POST](exemplos/03-calculadora-post/) e acompanhe o envio na aba **Rede/Network** do navegador. Localize os dados enviados e a página de resultado. Abrir diretamente `calcular.php` pela barra de endereço produz uma requisição GET e recebe status `405`.
+**Experimente:** execute a [calculadora POST](exemplos/03-calculadora-post/) e acompanhe o envio na aba **Rede/Network** do navegador. Localize os dados enviados e a página de resultado. Comece pelo formulário `index.html`: ele envia os números para a action `calcular.php`.
 
 ## 9. Respostas HTTP e JSON
 
 Uma resposta tem **código de status**, **cabeçalhos** e **corpo**. Imprimir uma mensagem é apenas uma parte da resposta.
 
-| Código | Significado usado nos exemplos |
+| Código | Significado |
 |---|---|
 | `200` | Processamento realizado com sucesso |
 | `303` | O navegador deve buscar o resultado em outro endereço |
 | `400` | Dados ausentes ou inválidos |
-| `405` | Método não aceito por esse endereço |
-| `500` | Falha inesperada no servidor |
 
 ### Uma resposta com dados
 
 ```php
 <?php
-header('Content-Type: application/json; charset=utf-8');
+header('Content-Type: application/json');
 http_response_code(200);
 
 $dados = ['resultado' => 15];
@@ -467,23 +438,22 @@ echo $dados['nome'];
 
 O `true` no segundo argumento de `json_decode()` faz os objetos JSON serem representados como arrays associativos. Uma lista PHP com índices consecutivos a partir de zero normalmente vira uma lista JSON (`[...]`); um registro com chaves textuais vira um objeto JSON (`{...}`). JSON é texto, e um array PHP é uma estrutura em memória.
 
-JSON inválido não deve ser usado como se já tivesse sido convertido corretamente. Para uma resposta que deveria ser um registro, verifique `is_array($dados)` e a existência dos campos esperados, como faz o exemplo de API. [Manual do PHP — json_decode](https://www.php.net/manual/pt_BR/function.json-decode.php).
+Consulte também o [Manual do PHP — json_decode](https://www.php.net/manual/pt_BR/function.json-decode.php).
 
 ### Uma resposta de erro
 
 ```php
 <?php
-header('Content-Type: application/json; charset=utf-8');
+header('Content-Type: application/json');
 http_response_code(400);
-echo json_encode(['erro' => 'Informe dois números válidos.']);
-exit;
+echo json_encode(['erro' => 'Informe dois números.']);
 ```
 
-`http_response_code()` define o status, mas não encerra a execução. `exit` interrompe o script. Em uma resposta JSON, não acrescente HTML, `var_dump()` ou mensagens soltas ao corpo, pois deixariam de formar um JSON válido.
+Este trecho produz uma resposta de erro para demonstrar o status `400`. `http_response_code()` define o status; `echo` envia os dados. Em uma resposta JSON, mantenha o corpo somente nesse formato, sem misturá-lo com HTML.
 
 Envie `header()` e o status **antes de qualquer saída**, inclusive HTML e espaços fora das tags PHP. Salvar arquivos PHP sem BOM ajuda a evitar uma saída invisível antes do código. [Manual do PHP — header](https://www.php.net/manual/pt_BR/function.header.php).
 
-**Experimente:** o [exemplo de resposta JSON](exemplos/04-resposta-json/) recebe os mesmos números da calculadora e responde com dados. Teste `?a=10&b=5` e `?a=abc&b=5`; compare os corpos e os status `200` e `400` na aba Rede/Network.
+**Experimente:** o [exemplo de resposta JSON](exemplos/04-resposta-json/) tem dois arquivos curtos. `index.php?a=10&b=5` calcula a soma e responde com `200`; [erro.php](exemplos/04-resposta-json/erro.php) produz sempre a resposta de demonstração com `400`. Abra os dois e compare o corpo e o status na aba Rede/Network.
 
 ## 10. Redirecionamentos
 
@@ -500,7 +470,7 @@ exit;
 O fluxo passa a ser:
 
 1. O formulário envia um POST para `processar.php`.
-2. O PHP valida os dados e responde com `303` e `Location`.
+2. O PHP recebe os dados e responde com `303` e `Location`.
 3. O navegador faz um novo GET para a página indicada.
 
 Assim, atualizar a página final repete o GET, em vez de reenviar o formulário. Uma nova requisição não recebe automaticamente as variáveis locais do script anterior.
@@ -508,12 +478,12 @@ Assim, atualizar a página final repete o GET, em vez de reenviar o formulário.
 No [exemplo de redirecionamento](exemplos/05-redirecionamento/), passamos um nome fictício pela URL de destino:
 
 ```php
-// Depois de validar e preparar $nome:
+$nome = $_POST['nome'];
 header('Location: confirmacao.php?nome=' . rawurlencode($nome), true, 303);
 exit;
 ```
 
-`rawurlencode()` codifica o valor para usá-lo como parâmetro da URL. Já a página final usa `htmlspecialchars()` para mostrá-lo no HTML. O exemplo não armazena dados: o nome exibido é apenas o parâmetro recebido naquela URL.
+`rawurlencode()` codifica o valor para usá-lo como parâmetro da URL, inclusive quando o nome contém espaços. A página final lê `$_GET['nome']` e apresenta o valor. O exemplo não armazena dados.
 
 ## 11. Chamando uma API pelo servidor
 
@@ -521,59 +491,27 @@ O PHP também pode atuar como cliente HTTP de outro servidor. Por exemplo, ele c
 
 O endereço [https://jsonplaceholder.typicode.com/posts/1](https://jsonplaceholder.typicode.com/posts/1) retorna uma publicação de demonstração, com campos como `title` e `body`. A consulta não exige chave de API. [JSONPlaceholder — Guia](https://jsonplaceholder.typicode.com/guide/).
 
-Usaremos a extensão **cURL** do PHP. O núcleo da consulta é:
+Podemos buscar o JSON e colocá-lo em `$publicacao` com duas instruções:
 
 ```php
-$consulta = curl_init('https://jsonplaceholder.typicode.com/posts/1');
-curl_setopt($consulta, CURLOPT_RETURNTRANSFER, true);
-curl_setopt($consulta, CURLOPT_TIMEOUT, 5);
-
-$texto = curl_exec($consulta);
-$status = curl_getinfo($consulta, CURLINFO_HTTP_CODE);
-
-if ($texto === false || $status !== 200) {
-    echo 'Não foi possível consultar a API.';
-} else {
-    $dados = json_decode($texto, true);
-
-    if (is_array($dados) && isset($dados['title']) && is_string($dados['title'])) {
-        echo htmlspecialchars($dados['title']);
-    } else {
-        echo 'A API não devolveu o título esperado.';
-    }
-}
+$texto = file_get_contents('https://jsonplaceholder.typicode.com/posts/1');
+$publicacao = json_decode($texto, true);
 ```
 
-| Instrução | Papel |
-|---|---|
-| `curl_init()` | Prepara a consulta ao endereço |
-| `CURLOPT_RETURNTRANSFER` | Faz o resultado voltar como texto para o PHP |
-| `CURLOPT_TIMEOUT` | Limita o tempo de espera, aqui a cinco segundos |
-| `curl_exec()` | Executa a requisição; retorna `false` se houver falha de transferência |
-| `curl_getinfo()` | Permite consultar o status HTTP recebido |
-| `json_decode(..., true)` | Converte o JSON em dados acessíveis por chaves |
+`file_get_contents()` faz a consulta GET e devolve o corpo da resposta como texto. `json_decode(..., true)` transforma esse texto em um array associativo. [Manual do PHP — file_get_contents](https://www.php.net/manual/pt_BR/function.file-get-contents.php).
 
-A transferência pode funcionar e ainda receber um erro HTTP, como `404`. Por isso, verificamos também o status. [Manual do PHP — curl_exec](https://www.php.net/manual/en/function.curl-exec.php).
+Agora os dados podem ser apresentados no HTML:
 
-### Preparando o ambiente
-
-Confira se `curl` aparece na lista produzida por:
-
-```bash
-php -m
+```php
+<h2><?= $publicacao['title'] ?></h2>
+<p><?= $publicacao['body'] ?></p>
 ```
 
-Na instalação Windows do [guia de ambiente](../../apoio/ambiente-web1-windows/), habilite também esta linha no `php.ini` se ela estiver comentada com `;`:
+Para executar a consulta, é preciso acesso à internet, `allow_url_fopen` habilitado (padrão do PHP) e suporte a HTTPS pela extensão OpenSSL, indicada no [guia de ambiente](../../apoio/ambiente-web1-windows/). [Manual do PHP — Configuração de acesso a URLs](https://www.php.net/manual/pt_BR/filesystem.configuration.php).
 
-```ini
-extension=curl
-```
+**Experimente:** a última seção da [página de comandos básicos](exemplos/01-comandos-basicos/) apresenta a publicação. O arquivo [consulta-api.php](exemplos/01-comandos-basicos/consulta-api.php) prepara `$publicacao`; o `index.php` gera o HTML.
 
-`php --ini` mostra qual arquivo de configuração está sendo carregado. Depois da alteração, reinicie o servidor PHP. Em outras instalações, pode ser necessário instalar o pacote da extensão cURL correspondente ao PHP.
-
-**Experimente:** a última seção da [página de comandos básicos](exemplos/01-comandos-basicos/) apresenta a publicação. O arquivo [consulta-api.php](exemplos/01-comandos-basicos/consulta-api.php) prepara os dados e trata falhas; o `index.php` gera o HTML.
-
-A chamada entre o servidor PHP e o JSONPlaceholder não aparece como uma chamada direta do navegador ao JSONPlaceholder na aba Rede. O navegador solicitou nossa página; foi o servidor que consultou a API. Se a consulta falhar, a página apresenta uma mensagem e mantém as demais demonstrações.
+A chamada entre o servidor PHP e o JSONPlaceholder não aparece como uma chamada direta do navegador ao JSONPlaceholder na aba Rede. O navegador solicitou nossa página; foi o servidor que consultou a API.
 
 ## 12. Exemplos e consulta rápida
 
@@ -591,18 +529,18 @@ Abra os endereços indicados no [índice dos exemplos](exemplos/). Eles executam
 | Exemplo | O que observar |
 |---|---|
 | [01 — Comandos básicos](exemplos/01-comandos-basicos/) | Variáveis, condições, função, arrays, `foreach`, tabela e API |
-| [02 — Calculadora GET](exemplos/02-calculadora-get/) | Parâmetros na URL, validação e resposta HTML |
+| [02 — Calculadora GET](exemplos/02-calculadora-get/) | Parâmetros na URL, soma e resposta HTML |
 | [03 — Calculadora POST](exemplos/03-calculadora-post/) | Formulário, `action`, corpo da requisição e processamento |
-| [04 — Resposta JSON](exemplos/04-resposta-json/) | Corpo JSON e códigos `200`, `400` e `405` |
-| [05 — Redirecionamento](exemplos/05-redirecionamento/) | POST, validação, `Location`, `303` e novo GET |
+| [04 — Resposta JSON](exemplos/04-resposta-json/) | Corpo JSON e códigos `200` e `400` em arquivos separados |
+| [05 — Redirecionamento](exemplos/05-redirecionamento/) | POST, `Location`, `303` e novo GET |
 
 O exemplo 01 inclui outro arquivo com:
 
 ```php
-require __DIR__ . '/consulta-api.php';
+require 'consulta-api.php';
 ```
 
-`require` carrega e executa o arquivo indicado. `__DIR__` representa a pasta do arquivo atual. Isso permite separar a consulta da apresentação sem acrescentar uma estrutura maior ao exemplo.
+`require` carrega e executa o arquivo indicado, que está na mesma pasta do `index.php`. Assim, a consulta fica em um arquivo pequeno e a apresentação fica na página.
 
 ### Erros que vale saber localizar
 
@@ -610,11 +548,11 @@ require __DIR__ . '/consulta-api.php';
 |---|---|
 | O PHP não executa | Use o servidor PHP e um endereço `http://localhost:8000/...` |
 | `Parse error` | Confira a linha indicada, os `;`, as aspas e o fechamento dos blocos |
-| `Undefined array key` | Confira o `name` enviado e use `??` para tratar uma entrada ausente |
+| `Undefined array key` | Confira o `name` enviado e se os parâmetros indicados no exemplo foram preenchidos |
 | `Headers already sent` | Procure saída antes de `header()`, incluindo HTML, espaços e BOM |
 | O formulário chega sem o campo esperado | Confira `action`, `method`, `name` e se o campo está desabilitado |
 | A resposta deveria ser JSON, mas não é | Procure HTML, avisos ou saídas de depuração misturados aos dados |
-| A consulta à API falha | Confira a extensão cURL, a conexão e o endereço; a API pode estar indisponível |
+| A consulta à API falha | Confira a conexão, o endereço e a configuração de acesso a URLs do PHP |
 
 Leia também as mensagens no terminal do servidor. Para conferir a sintaxe de um arquivo sem executá-lo, use `php -l calcular.php` na pasta correspondente.
 
@@ -622,7 +560,7 @@ Leia também as mensagens no terminal do servidor. Para conferir a sintaxe de um
 
 1. Acrescente um campo ao array associativo e observe a nova linha da tabela.
 2. Teste a calculadora com zero, um número negativo e um decimal.
-3. Remova um parâmetro da URL e confira o status recebido.
+3. Compare o resultado HTML da calculadora com a resposta JSON para os mesmos números.
 4. Troque a soma por multiplicação. Depois, implemente divisão e trate divisor zero.
 5. Na consulta à API, troque `/posts/1` por `/posts/2` e observe a resposta.
 
@@ -632,7 +570,7 @@ Leia também as mensagens no terminal do servidor. Para conferir a sintaxe de um
 - As variáveis usam `$`, a concatenação usa `.` e os arrays associam chaves a valores.
 - `foreach` percorre valores ou pares de chave e valor.
 - O `name` do campo identifica o dado recebido pelo PHP.
-- Valide a entrada antes de convertê-la ou utilizá-la.
+- Uma condição `if` permite conferir o preenchimento de um campo.
 - `echo` prepara o corpo; `header()` e `http_response_code()` preparam outras partes da resposta.
 - `json_encode()` serializa dados; `json_decode()` interpreta texto JSON.
 - Um redirecionamento provoca outra requisição.
@@ -644,8 +582,7 @@ Leia também as mensagens no terminal do servidor. Para conferir a sintaxe de um
 - [Manual do PHP — Formulários](https://www.php.net/manual/pt_BR/tutorial.forms.php)
 - [Manual do PHP — Arrays](https://www.php.net/manual/pt_BR/language.types.array.php)
 - [Manual do PHP — foreach](https://www.php.net/manual/en/control-structures.foreach.php)
-- [Manual do PHP — htmlspecialchars](https://www.php.net/manual/pt_BR/function.htmlspecialchars.php)
 - [Manual do PHP — http_response_code](https://www.php.net/manual/pt_BR/function.http-response-code.php)
 - [Manual do PHP — JSON](https://www.php.net/manual/pt_BR/book.json.php)
-- [Manual do PHP — cURL](https://www.php.net/manual/pt_BR/book.curl.php)
+- [Manual do PHP — file_get_contents](https://www.php.net/manual/pt_BR/function.file-get-contents.php)
 - [JSONPlaceholder — Guia](https://jsonplaceholder.typicode.com/guide/)
