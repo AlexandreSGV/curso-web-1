@@ -1,28 +1,7 @@
 <?php
-header('Content-Type: text/html; charset=utf-8');
-
-if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
-    header('Allow: GET');
-    http_response_code(405);
-    exit('Use o método GET.');
-}
-
-$a = $_GET['a'] ?? '';
-$b = $_GET['b'] ?? '';
-
-if (!is_numeric($a) || !is_numeric($b)) {
-    http_response_code(400);
-    exit('Informe dois números válidos.');
-}
-
-$a = (float) $a;
-$b = (float) $b;
+$a = (float) $_GET['a'];
+$b = (float) $_GET['b'];
 $resultado = $a + $b;
-
-if (!is_finite($resultado)) {
-    http_response_code(400);
-    exit('Os valores ultrapassam o limite numérico deste cálculo.');
-}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">

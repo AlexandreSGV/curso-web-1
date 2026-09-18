@@ -21,7 +21,9 @@ Mantenha o terminal aberto e acesse os exemplos pelo navegador:
 
 Os links do GitHub mostram os arquivos. Para executá-los, use a cópia local e os endereços `localhost` acima. `Ctrl+C` encerra o servidor. Não abra arquivos PHP por `file:///`.
 
-Use PHP 8 com as configurações padrão do [guia de ambiente](../../../apoio/ambiente-web1-windows/). A consulta do exemplo 01 precisa de internet e da extensão **cURL**: confira com `php -m`; no Windows, habilite `extension=curl` no `php.ini` e reinicie o servidor. `php --ini` informa qual configuração está sendo usada. Os outros exemplos executam sem consultar serviços externos.
+Use PHP 8 com as configurações padrão do [guia de ambiente](../../../apoio/ambiente-web1-windows/). A consulta do exemplo 01 usa `file_get_contents()` e precisa de internet, `allow_url_fopen` habilitado (padrão do PHP) e suporte a HTTPS pela extensão OpenSSL indicada no guia. Os outros exemplos executam sem consultar serviços externos.
+
+Nas calculadoras, envie os dois números pelo formulário ou pela URL indicada. No exemplo de redirecionamento, comece pelo formulário e preencha um nome. Para observar uma resposta com status `400`, abra o arquivo [erro.php do exemplo 04](04-resposta-json/erro.php).
 
 Mantenha a estrutura de pastas: os exemplos HTML usam o [styles.css](styles.css) compartilhado. Ele cuida apenas da apresentação. Salve arquivos PHP em UTF-8 sem BOM.
 
