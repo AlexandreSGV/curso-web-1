@@ -1,4 +1,4 @@
-# CRUD com PHP e PDO: cadastro de alunos
+# CRUD com PHP: cadastro de alunos
 
 Um sistema de informações precisa manter seus dados: cadastrar alunos, consultar uma turma, corrigir um e-mail ou excluir um registro. Essas operações formam um **CRUD**.
 
@@ -81,6 +81,8 @@ Usaremos um banco chamado `crud_alunos`, com uma tabela chamada `alunos`:
 | `id` | Número que identifica cada aluno |
 | `nome` | Nome do aluno |
 | `email` | E-mail do aluno |
+| `data_nascimento` | Data de nascimento do aluno |
+| `telefone` | Telefone do aluno |
 
 Uma **tabela** organiza dados em colunas e linhas. Cada linha, também chamada de **registro**, representa um aluno. O `id` permite indicar exatamente qual registro consultar, alterar ou excluir, mesmo quando dois alunos têm o mesmo nome.
 
@@ -120,7 +122,9 @@ USE crud_alunos;
 CREATE TABLE alunos (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(100),
-    email VARCHAR(150)
+    email VARCHAR(150),
+    data_nascimento DATE,
+    telefone VARCHAR(20)
 );
 ```
 
@@ -129,6 +133,8 @@ CREATE TABLE alunos (
 - `AUTO_INCREMENT` gera o próximo número de identificação automaticamente.
 - `PRIMARY KEY` define a coluna que identifica cada registro.
 - `VARCHAR(100)` guarda texto com até 100 caracteres.
+- `DATE` guarda uma data no formato `AAAA-MM-DD`, como `2006-04-15`.
+- O telefone será texto (`VARCHAR(20)`) para preservar zeros iniciais e permitir sinais como `+` e `-`.
 
 Crie esse banco uma vez. As duas versões do exemplo usarão a mesma tabela. A tabela começa vazia; os alunos serão inseridos pelo cadastro.
 
@@ -143,7 +149,8 @@ SOURCE banco.sql;
 ### Quatro comandos para reconhecer
 
 ```sql
-INSERT INTO alunos (nome, email) VALUES ('Ana', 'ana@example.com');
+INSERT INTO alunos (nome, email, data_nascimento, telefone)
+VALUES ('Ana', 'ana@example.com', '2006-04-15', '81999990000');
 SELECT * FROM alunos;
 UPDATE alunos SET nome = 'Ana Silva' WHERE id = 1;
 DELETE FROM alunos WHERE id = 1;
@@ -157,14 +164,19 @@ São demonstrações independentes de cadastro, consulta, alteração e exclusã
 
 **PDO** é um recurso do PHP para acessar bancos de dados. Vamos utilizá-lo com MySQL, por meio da extensão `pdo_mysql`, já indicada no guia de ambiente.
 
-O arquivo reutilizável `conexao.php` terá apenas a criação da conexão:
+O arquivo reutilizável `conexao.php` reunirá as configurações e a criação da conexão:
 
 ```php
 <?php
+$dbname = 'crud_alunos';
+$usuario = 'root';
+$senha = 'SUA_SENHA';
+$porta = 3306;
+
 $pdo = new PDO(
-    'mysql:host=localhost;dbname=crud_alunos;charset=utf8mb4',
-    'root',
-    'SUA_SENHA'
+    "mysql:host=localhost;port=$porta;dbname=$dbname;charset=utf8mb4",
+    $usuario,
+    $senha
 );
 ```
 
@@ -172,12 +184,13 @@ $pdo = new PDO(
 |---|---|
 | `mysql` | Tipo de banco utilizado |
 | `host=localhost` | MySQL no próprio computador |
-| `dbname=crud_alunos` | Banco que será acessado |
+| `$dbname` | Nome do banco que será acessado |
+| `$usuario` | Usuário do MySQL usado no ambiente local |
+| `$senha` | Senha local desse usuário |
+| `$porta` | Porta do MySQL; normalmente `3306` |
 | `charset=utf8mb4` | Codificação da conexão, para trabalhar com textos e acentos |
-| `root` | Usuário do MySQL usado no ambiente local |
-| `SUA_SENHA` | Substituir pela senha local desse usuário |
 
-Guarde a senha real somente na sua cópia local. Para reutilizar o arquivo em outro projeto, ajuste o banco e os dados de conexão.
+Para configurar a conexão, altere os valores das quatro variáveis. As aspas duplas permitem inserir `$porta` e `$dbname` no texto da conexão. Substitua `SUA_SENHA` pela senha do MySQL e guarde a senha real somente na sua cópia local.
 
 `new PDO(...)` cria o objeto que representa a conexão, guardado em `$pdo`. A conexão é encerrada automaticamente quando o script termina. [Manual do PHP — Conexões PDO](https://www.php.net/manual/pt_BR/pdo.connections.php).
 
@@ -192,17 +205,19 @@ Nos trechos das próximas seções, considere que essa linha já foi executada a
 ### Como ler os comandos PDO
 
 ```php
-$comando = $pdo->prepare('INSERT INTO alunos (nome, email) VALUES (?, ?)');
-$comando->execute(['Ana', 'ana@example.com']);
+$comando = $pdo->prepare(
+    'INSERT INTO alunos (nome, email, data_nascimento, telefone) VALUES (?, ?, ?, ?)'
+);
+$comando->execute(['Ana', 'ana@example.com', '2006-04-15', '81999990000']);
 ```
 
 O símbolo `->` chama uma operação do objeto. `prepare()` prepara o SQL; cada `?` reserva o lugar de um valor. `execute()` executa o comando com os valores do array, **na mesma ordem dos `?`**.
 
-Assim, nome e e-mail são fornecidos separadamente do texto SQL. Não é necessário montar o comando juntando o conteúdo dos campos dentro de aspas. [Manual do PHP — prepare](https://www.php.net/manual/pt_BR/pdo.prepare.php) e [execute](https://www.php.net/manual/pt_BR/pdostatement.execute.php).
+Assim, nome, e-mail, data de nascimento e telefone são fornecidos separadamente do texto SQL. Não é necessário montar o comando juntando o conteúdo dos campos dentro de aspas. [Manual do PHP — prepare](https://www.php.net/manual/pt_BR/pdo.prepare.php) e [execute](https://www.php.net/manual/pt_BR/pdostatement.execute.php).
 
 ## 5. Create: cadastrar um aluno
 
-Cadastrar significa acrescentar uma linha à tabela. O banco gera o `id`; o formulário envia nome e e-mail.
+Cadastrar significa acrescentar uma linha à tabela. O banco gera o `id`; o formulário envia nome, e-mail, data de nascimento e telefone.
 
 ### Formulário
 
@@ -210,20 +225,26 @@ Cadastrar significa acrescentar uma linha à tabela. O banco gera o `id`; o form
 <form method="post">
     Nome: <input name="nome">
     E-mail: <input name="email">
+    Data de nascimento: <input type="date" name="data_nascimento">
+    Telefone: <input type="tel" name="telefone">
     <button>Salvar</button>
 </form>
 ```
 
 Sem `action`, o formulário envia os dados para a própria URL. Os atributos `name` definem as chaves que o PHP lerá em `$_POST`.
 
+O campo `type="date"` envia a data no formato `AAAA-MM-DD`, usado pelo MySQL. O campo `type="tel"` permite digitar o telefone como texto.
+
 ### Gravação
 
 ```php
-$comando = $pdo->prepare('INSERT INTO alunos (nome, email) VALUES (?, ?)');
-$comando->execute([$_POST['nome'], $_POST['email']]);
+$comando = $pdo->prepare(
+    'INSERT INTO alunos (nome, email, data_nascimento, telefone) VALUES (?, ?, ?, ?)'
+);
+$comando->execute([$_POST['nome'], $_POST['email'], $_POST['data_nascimento'], $_POST['telefone']]);
 ```
 
-`INSERT INTO alunos` indica a tabela. `(nome, email)` indica as colunas preenchidas, e `VALUES (?, ?)` indica os dois valores que serão inseridos.
+`INSERT INTO alunos` indica a tabela. `(nome, email, data_nascimento, telefone)` indica as colunas preenchidas, e `VALUES (?, ?, ?, ?)` indica os quatro valores que serão inseridos.
 
 ### Quando o formulário e o processamento ficam no mesmo arquivo
 
@@ -231,8 +252,10 @@ Na primeira versão, `create.php` será aberto para mostrar o formulário e rece
 
 ```php
 if ($_POST) {
-    $comando = $pdo->prepare('INSERT INTO alunos (nome, email) VALUES (?, ?)');
-    $comando->execute([$_POST['nome'], $_POST['email']]);
+    $comando = $pdo->prepare(
+        'INSERT INTO alunos (nome, email, data_nascimento, telefone) VALUES (?, ?, ?, ?)'
+    );
+    $comando->execute([$_POST['nome'], $_POST['email'], $_POST['data_nascimento'], $_POST['telefone']]);
     header('Location: index.php', true, 303);
     exit;
 }
@@ -243,7 +266,7 @@ Nesse formulário, `if ($_POST)` distingue a abertura da página do envio dos ca
 ### Fluxo do cadastro
 
 1. O usuário abre `create.php`; o navegador envia **GET** e recebe o formulário HTML.
-2. Ao clicar em Salvar, o navegador envia **POST** com nome e e-mail.
+2. Ao clicar em Salvar, o navegador envia **POST** com nome, e-mail, data de nascimento e telefone.
 3. No servidor, o PHP lê `$_POST` e usa PDO para executar **INSERT** no MySQL.
 4. O PHP responde com **303**; o navegador faz um novo **GET** para `index.php` e recebe a listagem atualizada.
 
@@ -258,18 +281,22 @@ $consulta = $pdo->query('SELECT * FROM alunos');
 $alunos = $consulta->fetchAll(PDO::FETCH_ASSOC);
 ```
 
-`query()` executa diretamente esse SQL fixo. `fetchAll()` devolve as linhas encontradas. `PDO::FETCH_ASSOC` faz cada linha ser um array associativo, com chaves como `id`, `nome` e `email`.
+`query()` executa diretamente esse SQL fixo. `fetchAll()` devolve as linhas encontradas. `PDO::FETCH_ASSOC` faz cada linha ser um array associativo, com as chaves `id`, `nome`, `email`, `data_nascimento` e `telefone`.
 
 O PHP pode percorrer os dados e gerar uma tabela:
 
 ```php
 <table>
-    <tr><th>ID</th><th>Nome</th><th>E-mail</th></tr>
+    <tr>
+        <th>ID</th><th>Nome</th><th>E-mail</th><th>Data de nascimento</th><th>Telefone</th>
+    </tr>
     <?php foreach ($alunos as $aluno): ?>
         <tr>
             <td><?= $aluno['id'] ?></td>
             <td><?= $aluno['nome'] ?></td>
             <td><?= $aluno['email'] ?></td>
+            <td><?= $aluno['data_nascimento'] ?></td>
+            <td><?= $aluno['telefone'] ?></td>
         </tr>
     <?php endforeach; ?>
 </table>
@@ -313,20 +340,26 @@ Depois do `SELECT` por `id` mostrado na seção anterior, o formulário usa os d
     <input type="hidden" name="id" value="<?= $aluno['id'] ?>">
     Nome: <input name="nome" value="<?= $aluno['nome'] ?>">
     E-mail: <input name="email" value="<?= $aluno['email'] ?>">
+    Data de nascimento: <input type="date" name="data_nascimento" value="<?= $aluno['data_nascimento'] ?>">
+    Telefone: <input type="tel" name="telefone" value="<?= $aluno['telefone'] ?>">
     <button>Salvar alterações</button>
 </form>
 ```
 
-`value` preenche os campos. O campo `hidden` envia o `id` junto com nome e e-mail, sem apresentá-lo como um campo de digitação.
+`value` preenche os campos. O campo `hidden` envia o `id` junto com os demais dados, sem apresentá-lo como um campo de digitação.
 
 O processamento do envio usa:
 
 ```php
-$comando = $pdo->prepare('UPDATE alunos SET nome = ?, email = ? WHERE id = ?');
-$comando->execute([$_POST['nome'], $_POST['email'], $_POST['id']]);
+$comando = $pdo->prepare(
+    'UPDATE alunos SET nome = ?, email = ?, data_nascimento = ?, telefone = ? WHERE id = ?'
+);
+$comando->execute([
+    $_POST['nome'], $_POST['email'], $_POST['data_nascimento'], $_POST['telefone'], $_POST['id']
+]);
 ```
 
-`SET` define os novos valores das colunas. `WHERE id = ?` escolhe o aluno que será alterado. Observe a ordem: nome, e-mail e, por último, `id`.
+`SET` define os novos valores das colunas. `WHERE id = ?` escolhe o aluno que será alterado. Observe a ordem: nome, e-mail, data de nascimento, telefone e, por último, `id`.
 
 Na versão com tudo em `update.php`, o bloco `if ($_POST)` ficará antes da consulta e do formulário. Após atualizar, o PHP redirecionará para `index.php`, como no cadastro. A alteração mantém o mesmo `id`; ela não cria outro aluno.
 
@@ -334,7 +367,7 @@ Na versão com tudo em `update.php`, o bloco `if ($_POST)` ficará antes da cons
 
 1. O usuário clica em Editar; o navegador envia **GET** com o `id`.
 2. O PHP executa **SELECT**, monta o formulário preenchido e o envia ao navegador.
-3. O usuário altera os campos; o navegador envia **POST** com `id`, nome e e-mail.
+3. O usuário altera os campos; o navegador envia **POST** com `id`, nome, e-mail, data de nascimento e telefone.
 4. O PHP executa **UPDATE**, responde com **303**, e o navegador abre a listagem por **GET**.
 
 ## 8. Delete: excluir um aluno
@@ -373,7 +406,7 @@ O link faz uma requisição **GET**; `DELETE` é o comando **SQL** executado pel
 
 **Os arquivos dos exemplos serão criados nas próximas iterações.** Os trechos desta apostila apresentam os conceitos; as estruturas abaixo descrevem as duas versões que serão disponibilizadas na pasta `exemplos`.
 
-As duas versões usarão o mesmo banco, as mesmas colunas e as mesmas operações SQL.
+As duas versões usarão o mesmo banco, as mesmas colunas (`id`, `nome`, `email`, `data_nascimento` e `telefone`) e as mesmas operações SQL.
 
 ### Exemplo 1 — CRUD mínimo
 
@@ -432,6 +465,8 @@ Para enviar um formulário a outro arquivo, basta indicar a action:
 <form action="create_action.php" method="post">
     Nome: <input name="nome">
     E-mail: <input name="email">
+    Data de nascimento: <input type="date" name="data_nascimento">
+    Telefone: <input type="tel" name="telefone">
     <button>Salvar</button>
 </form>
 ```
