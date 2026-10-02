@@ -98,6 +98,12 @@ mysql -u root -p
 
 `-u root` indica o usuário. `-p` solicita a senha configurada na instalação. Depois de entrar, o prompt passa a mostrar `mysql>`.
 
+Se o MySQL usa outra porta, indique-a com `-P` maiúsculo. Por exemplo, para a porta `3307`:
+
+```bat
+mysql -h 127.0.0.1 -P 3307 -u root -p
+```
+
 No console do MySQL, os comandos básicos são:
 
 | Comando | Finalidade |
@@ -174,7 +180,7 @@ $senha = 'SUA_SENHA';
 $porta = 3306;
 
 $pdo = new PDO(
-    "mysql:host=localhost;port=$porta;dbname=$dbname;charset=utf8mb4",
+    "mysql:host=127.0.0.1;port=$porta;dbname=$dbname;charset=utf8mb4",
     $usuario,
     $senha
 );
@@ -183,7 +189,7 @@ $pdo = new PDO(
 | Parte | Significado |
 |---|---|
 | `mysql` | Tipo de banco utilizado |
-| `host=localhost` | MySQL no próprio computador |
+| `host=127.0.0.1` | MySQL no próprio computador, usando a porta configurada |
 | `$dbname` | Nome do banco da conexão |
 | `$usuario` | Usuário do MySQL usado no ambiente local |
 | `$senha` | Senha local desse usuário |
@@ -191,6 +197,8 @@ $pdo = new PDO(
 | `charset=utf8mb4` | Codificação da conexão, para trabalhar com textos e acentos |
 
 Para configurar a conexão, altere os valores das quatro variáveis. As aspas duplas permitem inserir `$porta` e `$dbname` no texto da conexão. Substitua `SUA_SENHA` pela senha do MySQL e guarde a senha real somente na sua cópia local.
+
+O endereço `127.0.0.1` mantém a conexão pela porta indicada em `$porta`, tanto no Windows quanto no Linux. Essa é a porta do **MySQL**; a porta `8000` dos comandos de execução pertence ao **servidor PHP**.
 
 `new PDO(...)` cria o objeto que representa a conexão, guardado em `$pdo`. A conexão é encerrada automaticamente quando o script termina. [Manual do PHP — Conexões PDO](https://www.php.net/manual/pt_BR/pdo.connections.php).
 
@@ -414,7 +422,7 @@ No [exemplo 2](exemplos/02-crud-templates/php/alunos/index.php), um formulário 
 
 ### Fluxo da exclusão
 
-1. O usuário escolhe Excluir na listagem ou nos detalhes; o navegador envia **GET** para `delete.php` com o `id`.
+1. O usuário escolhe Excluir na listagem ou nos detalhes. No exemplo 1, o link envia **GET** para `delete.php`; no exemplo 2, o formulário envia **POST** para `delete_action.php`. Ambos enviam o `id`.
 2. O PHP usa PDO para executar **DELETE** com o `id` recebido.
 3. O MySQL remove a linha, e o PHP responde ao navegador com um redirecionamento **303**.
 4. O navegador faz **GET** para a listagem; o PHP consulta os alunos restantes e devolve o HTML atualizado.
@@ -550,7 +558,7 @@ O Tailwind via CDN aplica poucas classes de espaçamento, cores e apresentação
    php -S localhost:8000
    ```
 
-4. Abra [http://localhost:8000](http://localhost:8000). No menu, clique em **Alunos**. Cadastre um aluno, abra seus detalhes, altere os dados e use **Excluir** para removê-lo.
+4. Abra [http://localhost:8000](http://localhost:8000). No menu, clique em **Alunos**. Cadastre um aluno preenchendo os quatro campos, abra seus detalhes, altere os dados e use **Excluir** para removê-lo.
 
 Mantenha o MySQL em execução. Se outro servidor PHP já ocupa a porta `8000`, encerre-o com `Ctrl+C` no terminal em que está em execução.
 
@@ -589,6 +597,7 @@ Abra [http://localhost:8000](http://localhost:8000) no navegador. No exemplo mí
 ## Referências
 
 - [PHP — Conexões PDO](https://www.php.net/manual/pt_BR/pdo.connections.php)
+- [PHP — Parâmetros da conexão PDO com MySQL](https://www.php.net/manual/pt_BR/ref.pdo-mysql.connection.php)
 - [PHP — prepare](https://www.php.net/manual/pt_BR/pdo.prepare.php) e [execute](https://www.php.net/manual/pt_BR/pdostatement.execute.php)
 - [PHP — fetch](https://www.php.net/manual/pt_BR/pdostatement.fetch.php) e [fetchAll](https://www.php.net/manual/pt_BR/pdostatement.fetchall.php)
 - [MySQL — Comandos do cliente](https://dev.mysql.com/doc/refman/8.4/en/mysql-commands.html)
