@@ -431,6 +431,8 @@ No [exemplo 2](exemplos/02-crud-templates/php/alunos/index.php), um formulário 
 
 Esta seção apresenta duas formas de organizar um CRUD: páginas simples com processamento integrado e uma estrutura com templates e actions. Ambas utilizam as colunas `id`, `nome`, `email`, `data_nascimento` e `telefone`, com as mesmas operações SQL.
 
+Cada exemplo inclui um script opcional `popular.sql` com oito alunos fictícios para experimentar a listagem, os detalhes, a edição e a exclusão. Ele acrescenta registros à tabela existente; o MySQL gera os ids automaticamente. Os dois scripts contêm os mesmos dados e usam o mesmo banco, portanto basta executar um deles. Cada nova execução acrescenta novamente os oito alunos.
+
 ### Exemplo 1 — CRUD mínimo
 
 [Abrir a pasta do exemplo 1](exemplos/01-crud-minimo/).
@@ -446,6 +448,7 @@ Os arquivos ficam na mesma pasta:
 | [delete.php](exemplos/01-crud-minimo/delete.php) | Excluir o aluno indicado pelo id e redirecionar para a listagem |
 | [conexao.php](exemplos/01-crud-minimo/conexao.php) | Criar a conexão PDO reutilizada pelas páginas |
 | [banco.sql](exemplos/01-crud-minimo/banco.sql) | Criar o banco e a tabela |
+| [popular.sql](exemplos/01-crud-minimo/popular.sql) | Inserir oito alunos fictícios no banco já criado |
 
 O HTML simples mantém o foco no percurso dos dados. Cadastro e edição reúnem formulário e processamento na mesma página; a exclusão utiliza um arquivo próprio.
 
@@ -458,14 +461,25 @@ O HTML simples mantém o foco no percurso dos dados. Cadastro e edição reúnem
    mysql -u root -p
    ```
 
-   Crie o banco e saia do console:
+   Crie o banco:
 
    ```sql
    SOURCE banco.sql;
-   EXIT;
    ```
 
    Se já criou o banco com a estrutura da seção 3, não precisa executar `banco.sql` novamente.
+
+   Para começar com os alunos fictícios, execute também:
+
+   ```sql
+   SOURCE popular.sql;
+   ```
+
+   Saia do console:
+
+   ```sql
+   EXIT;
+   ```
 
 3. Nesse mesmo CMD, inicie o servidor PHP:
 
@@ -500,6 +514,7 @@ Uma **view** apresenta o formulário ou os dados. Uma **action** é o arquivo PH
 | [php/alunos/update_action.php](exemplos/02-crud-templates/php/alunos/update_action.php) | Executar o UPDATE e redirecionar |
 | [php/alunos/delete_action.php](exemplos/02-crud-templates/php/alunos/delete_action.php) | Receber o id por POST, executar o DELETE e redirecionar |
 | [sql/banco.sql](exemplos/02-crud-templates/sql/banco.sql) | Script de criação do banco e da tabela |
+| [sql/popular.sql](exemplos/02-crud-templates/sql/popular.sql) | Inserir oito alunos fictícios no banco já criado |
 | [css/](exemplos/02-crud-templates/css/) e [js/](exemplos/02-crud-templates/js/) | Pastas reservadas para estilos e scripts próprios |
 
 As páginas usam `include` para reaproveitar cabeçalho, menu e rodapé. Em uma página dentro de `php/alunos/`, por exemplo:
@@ -538,16 +553,27 @@ O Tailwind via CDN aplica poucas classes de espaçamento, cores e apresentação
 #### Como executar
 
 1. Em `php/conexao.php`, configure `$dbname`, `$usuario`, `$senha` e `$porta` para o seu MySQL.
-2. Se o banco `crud_alunos` já contém a tabela da seção 3, use esse banco. Caso contrário, abra o CMD na pasta `exemplos/02-crud-templates` e entre no MySQL:
+2. Abra o CMD na pasta `exemplos/02-crud-templates` e entre no MySQL:
 
    ```bat
    mysql -u root -p
    ```
 
-   Execute o script e saia do console:
+   Se ainda não criou o banco com a estrutura da seção 3, execute:
 
    ```sql
    SOURCE sql/banco.sql;
+   ```
+
+   Para começar com os alunos fictícios, execute o script abaixo. Se já os inseriu pelo exemplo 1, eles também aparecem aqui e não é necessário executar novamente.
+
+   ```sql
+   SOURCE sql/popular.sql;
+   ```
+
+   Saia do console:
+
+   ```sql
    EXIT;
    ```
 
