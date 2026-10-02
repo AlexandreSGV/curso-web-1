@@ -113,7 +113,7 @@ Use `;` para finalizar cada instrução SQL. Se aparecer `->` no console, o MySQ
 
 ### SQL pronto para criar o banco
 
-Este será o conteúdo de `banco.sql` nos exemplos. Por enquanto, também é possível copiar o bloco para o console MySQL:
+O arquivo [banco.sql do exemplo 1](exemplos/01-crud-minimo/banco.sql) contém o SQL abaixo. Também é possível copiar o bloco para o console MySQL:
 
 ```sql
 CREATE DATABASE crud_alunos;
@@ -138,7 +138,7 @@ CREATE TABLE alunos (
 
 Crie esse banco uma vez. As duas versões do exemplo usarão a mesma tabela. A tabela começa vazia; os alunos serão inseridos pelo cadastro.
 
-Quando o arquivo `banco.sql` estiver disponível, abra o CMD na pasta dele, entre no MySQL e execute:
+Para executar o arquivo `banco.sql`, abra o CMD na pasta dele, entre no MySQL e execute:
 
 ```sql
 SOURCE banco.sql;
@@ -164,7 +164,7 @@ São demonstrações independentes de cadastro, consulta, alteração e exclusã
 
 **PDO** é um recurso do PHP para acessar bancos de dados. Vamos utilizá-lo com MySQL, por meio da extensão `pdo_mysql`, já indicada no guia de ambiente.
 
-O arquivo reutilizável `conexao.php` reunirá as configurações e a criação da conexão:
+O arquivo reutilizável [conexao.php](exemplos/01-crud-minimo/conexao.php) reúne as configurações e a criação da conexão:
 
 ```php
 <?php
@@ -248,7 +248,7 @@ $comando->execute([$_POST['nome'], $_POST['email'], $_POST['data_nascimento'], $
 
 ### Quando o formulário e o processamento ficam no mesmo arquivo
 
-Na primeira versão, `create.php` será aberto para mostrar o formulário e receberá o envio. Antes do HTML, a parte de processamento seguirá esta ideia:
+No [create.php do exemplo 1](exemplos/01-crud-minimo/create.php), a mesma página mostra o formulário e recebe o envio. Antes do HTML, fica a parte de processamento:
 
 ```php
 if ($_POST) {
@@ -283,7 +283,7 @@ $alunos = $consulta->fetchAll(PDO::FETCH_ASSOC);
 
 `query()` executa diretamente esse SQL fixo. `fetchAll()` devolve as linhas encontradas. `PDO::FETCH_ASSOC` faz cada linha ser um array associativo, com as chaves `id`, `nome`, `email`, `data_nascimento` e `telefone`.
 
-O PHP pode percorrer os dados e gerar uma tabela:
+O PHP pode percorrer os dados e gerar uma tabela, como no [index.php do exemplo 1](exemplos/01-crud-minimo/index.php):
 
 ```php
 <table>
@@ -361,7 +361,7 @@ $comando->execute([
 
 `SET` define os novos valores das colunas. `WHERE id = ?` escolhe o aluno que será alterado. Observe a ordem: nome, e-mail, data de nascimento, telefone e, por último, `id`.
 
-Na versão com tudo em `update.php`, o bloco `if ($_POST)` ficará antes da consulta e do formulário. Após atualizar, o PHP redirecionará para `index.php`, como no cadastro. A alteração mantém o mesmo `id`; ela não cria outro aluno.
+No [update.php do exemplo 1](exemplos/01-crud-minimo/update.php), o bloco `if ($_POST)` fica antes da consulta e do formulário. Após atualizar, o PHP redireciona para `index.php`, como no cadastro. A alteração mantém o mesmo `id`; ela não cria outro aluno.
 
 ### Fluxo da alteração
 
@@ -374,7 +374,7 @@ Na versão com tudo em `update.php`, o bloco `if ($_POST)` ficará antes da cons
 
 Excluir significa remover uma linha da tabela. O PHP precisa receber o `id` do aluno escolhido.
 
-No primeiro exemplo, o link de exclusão ficará na listagem, dentro do `foreach`:
+No [index.php do exemplo 1](exemplos/01-crud-minimo/index.php), o link de exclusão fica na listagem, dentro do `foreach`:
 
 ```php
 <a href="index.php?excluir=<?= $aluno['id'] ?>">Excluir</a>
@@ -404,25 +404,53 @@ O link faz uma requisição **GET**; `DELETE` é o comando **SQL** executado pel
 
 ## 9. Organização dos dois exemplos
 
-**Os arquivos dos exemplos serão criados nas próximas iterações.** Os trechos desta apostila apresentam os conceitos; as estruturas abaixo descrevem as duas versões que serão disponibilizadas na pasta `exemplos`.
+O **exemplo 1 já está disponível** na pasta `exemplos`. Ele reúne os trechos desta apostila em um CRUD completo e mínimo. O exemplo 2, com templates e actions, será criado em uma próxima iteração.
 
 As duas versões usarão o mesmo banco, as mesmas colunas (`id`, `nome`, `email`, `data_nascimento` e `telefone`) e as mesmas operações SQL.
 
 ### Exemplo 1 — CRUD mínimo
 
-Pasta prevista: `exemplos/01-crud-minimo/`.
+[Abrir a pasta do exemplo 1](exemplos/01-crud-minimo/).
 
-Serão três arquivos de páginas, mais a conexão e o SQL, todos na mesma pasta:
+São três arquivos de páginas, mais a conexão e o SQL, todos na mesma pasta:
 
 | Arquivo | Responsabilidade |
 |---|---|
-| `index.php` | Listar alunos, oferecer o link para cadastrar e os links de editar/excluir; processar a exclusão |
-| `create.php` | Mostrar o formulário e processar o cadastro no mesmo arquivo |
-| `update.php` | Buscar o aluno, mostrar o formulário preenchido e processar a alteração |
-| `conexao.php` | Criar a conexão PDO reutilizada pelas páginas |
-| `banco.sql` | Criar o banco e a tabela |
+| [index.php](exemplos/01-crud-minimo/index.php) | Listar alunos, oferecer o link para cadastrar e os links de editar/excluir; processar a exclusão |
+| [create.php](exemplos/01-crud-minimo/create.php) | Mostrar o formulário e processar o cadastro no mesmo arquivo |
+| [update.php](exemplos/01-crud-minimo/update.php) | Buscar o aluno, mostrar o formulário preenchido e processar a alteração |
+| [conexao.php](exemplos/01-crud-minimo/conexao.php) | Criar a conexão PDO reutilizada pelas páginas |
+| [banco.sql](exemplos/01-crud-minimo/banco.sql) | Criar o banco e a tabela |
 
-O HTML conterá apenas os elementos necessários ao funcionamento, sem CSS, metatags ou `label`. Os formulários e seus processamentos ficarão juntos para tornar o percurso dos dados fácil de acompanhar.
+O HTML contém apenas os elementos necessários ao funcionamento, sem CSS, metatags ou `label`. Os formulários e seus processamentos ficam juntos para tornar o percurso dos dados fácil de acompanhar.
+
+#### Como executar
+
+1. Em `conexao.php`, configure `$dbname`, `$usuario`, `$senha` e `$porta` para o seu MySQL.
+2. Abra o CMD na pasta `exemplos/01-crud-minimo` e entre no MySQL:
+
+   ```bat
+   mysql -u root -p
+   ```
+
+   Crie o banco e saia do console:
+
+   ```sql
+   SOURCE banco.sql;
+   EXIT;
+   ```
+
+   Se já criou o banco com a estrutura da seção 3, não precisa executar `banco.sql` novamente.
+
+3. Nesse mesmo CMD, inicie o servidor PHP:
+
+   ```bat
+   php -S localhost:8000
+   ```
+
+4. Abra [http://localhost:8000](http://localhost:8000). Clique em **Cadastrar aluno**, preencha os quatro campos e salve. Na listagem, use **Editar** para alterar o registro e **Excluir** para removê-lo.
+
+O MySQL deve permanecer em execução durante o uso do exemplo.
 
 ### Exemplo 2 — CRUD com templates e actions
 
