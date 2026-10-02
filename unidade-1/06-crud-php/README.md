@@ -2,7 +2,7 @@
 
 Um sistema de informações precisa manter seus dados: cadastrar alunos, consultar uma turma, corrigir um e-mail ou excluir um registro. Essas operações formam um **CRUD**.
 
-Nesta apostila, vamos ligar o PHP ao MySQL e acompanhar cada operação. Usaremos uma tabela de alunos e trechos pequenos de PHP, HTML e SQL. A leitura pressupõe os fundamentos da [apostila de PHP](../05-php/).
+Esta apostila apresenta a conexão do PHP com o MySQL e o funcionamento de cada operação. Os exemplos usam uma tabela de alunos e trechos pequenos de PHP, HTML e SQL. A leitura pressupõe os fundamentos da [apostila de PHP](../05-php/).
 
 ## Índice
 
@@ -74,7 +74,7 @@ Mesmo quando tudo executa no computador do aluno, navegador, servidor PHP e MySQ
 
 ## 3. O mínimo de MySQL e SQL
 
-Usaremos um banco chamado `crud_alunos`, com uma tabela chamada `alunos`:
+O cadastro utiliza um banco chamado `crud_alunos`, com uma tabela chamada `alunos`:
 
 | Coluna | Conteúdo |
 |---|---|
@@ -86,7 +86,7 @@ Usaremos um banco chamado `crud_alunos`, com uma tabela chamada `alunos`:
 
 Uma **tabela** organiza dados em colunas e linhas. Cada linha, também chamada de **registro**, representa um aluno. O `id` permite indicar exatamente qual registro consultar, alterar ou excluir, mesmo quando dois alunos têm o mesmo nome.
 
-**SQL** é a linguagem usada para dar instruções ao banco. Neste primeiro contato, vamos usar comandos prontos e observar sua finalidade.
+**SQL** é a linguagem usada para dar instruções ao banco. Os comandos prontos a seguir apresentam as operações básicas e sua finalidade.
 
 ### Entrando no MySQL
 
@@ -103,7 +103,7 @@ No console do MySQL, os comandos básicos são:
 | Comando | Finalidade |
 |---|---|
 | `SHOW DATABASES;` | Listar os bancos existentes |
-| `USE crud_alunos;` | Selecionar o banco que será usado |
+| `USE crud_alunos;` | Selecionar o banco para os comandos |
 | `SHOW TABLES;` | Listar as tabelas do banco selecionado |
 | `DESCRIBE alunos;` | Mostrar as colunas e os tipos da tabela |
 | `SELECT * FROM alunos;` | Consultar os alunos cadastrados |
@@ -134,9 +134,9 @@ CREATE TABLE alunos (
 - `PRIMARY KEY` define a coluna que identifica cada registro.
 - `VARCHAR(100)` guarda texto com até 100 caracteres.
 - `DATE` guarda uma data no formato `AAAA-MM-DD`, como `2006-04-15`.
-- O telefone será texto (`VARCHAR(20)`) para preservar zeros iniciais e permitir sinais como `+` e `-`.
+- O telefone é armazenado como texto (`VARCHAR(20)`) para preservar zeros iniciais e permitir sinais como `+` e `-`.
 
-Crie esse banco uma vez. As duas versões do exemplo usarão a mesma tabela. A tabela começa vazia; os alunos serão inseridos pelo cadastro.
+Crie esse banco uma vez. A tabela começa vazia; o formulário de cadastro permite inserir os alunos.
 
 Para executar o arquivo `banco.sql`, abra o CMD na pasta dele, entre no MySQL e execute:
 
@@ -158,11 +158,11 @@ DELETE FROM alunos WHERE id = 1;
 
 São demonstrações independentes de cadastro, consulta, alteração e exclusão. `*` significa todas as colunas. `WHERE id = 1` limita a operação ao aluno de identificação `1`.
 
-**O `WHERE` é essencial para escolher o registro na alteração e na exclusão.** Sem ele, `UPDATE` e `DELETE` atuam sobre todas as linhas da tabela. Nas próximas seções, o `id` virá do link ou do formulário.
+**O `WHERE` é essencial para escolher o registro na alteração e na exclusão.** Sem ele, `UPDATE` e `DELETE` atuam sobre todas as linhas da tabela. Nos exemplos, o `id` vem do link ou do formulário.
 
 ## 4. Conectando o PHP com PDO
 
-**PDO** é um recurso do PHP para acessar bancos de dados. Vamos utilizá-lo com MySQL, por meio da extensão `pdo_mysql`, já indicada no guia de ambiente.
+**PDO** é um recurso do PHP para acessar bancos de dados. A conexão com MySQL utiliza a extensão `pdo_mysql`, indicada no guia de ambiente.
 
 O arquivo reutilizável [conexao.php](exemplos/01-crud-minimo/conexao.php) reúne as configurações e a criação da conexão:
 
@@ -184,7 +184,7 @@ $pdo = new PDO(
 |---|---|
 | `mysql` | Tipo de banco utilizado |
 | `host=localhost` | MySQL no próprio computador |
-| `$dbname` | Nome do banco que será acessado |
+| `$dbname` | Nome do banco da conexão |
 | `$usuario` | Usuário do MySQL usado no ambiente local |
 | `$senha` | Senha local desse usuário |
 | `$porta` | Porta do MySQL; normalmente `3306` |
@@ -200,7 +200,7 @@ Em uma página na mesma pasta, use:
 require 'conexao.php';
 ```
 
-Nos trechos das próximas seções, considere que essa linha já foi executada antes de acessar `$pdo`.
+Nos trechos a seguir, considere que essa linha é executada antes de acessar `$pdo`.
 
 ### Como ler os comandos PDO
 
@@ -231,7 +231,7 @@ Cadastrar significa acrescentar uma linha à tabela. O banco gera o `id`; o form
 </form>
 ```
 
-Sem `action`, o formulário envia os dados para a própria URL. Os atributos `name` definem as chaves que o PHP lerá em `$_POST`.
+Sem `action`, o formulário envia os dados para a própria URL. Os atributos `name` definem as chaves que o PHP lê em `$_POST`.
 
 O campo `type="date"` envia a data no formato `AAAA-MM-DD`, usado pelo MySQL. O campo `type="tel"` permite digitar o telefone como texto.
 
@@ -244,7 +244,7 @@ $comando = $pdo->prepare(
 $comando->execute([$_POST['nome'], $_POST['email'], $_POST['data_nascimento'], $_POST['telefone']]);
 ```
 
-`INSERT INTO alunos` indica a tabela. `(nome, email, data_nascimento, telefone)` indica as colunas preenchidas, e `VALUES (?, ?, ?, ?)` indica os quatro valores que serão inseridos.
+`INSERT INTO alunos` indica a tabela. `(nome, email, data_nascimento, telefone)` indica as colunas preenchidas, e `VALUES (?, ?, ?, ?)` indica os quatro valores inseridos.
 
 ### Quando o formulário e o processamento ficam no mesmo arquivo
 
@@ -306,7 +306,13 @@ Cada repetição cria uma linha de HTML. O navegador recebe a tabela pronta, nã
 
 ### Consultar apenas um aluno
 
-Em uma URL como `update.php?id=3`, o PHP recebe `3` em `$_GET['id']`:
+Na listagem, o link **Ver detalhes** envia o `id` do aluno para `show.php`:
+
+```php
+<a href="show.php?id=<?= $aluno['id'] ?>">Ver detalhes</a>
+```
+
+Em uma URL como `show.php?id=3`, o PHP recebe `3` em `$_GET['id']`. O arquivo [show.php](exemplos/01-crud-minimo/show.php) consulta esse registro:
 
 ```php
 $consulta = $pdo->prepare('SELECT * FROM alunos WHERE id = ?');
@@ -314,7 +320,15 @@ $consulta->execute([$_GET['id']]);
 $aluno = $consulta->fetch(PDO::FETCH_ASSOC);
 ```
 
-`fetch()` busca uma linha; `fetchAll()` busca todas as linhas do resultado. A consulta por `id` será usada para preencher o formulário de edição.
+`fetch()` busca uma linha; `fetchAll()` busca todas as linhas do resultado. A página usa `$aluno` para apresentar os dados em uma tela separada:
+
+```php
+<h1>Detalhes do aluno</h1>
+<p>Nome: <?= $aluno['nome'] ?></p>
+<p>E-mail: <?= $aluno['email'] ?></p>
+```
+
+O exemplo completo também apresenta `id`, data de nascimento e telefone, além de links para editar, excluir e voltar à listagem. A mesma consulta por `id` preenche o formulário de edição em `update.php`.
 
 ### Fluxo da consulta
 
@@ -359,7 +373,7 @@ $comando->execute([
 ]);
 ```
 
-`SET` define os novos valores das colunas. `WHERE id = ?` escolhe o aluno que será alterado. Observe a ordem: nome, e-mail, data de nascimento, telefone e, por último, `id`.
+`SET` define os novos valores das colunas. `WHERE id = ?` escolhe o aluno da alteração. Observe a ordem: nome, e-mail, data de nascimento, telefone e, por último, `id`.
 
 No [update.php do exemplo 1](exemplos/01-crud-minimo/update.php), o bloco `if ($_POST)` fica antes da consulta e do formulário. Após atualizar, o PHP redireciona para `index.php`, como no cadastro. A alteração mantém o mesmo `id`; ela não cria outro aluno.
 
@@ -374,55 +388,56 @@ No [update.php do exemplo 1](exemplos/01-crud-minimo/update.php), o bloco `if ($
 
 Excluir significa remover uma linha da tabela. O PHP precisa receber o `id` do aluno escolhido.
 
-No [index.php do exemplo 1](exemplos/01-crud-minimo/index.php), o link de exclusão fica na listagem, dentro do `foreach`:
+O link de exclusão aparece na listagem ([index.php](exemplos/01-crud-minimo/index.php)) e na tela de detalhes ([show.php](exemplos/01-crud-minimo/show.php)). Nos dois casos, ele envia o `id` para `delete.php`:
 
 ```php
-<a href="index.php?excluir=<?= $aluno['id'] ?>">Excluir</a>
+<a href="delete.php?id=<?= $aluno['id'] ?>">Excluir</a>
 ```
 
-No início de `index.php`, antes da consulta de listagem e do HTML:
+O arquivo [delete.php](exemplos/01-crud-minimo/delete.php) contém apenas o processamento:
 
 ```php
-if (isset($_GET['excluir'])) {
-    $comando = $pdo->prepare('DELETE FROM alunos WHERE id = ?');
-    $comando->execute([$_GET['excluir']]);
-    header('Location: index.php', true, 303);
-    exit;
-}
+<?php
+require 'conexao.php';
+
+$comando = $pdo->prepare('DELETE FROM alunos WHERE id = ?');
+$comando->execute([$_GET['id']]);
+header('Location: index.php', true, 303);
+exit;
 ```
 
-`isset($_GET['excluir'])` identifica que o parâmetro de exclusão veio na URL. Depois de excluir, o redirecionamento volta para `index.php` sem esse parâmetro, para exibir a lista novamente.
+O PHP recebe o `id` pela URL, executa a exclusão e redireciona para `index.php`. O arquivo não apresenta HTML: sua resposta é o redirecionamento. A listagem permanece responsável por consultar e apresentar os alunos.
 
-O link faz uma requisição **GET**; `DELETE` é o comando **SQL** executado pelo PHP. Usar o link dessa forma é uma simplificação do primeiro exemplo. No segundo, um pequeno formulário com **POST** enviará o `id` para `delete_action.php`, pois a exclusão modifica os dados.
+O link faz uma requisição **GET**; `DELETE` é o comando **SQL** executado pelo PHP. Usar o link dessa forma é uma simplificação didática. Em aplicações reais, prefira enviar a exclusão por um formulário com **POST**, pois a operação modifica os dados.
 
 ### Fluxo da exclusão
 
-1. O usuário escolhe Excluir; o navegador envia o `id` ao servidor — por **GET** no primeiro exemplo e por **POST** no segundo.
+1. O usuário escolhe Excluir na listagem ou nos detalhes; o navegador envia **GET** para `delete.php` com o `id`.
 2. O PHP usa PDO para executar **DELETE** com o `id` recebido.
 3. O MySQL remove a linha, e o PHP responde ao navegador com um redirecionamento **303**.
 4. O navegador faz **GET** para a listagem; o PHP consulta os alunos restantes e devolve o HTML atualizado.
 
 ## 9. Organização dos dois exemplos
 
-O **exemplo 1 já está disponível** na pasta `exemplos`. Ele reúne os trechos desta apostila em um CRUD completo e mínimo. O exemplo 2, com templates e actions, será criado em uma próxima iteração.
-
-As duas versões usarão o mesmo banco, as mesmas colunas (`id`, `nome`, `email`, `data_nascimento` e `telefone`) e as mesmas operações SQL.
+Esta seção apresenta duas formas de organizar um CRUD: páginas simples com processamento integrado e uma estrutura com templates e actions. Ambas utilizam as colunas `id`, `nome`, `email`, `data_nascimento` e `telefone`, com as mesmas operações SQL.
 
 ### Exemplo 1 — CRUD mínimo
 
 [Abrir a pasta do exemplo 1](exemplos/01-crud-minimo/).
 
-São três arquivos de páginas, mais a conexão e o SQL, todos na mesma pasta:
+Os arquivos ficam na mesma pasta:
 
 | Arquivo | Responsabilidade |
 |---|---|
-| [index.php](exemplos/01-crud-minimo/index.php) | Listar alunos, oferecer o link para cadastrar e os links de editar/excluir; processar a exclusão |
+| [index.php](exemplos/01-crud-minimo/index.php) | Listar alunos e oferecer links para cadastrar, ver detalhes, editar e excluir |
+| [show.php](exemplos/01-crud-minimo/show.php) | Consultar e apresentar um aluno, com links para editar, excluir e voltar |
 | [create.php](exemplos/01-crud-minimo/create.php) | Mostrar o formulário e processar o cadastro no mesmo arquivo |
 | [update.php](exemplos/01-crud-minimo/update.php) | Buscar o aluno, mostrar o formulário preenchido e processar a alteração |
+| [delete.php](exemplos/01-crud-minimo/delete.php) | Excluir o aluno indicado pelo id e redirecionar para a listagem |
 | [conexao.php](exemplos/01-crud-minimo/conexao.php) | Criar a conexão PDO reutilizada pelas páginas |
 | [banco.sql](exemplos/01-crud-minimo/banco.sql) | Criar o banco e a tabela |
 
-O HTML contém apenas os elementos necessários ao funcionamento, sem CSS, metatags ou `label`. Os formulários e seus processamentos ficam juntos para tornar o percurso dos dados fácil de acompanhar.
+O HTML simples mantém o foco no percurso dos dados. Cadastro e edição reúnem formulário e processamento na mesma página; a exclusão utiliza um arquivo próprio.
 
 #### Como executar
 
@@ -448,17 +463,17 @@ O HTML contém apenas os elementos necessários ao funcionamento, sem CSS, metat
    php -S localhost:8000
    ```
 
-4. Abra [http://localhost:8000](http://localhost:8000). Clique em **Cadastrar aluno**, preencha os quatro campos e salve. Na listagem, use **Editar** para alterar o registro e **Excluir** para removê-lo.
+4. Abra [http://localhost:8000](http://localhost:8000). Clique em **Cadastrar aluno**, preencha os quatro campos e salve. Na listagem, use **Ver detalhes** para abrir a tela do aluno, **Editar** para alterar o registro e **Excluir** para removê-lo. A tela de detalhes também oferece os links de edição e exclusão.
 
 O MySQL deve permanecer em execução durante o uso do exemplo.
 
 ### Exemplo 2 — CRUD com templates e actions
 
-Pasta prevista: `exemplos/02-crud-templates/`.
+O esquema abaixo ilustra uma organização com arquivos separados para apresentação, processamento e elementos comuns das páginas.
 
 Uma **view** apresenta o formulário ou os dados. Uma **action** é o arquivo PHP que recebe uma operação e a executa. Separar esses arquivos permite localizar com facilidade o HTML e o processamento.
 
-| Caminho previsto | Responsabilidade |
+| Caminho | Responsabilidade |
 |---|---|
 | `php/index.php` | Home com uma breve apresentação do exemplo |
 | `php/conexao.php` | Conexão PDO compartilhada |
@@ -474,7 +489,7 @@ Uma **view** apresenta o formulário ou os dados. Uma **action** é o arquivo PH
 | `sql/banco.sql` | Script de criação do banco e da tabela |
 | `css/` e `js/` | Pastas reservadas para estilos e scripts próprios, quando necessários |
 
-As páginas usarão `include` para reaproveitar cabeçalho, menu e rodapé. Em uma página dentro de `php/alunos/`, por exemplo:
+As páginas usam `include` para reaproveitar cabeçalho, menu e rodapé. Em uma página dentro de `php/alunos/`, por exemplo:
 
 ```php
 <?php include '../templates/cabecalho.php'; ?>
@@ -485,7 +500,7 @@ As páginas usarão `include` para reaproveitar cabeçalho, menu e rodapé. Em u
 <?php include '../templates/rodape.php'; ?>
 ```
 
-`../` sobe uma pasta. Nessa mesma localização, a conexão será incluída com `require '../conexao.php';`. Na home, que estará em `php/`, os caminhos dos templates começarão por `templates/`.
+`../` sobe uma pasta. Nessa mesma localização, `require '../conexao.php';` inclui a conexão. Na home, em `php/`, os caminhos dos templates começam por `templates/`.
 
 Para enviar um formulário a outro arquivo, basta indicar a action:
 
@@ -499,13 +514,13 @@ Para enviar um formulário a outro arquivo, basta indicar a action:
 </form>
 ```
 
-As actions farão o processamento e o redirecionamento. Os templates serão usados nas páginas que apresentam HTML, depois dos comandos PHP que precisem preparar cabeçalhos HTTP.
+As actions fazem o processamento e o redirecionamento. As páginas incluem os templates depois dos comandos PHP que preparam cabeçalhos HTTP.
 
-O Tailwind via CDN fornecerá poucas classes para espaçamento, cores e apresentação dos botões. A lógica do CRUD continuará sendo PHP e SQL, e o funcionamento básico não precisará de JavaScript.
+O Tailwind via CDN permite aplicar classes de espaçamento, cores e apresentação dos botões. A lógica do CRUD utiliza PHP e SQL, e o funcionamento básico dispensa JavaScript.
 
 ## 10. Quadro de consulta rápida
 
-| Preciso… | Usarei… |
+| Preciso… | Uso… |
 |---|---|
 | Abrir o console MySQL | `mysql -u root -p` |
 | Selecionar o banco | `USE crud_alunos;` |
@@ -524,7 +539,7 @@ Para executar as páginas PHP, abra o CMD na pasta que contém a página inicial
 php -S localhost:8000
 ```
 
-Abra [http://localhost:8000](http://localhost:8000) no navegador. No primeiro exemplo, o servidor será iniciado na pasta do exemplo; no segundo, dentro de `php/`. O MySQL também precisa estar em execução: iniciar o servidor PHP não inicia o banco.
+Abra [http://localhost:8000](http://localhost:8000) no navegador. No exemplo mínimo, inicie o servidor na pasta do exemplo. Na organização com templates, a pasta inicial é `php/`. O MySQL também precisa estar em execução: iniciar o servidor PHP não inicia o banco.
 
 ### O que você precisa guardar
 
