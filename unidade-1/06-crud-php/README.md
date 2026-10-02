@@ -410,6 +410,8 @@ O PHP recebe o `id` pela URL, executa a exclusão e redireciona para `index.php`
 
 O link faz uma requisição **GET**; `DELETE` é o comando **SQL** executado pelo PHP. Usar o link dessa forma é uma simplificação didática. Em aplicações reais, prefira enviar a exclusão por um formulário com **POST**, pois a operação modifica os dados.
 
+No [exemplo 2](exemplos/02-crud-templates/php/alunos/index.php), um formulário com um campo `hidden` envia o `id` por **POST** para [delete_action.php](exemplos/02-crud-templates/php/alunos/delete_action.php). A action lê `$_POST['id']`, executa o mesmo SQL e redireciona para a listagem.
+
 ### Fluxo da exclusão
 
 1. O usuário escolhe Excluir na listagem ou nos detalhes; o navegador envia **GET** para `delete.php` com o `id`.
@@ -469,25 +471,28 @@ O MySQL deve permanecer em execução durante o uso do exemplo.
 
 ### Exemplo 2 — CRUD com templates e actions
 
-O esquema abaixo ilustra uma organização com arquivos separados para apresentação, processamento e elementos comuns das páginas.
+[Abrir a pasta do exemplo 2](exemplos/02-crud-templates/).
+
+Este exemplo realiza as mesmas operações do CRUD mínimo, com arquivos separados para apresentação, processamento e elementos comuns das páginas. A home apresenta o exemplo, e o menu contém os links **Home** e **Alunos**. As duas versões usam o mesmo banco: um aluno cadastrado em uma delas também aparece na outra.
 
 Uma **view** apresenta o formulário ou os dados. Uma **action** é o arquivo PHP que recebe uma operação e a executa. Separar esses arquivos permite localizar com facilidade o HTML e o processamento.
 
 | Caminho | Responsabilidade |
 |---|---|
-| `php/index.php` | Home com uma breve apresentação do exemplo |
-| `php/conexao.php` | Conexão PDO compartilhada |
-| `php/templates/cabecalho.php` | Início da página e carregamento do Tailwind pelo CDN |
-| `php/templates/menu.php` | Links Home e Alunos |
-| `php/templates/rodape.php` | Rodapé e fechamento da página |
-| `php/alunos/index.php` | Listagem e consulta de um aluno |
-| `php/alunos/create_view.php` | Formulário de cadastro |
-| `php/alunos/create_action.php` | Executar o INSERT e redirecionar |
-| `php/alunos/update_view.php` | Consultar o aluno e apresentar o formulário de edição |
-| `php/alunos/update_action.php` | Executar o UPDATE e redirecionar |
-| `php/alunos/delete_action.php` | Receber o id por POST, executar o DELETE e redirecionar |
-| `sql/banco.sql` | Script de criação do banco e da tabela |
-| `css/` e `js/` | Pastas reservadas para estilos e scripts próprios, quando necessários |
+| [php/index.php](exemplos/02-crud-templates/php/index.php) | Home com uma breve apresentação do exemplo |
+| [php/conexao.php](exemplos/02-crud-templates/php/conexao.php) | Conexão PDO compartilhada |
+| [php/templates/cabecalho.php](exemplos/02-crud-templates/php/templates/cabecalho.php) | Início da página e carregamento do Tailwind pelo CDN |
+| [php/templates/menu.php](exemplos/02-crud-templates/php/templates/menu.php) | Links Home e Alunos |
+| [php/templates/rodape.php](exemplos/02-crud-templates/php/templates/rodape.php) | Rodapé e fechamento da página |
+| [php/alunos/index.php](exemplos/02-crud-templates/php/alunos/index.php) | Listagem dos alunos |
+| [php/alunos/show.php](exemplos/02-crud-templates/php/alunos/show.php) | Detalhes de um aluno, com edição e exclusão |
+| [php/alunos/create_view.php](exemplos/02-crud-templates/php/alunos/create_view.php) | Formulário de cadastro |
+| [php/alunos/create_action.php](exemplos/02-crud-templates/php/alunos/create_action.php) | Executar o INSERT e redirecionar |
+| [php/alunos/update_view.php](exemplos/02-crud-templates/php/alunos/update_view.php) | Consultar o aluno e apresentar o formulário de edição |
+| [php/alunos/update_action.php](exemplos/02-crud-templates/php/alunos/update_action.php) | Executar o UPDATE e redirecionar |
+| [php/alunos/delete_action.php](exemplos/02-crud-templates/php/alunos/delete_action.php) | Receber o id por POST, executar o DELETE e redirecionar |
+| [sql/banco.sql](exemplos/02-crud-templates/sql/banco.sql) | Script de criação do banco e da tabela |
+| [css/](exemplos/02-crud-templates/css/) e [js/](exemplos/02-crud-templates/js/) | Pastas reservadas para estilos e scripts próprios |
 
 As páginas usam `include` para reaproveitar cabeçalho, menu e rodapé. Em uma página dentro de `php/alunos/`, por exemplo:
 
@@ -501,6 +506,8 @@ As páginas usam `include` para reaproveitar cabeçalho, menu e rodapé. Em uma 
 ```
 
 `../` sobe uma pasta. Nessa mesma localização, `require '../conexao.php';` inclui a conexão. Na home, em `php/`, os caminhos dos templates começam por `templates/`.
+
+Os links do menu começam com `/`, como `/alunos/index.php`. Essa barra indica a raiz do servidor, que neste exemplo é a pasta `php`. Assim, o mesmo menu funciona na home e nas páginas de alunos.
 
 Para enviar um formulário a outro arquivo, basta indicar a action:
 
@@ -516,7 +523,36 @@ Para enviar um formulário a outro arquivo, basta indicar a action:
 
 As actions fazem o processamento e o redirecionamento. As páginas incluem os templates depois dos comandos PHP que preparam cabeçalhos HTTP.
 
-O Tailwind via CDN permite aplicar classes de espaçamento, cores e apresentação dos botões. A lógica do CRUD utiliza PHP e SQL, e o funcionamento básico dispensa JavaScript.
+No cadastro, o percurso é: abrir `create_view.php`, preencher o formulário, enviar os dados por POST para `create_action.php` e voltar à listagem após o INSERT. A edição segue a mesma divisão entre `update_view.php` e `update_action.php`. A listagem e os detalhes contêm pequenos formulários que enviam a exclusão para `delete_action.php`.
+
+O Tailwind via CDN aplica poucas classes de espaçamento, cores e apresentação dos botões. Por exemplo, `p-4` adiciona espaçamento interno e `text-white` deixa o texto branco. O carregamento dos estilos exige internet. As pastas `css` e `js` ficam reservadas; o CRUD não utiliza arquivos próprios nessas pastas. [Tailwind — Play CDN](https://tailwindcss.com/docs/installation/play-cdn).
+
+#### Como executar
+
+1. Em `php/conexao.php`, configure `$dbname`, `$usuario`, `$senha` e `$porta` para o seu MySQL.
+2. Se o banco `crud_alunos` já contém a tabela da seção 3, use esse banco. Caso contrário, abra o CMD na pasta `exemplos/02-crud-templates` e entre no MySQL:
+
+   ```bat
+   mysql -u root -p
+   ```
+
+   Execute o script e saia do console:
+
+   ```sql
+   SOURCE sql/banco.sql;
+   EXIT;
+   ```
+
+3. No CMD, a partir da pasta `exemplos/02-crud-templates`, entre em `php` e inicie o servidor:
+
+   ```bat
+   cd php
+   php -S localhost:8000
+   ```
+
+4. Abra [http://localhost:8000](http://localhost:8000). No menu, clique em **Alunos**. Cadastre um aluno, abra seus detalhes, altere os dados e use **Excluir** para removê-lo.
+
+Mantenha o MySQL em execução. Se outro servidor PHP já ocupa a porta `8000`, encerre-o com `Ctrl+C` no terminal em que está em execução.
 
 ## 10. Quadro de consulta rápida
 
@@ -558,3 +594,4 @@ Abra [http://localhost:8000](http://localhost:8000) no navegador. No exemplo mí
 - [MySQL — Comandos do cliente](https://dev.mysql.com/doc/refman/8.4/en/mysql-commands.html)
 - [MySQL — Criação de tabelas](https://dev.mysql.com/doc/refman/8.4/en/creating-tables.html)
 - [MySQL — INSERT](https://dev.mysql.com/doc/refman/8.4/en/insert.html), [UPDATE](https://dev.mysql.com/doc/refman/8.4/en/update.html) e [DELETE](https://dev.mysql.com/doc/refman/8.4/en/delete.html)
+- [Tailwind — Play CDN](https://tailwindcss.com/docs/installation/play-cdn)
