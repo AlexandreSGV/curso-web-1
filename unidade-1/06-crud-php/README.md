@@ -14,7 +14,7 @@ Esta apostila apresenta a conexão do PHP com o MySQL e o funcionamento de cada 
 6. [Read: consultar os alunos](#6-read-consultar-os-alunos)
 7. [Update: alterar um aluno](#7-update-alterar-um-aluno)
 8. [Delete: excluir um aluno](#8-delete-excluir-um-aluno)
-9. [Organização dos dois exemplos](#9-organização-dos-dois-exemplos)
+9. [Organização dos exemplos](#9-organização-dos-exemplos)
 10. [Quadro de consulta rápida](#10-quadro-de-consulta-rápida)
 
 ## 1. O que é CRUD?
@@ -69,6 +69,8 @@ sequenceDiagram
 O navegador não envia SQL diretamente ao MySQL. Ele faz uma requisição HTTP ao servidor PHP; o PHP usa PDO para acessar o banco. A comunicação com o MySQL utiliza a conexão de banco de dados, não a requisição HTTP do navegador.
 
 Após cadastrar, alterar ou excluir, o PHP pode responder com um **redirecionamento**. O navegador então faz outra requisição para carregar a listagem atualizada.
+
+No [exemplo 3](exemplos/03-crud-api/), o PHP responde com **JSON**. O JavaScript recebe esses dados e atualiza o HTML no navegador, sem recarregar a página inteira.
 
 Mesmo quando tudo executa no computador do aluno, navegador, servidor PHP e MySQL continuam tendo funções diferentes.
 
@@ -427,11 +429,11 @@ No [exemplo 2](exemplos/02-crud-templates/php/alunos/index.php), um formulário 
 3. O MySQL remove a linha, e o PHP responde ao navegador com um redirecionamento **303**.
 4. O navegador faz **GET** para a listagem; o PHP consulta os alunos restantes e devolve o HTML atualizado.
 
-## 9. Organização dos dois exemplos
+## 9. Organização dos exemplos
 
-Esta seção apresenta duas formas de organizar um CRUD: páginas simples com processamento integrado e uma estrutura com templates e actions. Ambas utilizam as colunas `id`, `nome`, `email`, `data_nascimento` e `telefone`, com as mesmas operações SQL.
+Esta seção apresenta três formas de organizar um CRUD: páginas simples com processamento integrado, uma estrutura com templates e actions e uma API PHP consumida por um front-end JavaScript. Todas utilizam as colunas `id`, `nome`, `email`, `data_nascimento` e `telefone`, com as mesmas operações SQL.
 
-Cada exemplo inclui um script opcional `popular.sql` com oito alunos fictícios para experimentar a listagem, os detalhes, a edição e a exclusão. Ele acrescenta registros à tabela existente; o MySQL gera os ids automaticamente. Os dois scripts contêm os mesmos dados e usam o mesmo banco, portanto basta executar um deles. Cada nova execução acrescenta novamente os oito alunos.
+Cada exemplo inclui um script opcional `popular.sql` com oito alunos fictícios para experimentar a listagem, os detalhes, a edição e a exclusão. Ele acrescenta registros à tabela existente; o MySQL gera os ids automaticamente. Os três scripts contêm os mesmos dados e usam o mesmo banco, portanto basta executar um deles. Cada nova execução acrescenta novamente os oito alunos.
 
 ### Exemplo 1 — CRUD mínimo
 
@@ -587,6 +589,16 @@ O Tailwind via CDN aplica poucas classes de espaçamento, cores e apresentação
 4. Abra [http://localhost:8000](http://localhost:8000). No menu, clique em **Alunos**. Cadastre um aluno preenchendo os quatro campos, abra seus detalhes, altere os dados e use **Excluir** para removê-lo.
 
 Mantenha o MySQL em execução. Se outro servidor PHP já ocupa a porta `8000`, encerre-o com `Ctrl+C` no terminal em que está em execução.
+
+### Exemplo 3 — API PHP e dois front-ends
+
+[Abrir o exemplo e as instruções de execução](exemplos/03-crud-api/README.md).
+
+Neste exemplo, a [API PHP](exemplos/03-crud-api/api/alunos.php) executa o CRUD com PDO e devolve JSON. O [JavaScript](exemplos/03-crud-api/js/app.js) trata os eventos, envia as requisições e preenche a página. Há duas apresentações: um [front-end mínimo, sem CSS](exemplos/03-crud-api/frontend-minimo/index.html), e outro [com Tailwind](exemplos/03-crud-api/frontend-tailwind/index.html). Os dois usam a mesma API e o mesmo JavaScript.
+
+`GET` consulta, `POST` cadastra, `PUT` altera e `DELETE` exclui. Cadastro e edição enviam os quatro campos em JSON; o PHP lê esse corpo com `php://input` e `json_decode()`. Após cada alteração, o JavaScript consulta a lista novamente e atualiza a tabela.
+
+O banco é o mesmo dos exemplos anteriores. O [guia do exemplo](exemplos/03-crud-api/README.md) apresenta a configuração, os endereços das duas interfaces, o contrato da API e o percurso das requisições.
 
 ## 10. Quadro de consulta rápida
 
