@@ -4,7 +4,7 @@ Um cadastro de alunos pode usar diferentes tecnologias no servidor e manter a me
 
 O foco está em reconhecer o que muda no back-end e o que permanece compatível: as operações HTTP, os dados em JSON, o front-end e o banco MySQL.
 
-A leitura pressupõe o [CRUD com PHP](../06-crud-php/), o uso de [JavaScript e `fetch`](../04-javascript-dom/) e uma introdução a TypeScript. Os blocos de código são recortes didáticos; não formam, isoladamente, um projeto executável. A pasta `exemplo/` fica reservada para a implementação completa.
+A leitura pressupõe o [CRUD com PHP](../06-crud-php/), o uso de [JavaScript e `fetch`](../04-javascript-dom/) e uma introdução a TypeScript. Os blocos de código são recortes didáticos; não formam, isoladamente, um projeto executável. O projeto executável e suas instruções estão na pasta [exemplos/](exemplos/).
 
 ## Índice
 
@@ -412,7 +412,7 @@ Em **F12 → Rede/Network → Fetch/XHR**, compare método, corpo JSON, status e
 
 ## 9. Organização do exemplo e consulta rápida
 
-A organização prevista para o projeto completo na pasta `exemplo/` é:
+O projeto completo na pasta [exemplos/](exemplos/) segue esta organização:
 
 | Caminho | Responsabilidade |
 |---|---|

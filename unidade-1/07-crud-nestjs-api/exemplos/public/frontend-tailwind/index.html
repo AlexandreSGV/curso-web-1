@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>Alunos — front-end com Tailwind</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="../js/app.js" defer></script>
+</head>
+<body class="min-h-screen bg-slate-100 text-slate-800">
+    <header class="bg-slate-900 px-6 py-6 text-white">
+        <div class="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-4">
+            <div>
+                <p class="text-sm font-semibold text-teal-300">SECRETARIA ESCOLAR</p>
+                <h1 class="mt-1 text-3xl font-bold">Cadastro de alunos</h1>
+            </div>
+            <a href="../frontend-minimo/" class="rounded-lg border border-slate-500 px-4 py-2 hover:bg-slate-800">Abrir versão mínima</a>
+        </div>
+    </header>
+
+    <main class="mx-auto max-w-7xl p-6">
+        <p class="mb-2 text-slate-600">Cadastre alunos, consulte os detalhes e mantenha os dados atualizados.</p>
+        <p id="mensagem" role="status" class="mb-4 min-h-6 font-medium text-teal-800"></p>
+
+        <div class="space-y-6">
+            <section class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+                <h2 id="titulo-formulario" class="mb-5 text-xl font-bold">Cadastrar aluno</h2>
+                <form id="formulario" class="grid gap-4 sm:grid-cols-2">
+                    <input type="hidden" name="id">
+                    <div>
+                        <label for="nome" class="mb-1 block text-sm font-semibold">Nome</label>
+                        <input id="nome" name="nome" maxlength="100" required class="w-full rounded-lg border border-slate-300 p-2 focus:outline-teal-600">
+                    </div>
+                    <div>
+                        <label for="email" class="mb-1 block text-sm font-semibold">E-mail</label>
+                        <input id="email" type="email" name="email" maxlength="150" required class="w-full rounded-lg border border-slate-300 p-2 focus:outline-teal-600">
+                    </div>
+                    <div>
+                        <label for="data_nascimento" class="mb-1 block text-sm font-semibold">Data de nascimento</label>
+                        <input id="data_nascimento" type="date" name="data_nascimento" required class="w-full rounded-lg border border-slate-300 p-2 focus:outline-teal-600">
+                    </div>
+                    <div>
+                        <label for="telefone" class="mb-1 block text-sm font-semibold">Telefone</label>
+                        <input id="telefone" type="tel" name="telefone" maxlength="20" required class="w-full rounded-lg border border-slate-300 p-2 focus:outline-teal-600">
+                    </div>
+                    <button id="salvar" class="w-full rounded-lg bg-teal-700 px-4 py-2 font-semibold text-white hover:bg-teal-800 disabled:opacity-50">Salvar</button>
+                    <button id="cancelar" type="button" class="w-full rounded-lg border border-slate-300 px-4 py-2 hover:bg-slate-100">Limpar / cancelar edição</button>
+                </form>
+            </section>
+
+            <section class="min-w-0 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+                <div class="mb-5 flex flex-wrap items-center justify-between gap-3">
+                    <h2 class="text-xl font-bold">Alunos <span id="total" class="ml-1 rounded-full bg-teal-100 px-3 py-1 text-sm text-teal-800">0</span></h2>
+                    <button id="atualizar" class="rounded-lg border border-slate-300 px-3 py-2 text-sm hover:bg-slate-100">Atualizar lista</button>
+                </div>
+                <p id="lista-vazia" hidden class="py-6 text-slate-500">Nenhum aluno cadastrado. Use o formulário para começar.</p>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-100 text-slate-600">
+                            <tr>
+                                <th class="p-3">ID</th><th class="p-3">Nome</th><th class="p-3">E-mail</th>
+                                <th class="p-3">Nascimento</th><th class="p-3">Telefone</th><th class="p-3">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="alunos"></tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+
+        <template id="linha-aluno">
+            <tr class="border-b border-slate-100 hover:bg-slate-50">
+                <td data-campo="id" class="p-3 text-slate-500"></td>
+                <td data-campo="nome" class="p-3 font-semibold"></td>
+                <td data-campo="email" class="p-3"></td>
+                <td data-campo="data_nascimento" class="whitespace-nowrap p-3"></td>
+                <td data-campo="telefone" class="whitespace-nowrap p-3"></td>
+                <td class="p-3">
+                    <div class="flex flex-wrap gap-2">
+                        <button data-acao="ver" class="whitespace-nowrap rounded bg-slate-100 px-2 py-1 hover:bg-slate-200">Ver detalhes</button>
+                        <button data-acao="editar" class="rounded bg-blue-50 px-2 py-1 text-blue-800 hover:bg-blue-100">Editar</button>
+                        <button data-acao="excluir" class="rounded bg-red-50 px-2 py-1 text-red-700 hover:bg-red-100">Excluir</button>
+                    </div>
+                </td>
+            </tr>
+        </template>
+
+        <section id="detalhes" hidden class="mt-6 rounded-xl border border-teal-200 bg-white p-6 shadow-sm">
+            <h2 class="mb-4 text-xl font-bold">Detalhes do aluno <span id="detalhe-id"></span></h2>
+            <dl class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div><dt class="text-sm text-slate-500">Nome</dt><dd data-campo="nome" class="font-semibold"></dd></div>
+                <div><dt class="text-sm text-slate-500">E-mail</dt><dd data-campo="email" class="break-all font-semibold"></dd></div>
+                <div><dt class="text-sm text-slate-500">Data de nascimento</dt><dd data-campo="data_nascimento" class="font-semibold"></dd></div>
+                <div><dt class="text-sm text-slate-500">Telefone</dt><dd data-campo="telefone" class="font-semibold"></dd></div>
+            </dl>
+        </section>
+    </main>
+
+    <footer class="mx-auto max-w-7xl px-6 py-5 text-sm text-slate-500">Cadastro de alunos · Web 1</footer>
+</body>
+</html>

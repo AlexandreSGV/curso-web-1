@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>Alunos — front-end mínimo</title>
+    <script src="../js/app.js" defer></script>
+</head>
+<body>
+    <h1>Cadastro de alunos</h1>
+    <p><a href="../frontend-tailwind/">Abrir versão com Tailwind</a></p>
+    <p id="mensagem" role="status"></p>
+
+    <h2 id="titulo-formulario">Cadastrar aluno</h2>
+    <form id="formulario">
+        <input type="hidden" name="id">
+        <p>Nome: <input name="nome" maxlength="100" required></p>
+        <p>E-mail: <input type="email" name="email" maxlength="150" required></p>
+        <p>Data de nascimento: <input type="date" name="data_nascimento" required></p>
+        <p>Telefone: <input type="tel" name="telefone" maxlength="20" required></p>
+        <button id="salvar">Salvar</button>
+        <button id="cancelar" type="button">Limpar / cancelar edição</button>
+    </form>
+
+    <h2>Alunos cadastrados: <span id="total">0</span></h2>
+    <button id="atualizar">Atualizar lista</button>
+    <p id="lista-vazia" hidden>Nenhum aluno cadastrado.</p>
+    <table>
+        <thead>
+            <tr><th>ID</th><th>Nome</th><th>E-mail</th><th>Nascimento</th><th>Telefone</th><th>Ações</th></tr>
+        </thead>
+        <tbody id="alunos"></tbody>
+    </table>
+
+    <template id="linha-aluno">
+        <tr>
+            <td data-campo="id"></td>
+            <td data-campo="nome"></td>
+            <td data-campo="email"></td>
+            <td data-campo="data_nascimento"></td>
+            <td data-campo="telefone"></td>
+            <td>
+                <button data-acao="ver">Ver detalhes</button>
+                <button data-acao="editar">Editar</button>
+                <button data-acao="excluir">Excluir</button>
+            </td>
+        </tr>
+    </template>
+
+    <section id="detalhes" hidden>
+        <h2>Aluno <span id="detalhe-id"></span></h2>
+        <dl>
+            <dt>Nome</dt><dd data-campo="nome"></dd>
+            <dt>E-mail</dt><dd data-campo="email"></dd>
+            <dt>Data de nascimento</dt><dd data-campo="data_nascimento"></dd>
+            <dt>Telefone</dt><dd data-campo="telefone"></dd>
+        </dl>
+    </section>
+</body>
+</html>
