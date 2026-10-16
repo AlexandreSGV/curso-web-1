@@ -602,9 +602,9 @@ O banco é o mesmo dos exemplos anteriores. O [guia do exemplo](exemplos/03-crud
 
 ### Tutorial passo a passo — CRUD de produtos
 
-[Abrir o tutorial e os arquivos do projeto](exemplos/tutorial-crud-produtos-minimalista/README.md).
+[Abrir o tutorial passo a passo](exemplos/tutorial-crud-produtos-minimalista/README.md).
 
-O tutorial complementar apresenta a construção de um CRUD mínimo de produtos em 21 passos: criação da pasta, SQL do banco, conexão PDO, formulários, actions, consultas, listagem e redirecionamentos. Todos os arquivos ficam na mesma pasta. Este projeto usa seu próprio banco, `crud_armazem`, e a tabela `produtos`.
+O tutorial complementar apresenta a construção de um CRUD mínimo de produtos em 21 passos: criação da pasta, SQL do banco, conexão PDO, formulários, actions, consultas, listagem e redirecionamentos. Crie os arquivos na sua pasta de projeto conforme segue os códigos e os testes de cada passo. Este projeto usa seu próprio banco, `crud_armazem`, e a tabela `produtos`.
 
 ## 10. Quadro de consulta rápida
 

@@ -11,7 +11,7 @@ Este tutorial apresenta a construção de um cadastro de produtos desde a criaç
 
 É necessário ter PHP com a extensão `pdo_mysql`, MySQL em execução e um editor como o VS Code. A preparação dessas ferramentas está no [guia de ambiente](../../../../apoio/ambiente-web1-windows/).
 
-Todos os arquivos ficam na mesma pasta. Salve-os como UTF-8 no editor. Os arquivos disponíveis aqui contêm a versão final; ao construir o projeto passo a passo, acrescente os redirecionamentos somente no passo 20.
+Crie cada arquivo na sua pasta de projeto conforme avança pelos passos e utilize os códigos apresentados no texto. Salve os arquivos como UTF-8 no editor e teste cada operação na etapa indicada. Acrescente os redirecionamentos somente no passo 20.
 
 ## 1. Criar a pasta do projeto
 
@@ -27,7 +27,7 @@ Substitua `seu_nome` pelo nome da sua pasta. `mkdir` cria a pasta, `cd` entra ne
 
 ## 2. Escrever o SQL do banco
 
-Crie o arquivo [banco.sql](banco.sql):
+Crie o arquivo `banco.sql`:
 
 ```sql
 CREATE DATABASE crud_armazem;
@@ -72,7 +72,7 @@ Use `;` para finalizar os comandos. Mantenha esse console aberto para consultar 
 
 ## 4. Criar a conexão PDO
 
-Crie o arquivo [conexao.php](conexao.php):
+Crie o arquivo `conexao.php`:
 
 ```php
 <?php
@@ -94,7 +94,7 @@ As variáveis indicam o banco, o usuário, a senha e a porta do MySQL. Ajuste es
 
 ## 5. Criar o formulário de cadastro
 
-Crie o arquivo [create_produto_form.php](create_produto_form.php):
+Crie o arquivo `create_produto_form.php`:
 
 ```html
 <form method="post" action="create_produto_action.php">
@@ -186,7 +186,7 @@ Em um banco recém-criado, o primeiro produto recebe o `id` igual a `1`. Se o n�
 
 ## 11. Criar a tela de um produto
 
-Crie o arquivo [show_produto.php](show_produto.php):
+Crie o arquivo `show_produto.php`:
 
 ```php
 <?php
@@ -221,7 +221,7 @@ No endereço, `?` inicia os parâmetros e `id=1` informa qual produto consultar.
 
 ## 13. Criar o formulário de edição
 
-Crie o arquivo [update_produto_form.php](update_produto_form.php):
+Crie o arquivo `update_produto_form.php`:
 
 ```php
 <?php
@@ -328,7 +328,7 @@ As quatro operações já estão funcionando. A próxima tela reúne os produtos
 
 ## 19. Criar a listagem com os links
 
-Crie o arquivo [index_produto.php](index_produto.php):
+Crie o arquivo `index_produto.php`:
 
 ```php
 <?php
@@ -461,18 +461,18 @@ Comece pela [listagem de produtos](http://localhost:8000/index_produto.php):
 
 Mantenha o MySQL e o servidor PHP em execução. Para encerrar o servidor PHP ao terminar, pressione `Ctrl+C` no terminal dele.
 
-## Arquivos do projeto concluído
+## Arquivos criados durante o tutorial
 
 | Arquivo | Responsabilidade |
 |---|---|
-| [banco.sql](banco.sql) | Criar o banco e a tabela |
-| [conexao.php](conexao.php) | Abrir a conexão PDO |
-| [create_produto_form.php](create_produto_form.php) | Apresentar o formulário de cadastro |
-| [create_produto_action.php](create_produto_action.php) | Inserir o produto e redirecionar |
-| [show_produto.php](show_produto.php) | Consultar e exibir um produto |
-| [update_produto_form.php](update_produto_form.php) | Consultar o produto e preencher o formulário de edição |
-| [update_produto_action.php](update_produto_action.php) | Atualizar o produto e redirecionar |
-| [delete_produto_action.php](delete_produto_action.php) | Excluir o produto e redirecionar |
-| [index_produto.php](index_produto.php) | Listar os produtos e oferecer os links das operações |
+| `banco.sql` | Criar o banco e a tabela |
+| `conexao.php` | Abrir a conexão PDO |
+| `create_produto_form.php` | Apresentar o formulário de cadastro |
+| `create_produto_action.php` | Inserir o produto e redirecionar |
+| `show_produto.php` | Consultar e exibir um produto |
+| `update_produto_form.php` | Consultar o produto e preencher o formulário de edição |
+| `update_produto_action.php` | Atualizar o produto e redirecionar |
+| `delete_produto_action.php` | Excluir o produto e redirecionar |
+| `index_produto.php` | Listar os produtos e oferecer os links das operações |
 
 Para aprofundar os conceitos, consulte a [apostila de CRUD com PHP](../../README.md).
