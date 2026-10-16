@@ -433,7 +433,7 @@ No [exemplo 2](exemplos/02-crud-templates/php/alunos/index.php), um formulário 
 
 Esta seção apresenta três formas de organizar um CRUD: páginas simples com processamento integrado, uma estrutura com templates e actions e uma API PHP consumida por um front-end JavaScript. Todas utilizam as colunas `id`, `nome`, `email`, `data_nascimento` e `telefone`, com as mesmas operações SQL.
 
-Cada exemplo inclui um script opcional `popular.sql` com oito alunos fictícios para experimentar a listagem, os detalhes, a edição e a exclusão. Ele acrescenta registros à tabela existente; o MySQL gera os ids automaticamente. Os três scripts contêm os mesmos dados e usam o mesmo banco, portanto basta executar um deles. Cada nova execução acrescenta novamente os oito alunos.
+Cada um dos três exemplos de alunos inclui um script opcional `popular.sql` com oito alunos fictícios para experimentar a listagem, os detalhes, a edição e a exclusão. Ele acrescenta registros à tabela existente; o MySQL gera os ids automaticamente. Os três scripts contêm os mesmos dados e usam o mesmo banco, portanto basta executar um deles. Cada nova execução acrescenta novamente os oito alunos.
 
 ### Exemplo 1 — CRUD mínimo
 
@@ -599,6 +599,12 @@ Neste exemplo, a [API PHP](exemplos/03-crud-api/api/alunos.php) executa o CRUD c
 `GET` consulta, `POST` cadastra, `PUT` altera e `DELETE` exclui. Cadastro e edição enviam os quatro campos em JSON; o PHP lê esse corpo com `php://input` e `json_decode()`. Após cada alteração, o JavaScript consulta a lista novamente e atualiza a tabela.
 
 O banco é o mesmo dos exemplos anteriores. O [guia do exemplo](exemplos/03-crud-api/README.md) apresenta a configuração, os endereços das duas interfaces, o contrato da API e o percurso das requisições.
+
+### Tutorial passo a passo — CRUD de produtos
+
+[Abrir o tutorial e os arquivos do projeto](exemplos/tutorial-crud-produtos-minimalista/README.md).
+
+O tutorial complementar apresenta a construção de um CRUD mínimo de produtos em 21 passos: criação da pasta, SQL do banco, conexão PDO, formulários, actions, consultas, listagem e redirecionamentos. Todos os arquivos ficam na mesma pasta. Este projeto usa seu próprio banco, `crud_armazem`, e a tabela `produtos`.
 
 ## 10. Quadro de consulta rápida
 
