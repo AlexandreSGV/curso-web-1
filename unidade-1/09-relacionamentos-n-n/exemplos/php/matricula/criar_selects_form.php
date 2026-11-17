@@ -12,7 +12,7 @@ include __DIR__ . '/../templates/cabecalho.php';
         <select name="aluno_id" required>
             <option value="">Escolha um aluno</option>
             <?php foreach ($alunos as $aluno): ?>
-                <option value="<?= $aluno['id'] ?>"><?= h($aluno['nome']) ?></option>
+                <option value="<?= $aluno['id'] ?>"><?= $aluno['nome'] ?></option>
             <?php endforeach; ?>
         </select>
     </label></p>
@@ -20,7 +20,7 @@ include __DIR__ . '/../templates/cabecalho.php';
         <select name="turma_id" required>
             <option value="">Escolha uma turma</option>
             <?php foreach ($turmas as $turma): ?>
-                <option value="<?= $turma['id'] ?>"><?= h($turma['nome']) ?></option>
+                <option value="<?= $turma['id'] ?>"><?= $turma['nome'] ?></option>
             <?php endforeach; ?>
         </select>
     </label></p>

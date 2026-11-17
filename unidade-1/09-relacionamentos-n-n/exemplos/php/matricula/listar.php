@@ -17,8 +17,8 @@ include __DIR__ . '/../templates/cabecalho.php';
 </p>
 <ul>
     <?php foreach ($matriculas as $matricula): ?>
-        <li><?= h($matricula['aluno']) ?> —
-            <a href="/php/turma/detalhes.php?id=<?= $matricula['turma_id'] ?>"><?= h($matricula['turma']) ?></a>
+        <li><?= $matricula['aluno'] ?> —
+            <a href="/php/turma/detalhes.php?id=<?= $matricula['turma_id'] ?>"><?= $matricula['turma'] ?></a>
         </li>
     <?php endforeach; ?>
 </ul>

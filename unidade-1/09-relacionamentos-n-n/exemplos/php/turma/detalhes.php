@@ -12,9 +12,9 @@ $disponiveis = $pdo->query('SELECT id, nome FROM alunos ORDER BY nome, id');
 $titulo = $registro['nome'];
 include __DIR__ . '/../templates/cabecalho.php';
 ?>
-<h1><?= h($registro['nome']) ?></h1>
+<h1><?= $registro['nome'] ?></h1>
 <p>ID: <?= $id ?></p>
-<p>Professor: <?= h($registro['professor']) ?></p>
+<p>Professor: <?= $registro['professor'] ?></p>
 <p>
     <a href="editar_form.php?id=<?= $id ?>">Editar</a>
     | <a href="listar.php">Voltar à lista</a>
@@ -32,7 +32,7 @@ include __DIR__ . '/../templates/cabecalho.php';
         <select name="aluno_id" required>
             <option value="">Escolha um aluno</option>
             <?php foreach ($disponiveis as $aluno): ?>
-                <option value="<?= $aluno['id'] ?>"><?= h($aluno['nome']) ?></option>
+                <option value="<?= $aluno['id'] ?>"><?= $aluno['nome'] ?></option>
             <?php endforeach; ?>
         </select>
     </label>
@@ -45,7 +45,7 @@ include __DIR__ . '/../templates/cabecalho.php';
         <li>
             <form method="post" action="/php/matricula/deletar_action.php">
                 <?php campo_token(); ?>
-                <a href="/php/aluno/detalhes.php?id=<?= $aluno['id'] ?>"><?= h($aluno['nome']) ?></a>
+                <a href="/php/aluno/detalhes.php?id=<?= $aluno['id'] ?>"><?= $aluno['nome'] ?></a>
                 <input type="hidden" name="aluno_id" value="<?= $aluno['id'] ?>">
                 <input type="hidden" name="turma_id" value="<?= $id ?>">
                 <button>Desmatricular</button>

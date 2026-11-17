@@ -1,11 +1,5 @@
 <?php
 
-// Prepara dados para exibição como texto no HTML, inclusive em atributos como value.
-// Aspas e sinais como < e & não são interpretados como parte da marcação.
-function h($texto) {
-    return htmlspecialchars((string) $texto, ENT_QUOTES, 'UTF-8');
-}
-
 // Redireciona o navegador com status 303 e encerra o script.
 function ir($url) {
     header('Location: ' . $url, true, 303);
@@ -26,7 +20,7 @@ function usuario_logado($pdo) {
 // Cria o token da sessão se necessário e o inclui como campo oculto no formulário.
 function campo_token() {
     $_SESSION['token'] ??= bin2hex(random_bytes(32));
-    echo '<input type="hidden" name="token" value="' . h($_SESSION['token']) . '">';
+    echo '<input type="hidden" name="token" value="' . $_SESSION['token'] . '">';
 }
 
 // Aceita apenas POST e verifica se o formulário enviou o token da sessão.
