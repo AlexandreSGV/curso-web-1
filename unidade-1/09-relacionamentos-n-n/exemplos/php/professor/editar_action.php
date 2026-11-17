@@ -1,8 +1,7 @@
 <?php
-require __DIR__ . '/../inicio.php';
-exigir_login();
+require __DIR__ . '/../verificar_login.php';
 exigir_post();
 
 $comando = $pdo->prepare('UPDATE professores SET nome = ? WHERE id = ?');
 $comando->execute([$_POST['nome'], $_POST['id']]);
-ir('/professor/listar.php');
+ir('/php/professor/listar.php');

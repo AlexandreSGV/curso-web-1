@@ -1,9 +1,8 @@
 <?php
-require __DIR__ . '/../inicio.php';
-exigir_login();
+require __DIR__ . '/../verificar_login.php';
 $registros = $pdo->query('SELECT id, nome FROM alunos ORDER BY nome, id');
 $titulo = 'Alunos';
-include __DIR__ . '/../../templates/cabecalho.php';
+include __DIR__ . '/../templates/cabecalho.php';
 ?>
 <h1>Alunos</h1>
 <p><a href="criar_form.php">Cadastrar novo registro</a></p>
@@ -20,4 +19,4 @@ include __DIR__ . '/../../templates/cabecalho.php';
         </li>
     <?php endforeach; ?>
 </ul>
-<?php include __DIR__ . '/../../templates/rodape.php'; ?>
+<?php include __DIR__ . '/../templates/rodape.php'; ?>

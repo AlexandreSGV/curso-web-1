@@ -1,8 +1,7 @@
 <?php
-require __DIR__ . '/../inicio.php';
-exigir_login();
+require __DIR__ . '/../verificar_login.php';
 exigir_post();
 
 $comando = $pdo->prepare('INSERT INTO alunos (nome) VALUES (?)');
 $comando->execute([$_POST['nome']]);
-ir('/aluno/listar.php');
+ir('/php/aluno/listar.php');

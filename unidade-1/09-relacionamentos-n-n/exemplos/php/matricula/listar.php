@@ -1,6 +1,5 @@
 <?php
-require __DIR__ . '/../inicio.php';
-exigir_login();
+require __DIR__ . '/../verificar_login.php';
 $matriculas = $pdo->query(
     'SELECT a.nome AS aluno, t.nome AS turma, t.id AS turma_id
      FROM matriculas AS m
@@ -9,7 +8,7 @@ $matriculas = $pdo->query(
      ORDER BY t.nome, a.nome'
 );
 $titulo = 'Matrículas';
-include __DIR__ . '/../../templates/cabecalho.php';
+include __DIR__ . '/../templates/cabecalho.php';
 ?>
 <h1>Matrículas</h1>
 <p>
@@ -19,8 +18,8 @@ include __DIR__ . '/../../templates/cabecalho.php';
 <ul>
     <?php foreach ($matriculas as $matricula): ?>
         <li><?= h($matricula['aluno']) ?> —
-            <a href="/turma/detalhes.php?id=<?= $matricula['turma_id'] ?>"><?= h($matricula['turma']) ?></a>
+            <a href="/php/turma/detalhes.php?id=<?= $matricula['turma_id'] ?>"><?= h($matricula['turma']) ?></a>
         </li>
     <?php endforeach; ?>
 </ul>
-<?php include __DIR__ . '/../../templates/rodape.php'; ?>
+<?php include __DIR__ . '/../templates/rodape.php'; ?>

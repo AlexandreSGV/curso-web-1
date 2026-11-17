@@ -1,6 +1,5 @@
 <?php
-require __DIR__ . '/../inicio.php';
-exigir_login();
+require __DIR__ . '/../verificar_login.php';
 exigir_post();
 
 $turmaId = (int) $_POST['turma_id'];
@@ -14,7 +13,7 @@ try {
     if ($erro->getCode() !== '23000') {
         throw $erro;
     }
-    ir('/matricula/criar_ids_form.php?ids_invalidos=1');
+    ir('/php/matricula/criar_ids_form.php?ids_invalidos=1');
 }
 
-ir('/turma/detalhes.php?id=' . $turmaId);
+ir('/php/turma/detalhes.php?id=' . $turmaId);

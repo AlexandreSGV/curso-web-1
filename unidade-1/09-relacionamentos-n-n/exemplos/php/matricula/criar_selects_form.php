@@ -1,10 +1,9 @@
 <?php
-require __DIR__ . '/../inicio.php';
-exigir_login();
+require __DIR__ . '/../verificar_login.php';
 $alunos = $pdo->query('SELECT id, nome FROM alunos ORDER BY nome, id');
 $turmas = $pdo->query('SELECT id, nome FROM turmas ORDER BY nome, id');
 $titulo = 'Matrícula por listas';
-include __DIR__ . '/../../templates/cabecalho.php';
+include __DIR__ . '/../templates/cabecalho.php';
 ?>
 <h1>Matrícula por listas</h1>
 <form method="post" action="criar_action.php">
@@ -27,4 +26,4 @@ include __DIR__ . '/../../templates/cabecalho.php';
     </label></p>
     <button>Matricular</button>
 </form>
-<?php include __DIR__ . '/../../templates/rodape.php'; ?>
+<?php include __DIR__ . '/../templates/rodape.php'; ?>

@@ -1,8 +1,7 @@
 <?php
-require __DIR__ . '/../inicio.php';
-exigir_login();
+require __DIR__ . '/../verificar_login.php';
 $titulo = 'Cadastrar professor';
-include __DIR__ . '/../../templates/cabecalho.php';
+include __DIR__ . '/../templates/cabecalho.php';
 ?>
 <h1>Cadastrar professor</h1>
 <form method="post" action="criar_action.php">
@@ -11,4 +10,4 @@ include __DIR__ . '/../../templates/cabecalho.php';
     <button>Salvar</button>
     <a href="listar.php">Voltar à lista</a>
 </form>
-<?php include __DIR__ . '/../../templates/rodape.php'; ?>
+<?php include __DIR__ . '/../templates/rodape.php'; ?>
