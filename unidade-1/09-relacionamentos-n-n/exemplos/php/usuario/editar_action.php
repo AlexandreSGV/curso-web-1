@@ -1,6 +1,5 @@
 <?php
-require __DIR__ . '/../inicio.php';
-exigir_login();
+require __DIR__ . '/../verificar_login.php';
 exigir_post();
 
 if ($_POST['senha'] === '') {
@@ -11,4 +10,4 @@ if ($_POST['senha'] === '') {
     $comando = $pdo->prepare('UPDATE usuarios SET nome = ?, login = ?, senha = ? WHERE id = ?');
     $comando->execute([$_POST['nome'], $_POST['login'], $senha, $_POST['id']]);
 }
-ir('/usuario/listar.php');
+ir('/php/usuario/listar.php');

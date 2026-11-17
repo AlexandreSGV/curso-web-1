@@ -27,7 +27,7 @@ Se o MySQL usa outro usuário, senha ou porta, ajuste [config/conexao.php](confi
 No CMD, ainda na pasta `exemplos`:
 
 ```bat
-php -S localhost:8000 -t php
+php -S localhost:8000
 ```
 
 Abra [http://localhost:8000/](http://localhost:8000/). A home dá as boas-vindas e oferece o botão **Entrar**. Use a conta local de demonstração:
@@ -46,14 +46,24 @@ O nome `admin` identifica a conta inicial. O exemplo não distingue perfis de ac
 | Pasta ou arquivo | O que contém |
 |---|---|
 | [config/](config/) | Conexão PDO e scripts SQL de criação e população |
-| [templates/](templates/) | Dois arquivos compartilhados: cabeçalho com menu e rodapé |
-| [php/index.php](php/index.php) | Home do sistema |
-| [php/inicio.php](php/inicio.php) | Inicialização da sessão, conexão e pequenas funções comuns |
+| [index.php](index.php) | Home do sistema, na raiz do exemplo |
+| [css/](css/), [js/](js/) e [img/](img/) | Pastas para estilos, scripts e imagens |
+| [php/templates/](php/templates/) | Cabeçalho com menu e rodapé compartilhados |
+| [php/verificar_login.php](php/verificar_login.php) | Abre a sessão e redireciona para o login quando não há um usuário autenticado |
+| [php/funcoes.php](php/funcoes.php) | Funções reutilizadas no HTML e no processamento dos formulários |
 | [php/login/](php/login/) | Formulário de login e ações de entrada e saída |
 | [php/aluno/](php/aluno/), [php/professor/](php/professor/), [php/turma/](php/turma/) e [php/usuario/](php/usuario/) | Um cadastro completo em cada pasta |
 | [php/matricula/](php/matricula/) | Listagem, dois formulários e ações para matricular e desmatricular |
 
-`-t php` indica a pasta pública do servidor local. Por isso, o endereço de [php/aluno/listar.php](php/aluno/listar.php) é `/aluno/listar.php`. A configuração e os templates ficam fora da pasta pública e são carregados pelos arquivos PHP.
+Inicie o servidor na raiz do exemplo, onde está o `index.php`. O endereço de [php/aluno/listar.php](php/aluno/listar.php), por exemplo, é `/php/aluno/listar.php`.
+
+As páginas e ações protegidas começam com este `require`, antes de qualquer saída HTML:
+
+```php
+require __DIR__ . '/../verificar_login.php';
+```
+
+O arquivo verifica a sessão. Se o usuário não estiver autenticado, envia o redirecionamento e encerra a requisição. A home e o formulário de login podem ser abertos sem esse `require`.
 
 Os quatro cadastros seguem o mesmo padrão. Para começar a leitura, acompanhe os arquivos do cadastro de alunos:
 
@@ -67,7 +77,7 @@ Os quatro cadastros seguem o mesmo padrão. Para começar a leitura, acompanhe o
 | [editar_action.php](php/aluno/editar_action.php) | Recebe o POST e grava a alteração |
 | [deletar_action.php](php/aluno/deletar_action.php) | Recebe o ID por POST e exclui o registro |
 
-O botão **Excluir** é um formulário POST. Assim, abrir um endereço no navegador não dispara a exclusão. A página usa `include` para montar cabeçalho e rodapé. A função `exigir_login()` protege o acesso no servidor, mesmo se alguém digitar o endereço direto.
+O botão **Excluir** envia um formulário POST. A página usa `include` para montar o cabeçalho e o rodapé.
 
 ## 4. Experimentar os relacionamentos
 
@@ -76,7 +86,7 @@ O botão **Excluir** é um formulário POST. Assim, abrir um endereço no navega
 3. Em **Matrículas → Matricular por listas**, selecione Felipe Costa e **Banco de Dados**. Agora Felipe aparece nas duas turmas.
 4. Nos detalhes de **Web 1**, selecione outro aluno no formulário da própria turma e clique em **Matricular**. Os três formulários usam o mesmo [criar_action.php](php/matricula/criar_action.php).
 5. Em **Web 1**, use **Desmatricular** ao lado de Felipe. Confira que ele ainda está em **Banco de Dados** e no cadastro de alunos.
-6. Clique em **Sair** e tente abrir `/turma/listar.php` diretamente. O sistema solicita o login.
+6. Clique em **Sair** e tente abrir `/php/turma/listar.php` diretamente. O sistema solicita o login.
 
 Para praticar o CRUD, crie um aluno, veja os detalhes, altere o nome e exclua o registro. Na tela **Usuários**, o mesmo fluxo permite criar outra conta. Deixar a senha em branco na edição mantém a senha atual. Para excluir uma conta que está em uso, entre com outra conta.
 

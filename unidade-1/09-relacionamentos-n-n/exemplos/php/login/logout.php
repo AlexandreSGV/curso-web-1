@@ -1,6 +1,5 @@
 <?php
-require __DIR__ . '/../inicio.php';
-exigir_login();
+require __DIR__ . '/../verificar_login.php';
 exigir_post();
 
 $_SESSION = [];
