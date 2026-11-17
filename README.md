@@ -12,6 +12,7 @@ Materiais da disciplina de Desenvolvimento Web 1.
 6. [CRUD com PHP: cadastro de alunos](unidade-1/06-crud-php/)
 7. [CRUD com NestJS: mesma interface e mesmo banco](unidade-1/07-crud-nestjs-api/)
 8. [PHP: sessões e autenticação](unidade-1/08-sessoes-autenticacao/)
+9. [PHP: relacionamento N–N com alunos, turmas e matrículas](unidade-1/09-relacionamentos-n-n/)
 
 ## Projeto acumulativo
 
