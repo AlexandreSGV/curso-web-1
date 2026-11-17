@@ -2,7 +2,7 @@
 
 Ana pode cursar **Web 1** e **Banco de Dados** ao mesmo tempo. A turma de **Web 1**, por sua vez, pode receber Ana, Bruno e outros alunos. Chamamos essa associação de **matrícula**: cada matrícula liga um aluno a uma turma.
 
-Nesta aula, você vai usar PHP puro, PDO e MySQL para construir três maneiras de matricular alunos e uma maneira de desmatriculá-los. O [guia prático](exemplos/README.md) reaproveita a [autenticação da aula 08](../08-sessoes-autenticacao/) e os padrões de formulário, consulta e gravação da [aula de CRUD](../06-crud-php/).
+Nesta aula, você vai usar PHP puro, PDO e MySQL para entender três maneiras de matricular alunos e uma maneira de desmatriculá-los. O [projeto completo](exemplos/README.md) aplica os conceitos de [sessão e autenticação da aula 08](../08-sessoes-autenticacao/) e os padrões de formulário, consulta e gravação da [aula de CRUD](../06-crud-php/).
 
 ## Índice
 
@@ -11,7 +11,7 @@ Nesta aula, você vai usar PHP puro, PDO e MySQL para construir três maneiras d
 3. [Três formas de matricular](#3-três-formas-de-matricular)
 4. [Como listar os alunos de uma turma](#4-como-listar-os-alunos-de-uma-turma)
 5. [Como desmatricular um aluno](#5-como-desmatricular-um-aluno)
-6. [Construção prática](#6-construção-prática)
+6. [Executar o projeto completo](#6-executar-o-projeto-completo)
 
 ## 1. Dois relacionamentos no mesmo sistema
 
@@ -43,7 +43,7 @@ Veja três linhas da tabela intermediária:
 
 As **chaves estrangeiras** apontam para alunos e turmas que já existem. A **chave primária composta** é o par `(aluno_id, turma_id)`: cada ID pode aparecer várias vezes, mas o mesmo par só pode aparecer uma vez.
 
-Matricular Ana em Web 1 significa inserir o par `(1, 1)` em `matriculas`. Nenhum cadastro de aluno ou turma precisa ser criado novamente. O esquema completo está no [passo 2 do guia](exemplos/README.md#2-criar-as-tabelas).
+Matricular Ana em Web 1 significa inserir o par `(1, 1)` em `matriculas`. Os cadastros do aluno e da turma já existem. O esquema completo está em [config/banco.sql](exemplos/config/banco.sql).
 
 ## 3. Três formas de matricular
 
@@ -53,14 +53,15 @@ Matricular Ana em Web 1 significa inserir o par `(1, 1)` em `matriculas`. Nenhum
 | Matrícula por listas | Escolhe o aluno e a turma pelo nome | Dois `select`; cada opção envia o ID do registro |
 | Detalhes da turma | Escolhe um aluno e clica em **Matricular** | Um `select` para o aluno e um campo oculto com o ID da turma aberta |
 
-Nos três casos, o formulário envia `aluno_id` e `turma_id` por POST para `matricular.php`. O PHP verifica o login e usa os valores para inserir a matrícula com PDO:
+Nos três casos, o formulário envia `aluno_id` e `turma_id` por POST para [matricula/criar_action.php](exemplos/php/matricula/criar_action.php). O PHP verifica o login e usa os valores para inserir a matrícula com PDO. O trecho central é:
 
 ```php
+$turmaId = (int) $_POST['turma_id'];
 $comando = $pdo->prepare(
     'INSERT INTO matriculas (aluno_id, turma_id) VALUES (?, ?)
      ON DUPLICATE KEY UPDATE aluno_id = aluno_id'
 );
-$comando->execute([$_POST['aluno_id'], $_POST['turma_id']]);
+$comando->execute([$_POST['aluno_id'], $turmaId]);
 ```
 
 O trecho `ON DUPLICATE KEY UPDATE` deixa a linha como está se o par já existe. Assim, repetir a matrícula não cria outra linha. A chave estrangeira continua impedindo IDs que não existem.
@@ -89,9 +90,9 @@ DELETE FROM matriculas WHERE aluno_id = ? AND turma_id = ?;
 
 O aluno e a turma continuam cadastrados. Se Ana está em duas turmas, desmatriculá-la de uma mantém a matrícula na outra. Usar só o ID do aluno no `WHERE` removeria todas as matrículas dele.
 
-## 6. Construção prática
+## 6. Executar o projeto completo
 
-No [guia passo a passo](exemplos/README.md), você cria os cadastros de professores, turmas e alunos e protege as telas e ações com o login da aula anterior. Depois, monta as três telas de matrícula, consulta os detalhes da turma e desmatricula um aluno.
+Siga o [guia de execução](exemplos/README.md) para criar e popular o banco e abrir a home. O sistema inclui login, logout e cadastros de professores, turmas, alunos e usuários. Os arquivos PHP ficam separados por entidade e usam o mesmo cabeçalho com menu e o mesmo rodapé.
 
 Para conferir a relação N–N, use **Ana** em duas turmas e **Bruno** em uma das turmas de Ana. Depois, desmatricule Ana de uma turma e confira que o vínculo na outra permanece.
 
