@@ -5,7 +5,7 @@ $registro = buscar($pdo, 'SELECT nome FROM alunos WHERE id = ?', $id);
 $titulo = $registro['nome'];
 include __DIR__ . '/../templates/cabecalho.php';
 ?>
-<h1><?= h($registro['nome']) ?></h1>
+<h1><?= $registro['nome'] ?></h1>
 <p>ID: <?= $id ?></p>
 <p>
     <a href="editar_form.php?id=<?= $id ?>">Editar</a>

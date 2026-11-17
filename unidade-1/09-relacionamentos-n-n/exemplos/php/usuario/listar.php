@@ -9,7 +9,7 @@ include __DIR__ . '/../templates/cabecalho.php';
 <ul>
     <?php foreach ($registros as $registro): ?>
         <li>
-            <?= $registro['id'] ?> — <?= h($registro['nome']) ?> (<?= h($registro['login']) ?>)
+            <?= $registro['id'] ?> — <?= $registro['nome'] ?> (<?= $registro['login'] ?>)
             | <a href="detalhes.php?id=<?= $registro['id'] ?>">Detalhes</a>
             | <a href="editar_form.php?id=<?= $registro['id'] ?>">Editar</a>
             <form method="post" action="deletar_action.php" style="display: inline">

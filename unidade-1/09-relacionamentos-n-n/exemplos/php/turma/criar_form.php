@@ -12,7 +12,7 @@ include __DIR__ . '/../templates/cabecalho.php';
         <select name="professor_id" required>
             <option value="">Escolha um professor</option>
             <?php foreach ($professores as $professor): ?>
-                <option value="<?= $professor['id'] ?>"><?= h($professor['nome']) ?></option>
+                <option value="<?= $professor['id'] ?>"><?= $professor['nome'] ?></option>
             <?php endforeach; ?>
         </select>
     </label></p>

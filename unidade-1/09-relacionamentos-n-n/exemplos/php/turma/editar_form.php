@@ -10,12 +10,12 @@ include __DIR__ . '/../templates/cabecalho.php';
 <form method="post" action="editar_action.php">
     <?php campo_token(); ?>
     <input type="hidden" name="id" value="<?= $id ?>">
-    <p><label>Nome: <input name="nome" maxlength="100" value="<?= h($registro['nome']) ?>" required></label></p>
+    <p><label>Nome: <input name="nome" maxlength="100" value="<?= $registro['nome'] ?>" required></label></p>
     <p><label>Professor:
         <select name="professor_id" required>
             <option value="">Escolha um professor</option>
             <?php foreach ($professores as $professor): ?>
-                <option value="<?= $professor['id'] ?>" <?= $professor['id'] == $registro['professor_id'] ? 'selected' : '' ?>><?= h($professor['nome']) ?></option>
+                <option value="<?= $professor['id'] ?>" <?= $professor['id'] == $registro['professor_id'] ? 'selected' : '' ?>><?= $professor['nome'] ?></option>
             <?php endforeach; ?>
         </select>
     </label></p>

@@ -5,9 +5,9 @@ $registro = buscar($pdo, 'SELECT nome, login FROM usuarios WHERE id = ?', $id);
 $titulo = $registro['nome'];
 include __DIR__ . '/../templates/cabecalho.php';
 ?>
-<h1><?= h($registro['nome']) ?></h1>
+<h1><?= $registro['nome'] ?></h1>
 <p>ID: <?= $id ?></p>
-<p>Usuário: <?= h($registro['login']) ?></p>
+<p>Usuário: <?= $registro['login'] ?></p>
 <?php if (isset($_GET['conta_atual'])): ?>
     <p>Entre com outra conta para excluir este usuário.</p>
 <?php endif; ?>

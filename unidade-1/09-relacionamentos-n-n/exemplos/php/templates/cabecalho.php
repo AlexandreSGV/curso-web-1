@@ -7,7 +7,7 @@ if (!isset($titulo)) {
 <!doctype html>
 <html lang="pt-BR">
 <head>
-    <title><?= h($titulo ?? 'Sistema escolar') ?></title>
+    <title><?= $titulo ?? 'Sistema escolar' ?></title>
 </head>
 <body>
 <header>
@@ -21,7 +21,7 @@ if (!isset($titulo)) {
             | <a href="/php/matricula/listar.php">Matrículas</a>
             <form method="post" action="/php/login/logout.php" style="display: inline">
                 <?php campo_token(); ?>
-                — <?= h($usuarioLogado['nome']) ?>
+                — <?= $usuarioLogado['nome'] ?>
                 <button>Sair</button>
             </form>
         <?php else: ?>

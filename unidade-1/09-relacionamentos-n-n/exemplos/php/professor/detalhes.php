@@ -5,7 +5,7 @@ $registro = buscar($pdo, 'SELECT nome FROM professores WHERE id = ?', $id);
 $titulo = $registro['nome'];
 include __DIR__ . '/../templates/cabecalho.php';
 ?>
-<h1><?= h($registro['nome']) ?></h1>
+<h1><?= $registro['nome'] ?></h1>
 <p>ID: <?= $id ?></p>
 <?php if (isset($_GET['em_uso'])): ?>
     <p>Atribua as turmas a outro professor antes de excluir este cadastro.</p>
