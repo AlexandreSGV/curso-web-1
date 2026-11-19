@@ -1,8 +1,8 @@
 # PHP: relacionamento N–N com alunos, turmas e matrículas
 
-Ana pode cursar **Web 1** e **Banco de Dados** ao mesmo tempo. A turma de **Web 1**, por sua vez, pode receber Ana, Bruno e outros alunos. Chamamos essa associação de **matrícula**: cada matrícula liga um aluno a uma turma.
+Em um sistema escolar, os cadastros de alunos, professores e turmas estão relacionados. O sistema precisa registrar qual professor é responsável por cada turma e quais alunos estão matriculados nela. Essas associações orientam a organização das tabelas e a construção das telas da aplicação.
 
-Nesta aula, você aprende a reconhecer um relacionamento N–N, guardar os vínculos em uma tabela e consultar esses dados nos dois sentidos. O [projeto completo](exemplos/README.md) mostra como fazer isso com PHP puro, PDO e MySQL, reaproveitando os conceitos de [sessão e autenticação](../08-sessoes-autenticacao/) e de [CRUD](../06-crud-php/).
+Esta apostila apresenta o relacionamento **N–N**, ou **muitos para muitos**, a partir da matrícula de alunos em turmas. O estudo acompanha a representação desse vínculo no banco, sua criação por formulários, as consultas nos dois sentidos e a desmatrícula. O [projeto completo](exemplos/README.md) implementa essas operações com PHP puro, PDO e MySQL, dando continuidade aos conteúdos de [CRUD](../06-crud-php/) e de [sessão e autenticação](../08-sessoes-autenticacao/).
 
 ## Índice
 
@@ -15,7 +15,11 @@ Nesta aula, você aprende a reconhecer um relacionamento N–N, guardar os vínc
 
 ## 1. Dois relacionamentos no mesmo sistema
 
-Para identificar o tipo de relacionamento, faça a pergunta nos **dois sentidos**. Para cada aluno, quantas turmas ele pode frequentar? Para cada turma, quantos alunos ela pode receber? Como pode haver vários vínculos nos dois sentidos, o relacionamento é **N–N**, também chamado de **muitos para muitos**.
+Para identificar o tipo de relacionamento, observe quantos registros podem se associar nos **dois sentidos**. No sistema desta aula, um professor pode lecionar em várias turmas, e cada turma tem um professor responsável. Esse é um relacionamento **1–N**, ou **um para muitos**.
+
+A associação entre alunos e turmas funciona de outra forma. Ana, por exemplo, pode estar nas turmas de **Web 1** e **Banco de Dados** ao mesmo tempo. A turma de **Web 1** também pode receber Bruno e outros alunos. Como um aluno pode participar de várias turmas e uma turma pode receber vários alunos, esse relacionamento é **N–N**. Cada vínculo entre um aluno e uma turma é uma **matrícula**.
+
+A comparação abaixo resume os dois casos:
 
 | Relacionamento | Como funciona | Onde fica a ligação |
 |---|---|---|
@@ -39,11 +43,9 @@ erDiagram
 
 Leia o diagrama assim: `||` indica **exatamente um** e `o{` indica **zero ou muitos**. A tabela intermediária transforma a associação N–N em dois vínculos 1–N: **aluno → matrículas** e **turma → matrículas**.
 
-O **usuário** que faz login e o **aluno** matriculado têm papéis diferentes. Uma conta em `usuarios` dá acesso ao sistema. Um registro em `alunos` representa uma pessoa que pode ser matriculada.
-
 ## 2. Como o banco guarda uma matrícula
 
-Nos dados iniciais do projeto, Ana tem ID `1` e Bruno tem ID `2`. Na tabela de turmas, Web 1 tem ID `1` e Banco de Dados tem ID `2`. Veja como três matrículas ligam esses registros:
+Com a tabela intermediária, cada matrícula é armazenada como um par: o ID do aluno e o ID da turma. Nos dados iniciais do projeto, Ana tem ID `1` e Bruno tem ID `2`. Na tabela de turmas, Web 1 tem ID `1` e Banco de Dados tem ID `2`. Veja como três matrículas ligam esses registros:
 
 | `aluno_id` | `turma_id` | Significado |
 |---|---|---|
@@ -52,6 +54,8 @@ Nos dados iniciais do projeto, Ana tem ID `1` e Bruno tem ID `2`. Na tabela de t
 | 2 | 1 | Bruno está em Web 1 |
 
 Leia a tabela pelo `aluno_id = 1`: as duas primeiras linhas mostram as turmas de Ana. Agora leia pelo `turma_id = 1`: a primeira e a terceira linhas mostram os alunos de Web 1. **Os mesmos dados respondem às duas perguntas.**
+
+Além de guardar os IDs, é preciso definir como identificar cada matrícula e impedir vínculos repetidos. Duas opções comuns permitem representar essa regra.
 
 ### Opção 1: chave primária composta
 
@@ -119,6 +123,8 @@ Esse trecho pressupõe as tabelas `medicos` e `pacientes` com uma coluna `id INT
 
 ## 3. Três formas de matricular
 
+Definida a estrutura no banco, o próximo passo é receber do usuário o aluno e a turma que deseja associar. O projeto apresenta três formas de fazer essa escolha. A interface muda, mas todas enviam os dois IDs necessários para criar a matrícula:
+
 | Tela | O que o usuário faz | Como o formulário envia os IDs |
 |---|---|---|
 | [Matrícula por IDs](exemplos/php/matricula/criar_ids_form.php) | Digita os números do aluno e da turma | Dois campos `type="number"` |
@@ -141,6 +147,8 @@ $comando->execute([$_POST['aluno_id'], $turmaId]);
 O `INSERT` tenta acrescentar uma linha em `matriculas`. Se o par já existe, a atribuição `aluno_id = aluno_id` mantém o registro como está. As chaves estrangeiras continuam impedindo matrículas com IDs que não existem.
 
 ## 4. Como consultar o vínculo nos dois sentidos
+
+Depois de gravar as matrículas, o sistema precisa mostrá-las nas telas. Como a tabela intermediária guarda os IDs, usamos consultas com `JOIN` para obter também os nomes. Podemos partir de uma turma para encontrar seus alunos ou de um aluno para encontrar suas turmas.
 
 ### Da turma para os alunos
 
@@ -172,7 +180,7 @@ Nesse caso, o resultado é **Banco de Dados** e **Web 1**. A tabela intermediár
 
 ## 5. Como desmatricular um aluno
 
-Ao lado de cada aluno, o botão **Desmatricular** envia os dois IDs por POST. A ação remove o par correspondente:
+A lista de alunos matriculados também permite desfazer um vínculo. Na tela de detalhes da turma, o botão **Desmatricular**, ao lado de cada aluno, envia os dois IDs por POST. A ação remove o par correspondente:
 
 ```sql
 DELETE FROM matriculas WHERE aluno_id = ? AND turma_id = ?;
@@ -182,7 +190,11 @@ Se o botão for o de Ana em Web 1, a [ação de desmatrícula](exemplos/php/matr
 
 ## 6. Executar o projeto completo
 
-Siga o [guia de execução](exemplos/README.md) para criar e popular o banco e abrir a home. O sistema inclui criação pública de conta, login, logout e cadastros de professores, turmas, alunos e usuários. Crie uma conta pela home e entre para acessar os cadastros e as matrículas. Os arquivos PHP ficam separados por entidade e usam o mesmo cabeçalho com menu e o mesmo rodapé.
+O projeto completo reúne a estrutura do banco, os formulários de matrícula, as consultas e a desmatrícula apresentados nas seções anteriores. Ele inclui também login, logout e cadastros de professores, turmas, alunos e usuários. Os arquivos PHP ficam separados por entidade e usam o mesmo cabeçalho com menu e o mesmo rodapé.
+
+O **usuário** que faz login e o **aluno** matriculado têm papéis diferentes. Uma conta em `usuarios` dá acesso ao sistema. Um registro em `alunos` representa uma pessoa que pode ser matriculada.
+
+Siga o [guia de execução](exemplos/README.md) para criar e popular o banco e abrir a home. Crie uma conta pela opção **Criar conta** e entre para acessar os cadastros e as matrículas.
 
 Para conferir na prática, abra os detalhes de **Web 1** e de **Banco de Dados** com o banco recém-populado. Observe em quais turmas Ana e Bruno aparecem. Desmatricule Ana apenas de Web 1 e confira a lista das duas turmas e o cadastro de alunos.
 
@@ -199,7 +211,6 @@ Para conferir na prática, abra os detalhes de **Web 1** e de **Banco de Dados**
 ### Referências
 
 - [MySQL — PRIMARY KEY e UNIQUE](https://dev.mysql.com/doc/refman/8.4/en/create-table.html)
-
 - [MySQL — chaves estrangeiras](https://dev.mysql.com/doc/refman/8.4/en/create-table-foreign-keys.html)
 - [MySQL — JOIN](https://dev.mysql.com/doc/refman/8.4/en/join.html)
 - [MySQL — ON DUPLICATE KEY UPDATE](https://dev.mysql.com/doc/refman/8.4/en/insert-on-duplicate.html)
