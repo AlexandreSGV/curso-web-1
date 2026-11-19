@@ -9,5 +9,6 @@ if (isset($_SESSION['usuario_id'])) {
 }
 
 if (!$usuarioLogado) {
-    ir('/php/login/form.php');
+    header('Location: /php/login/form.php', true, 303);
+    exit;
 }

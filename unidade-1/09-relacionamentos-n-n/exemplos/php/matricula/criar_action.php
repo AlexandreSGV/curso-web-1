@@ -13,7 +13,9 @@ try {
     if ($erro->getCode() !== '23000') {
         throw $erro;
     }
-    ir('/php/matricula/criar_ids_form.php?ids_invalidos=1');
+    header('Location: /php/matricula/criar_ids_form.php?ids_invalidos=1', true, 303);
+    exit;
 }
 
-ir('/php/turma/detalhes.php?id=' . $turmaId);
+header('Location: /php/turma/detalhes.php?id=' . $turmaId, true, 303);
+exit;

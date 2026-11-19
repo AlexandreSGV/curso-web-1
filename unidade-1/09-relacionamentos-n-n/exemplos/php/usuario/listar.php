@@ -13,7 +13,6 @@ include __DIR__ . '/../templates/cabecalho.php';
             | <a href="detalhes.php?id=<?= $registro['id'] ?>">Detalhes</a>
             | <a href="editar_form.php?id=<?= $registro['id'] ?>">Editar</a>
             <form method="post" action="deletar_action.php" style="display: inline">
-                <?php campo_token(); ?>
                 <button name="id" value="<?= $registro['id'] ?>">Excluir</button>
             </form>
         </li>

@@ -18,9 +18,9 @@ SOURCE config/popular_banco.sql;
 EXIT;
 ```
 
-O primeiro script cria o banco `escola_nn` e suas tabelas. O segundo insere **40 alunos, 5 turmas, 3 professores, 1 usuário de teste e 6 matrículas**. Execute os scripts uma vez em um banco novo. Esse banco é independente do banco da aula anterior.
+O primeiro script cria o banco `escola_nn` e suas tabelas. O segundo insere **40 alunos, 5 turmas, 3 professores e 6 matrículas**. Execute os scripts uma vez em um banco novo. Esse banco é independente do banco da aula anterior. O script não cadastra usuários; a primeira conta é criada pelo formulário do sistema.
 
-Se o MySQL usa outro usuário, senha ou porta, ajuste [config/conexao.php](config/conexao.php). A configuração inicial usa `127.0.0.1`, porta `3306`, usuário `root` e senha `root`. A senha do banco é diferente da senha para entrar no sistema.
+Se o MySQL usa outro usuário, senha ou porta, ajuste os valores diretamente em [config/conexao.php](config/conexao.php). O endereço, a porta e o nome do banco ficam na primeira string do PDO; o usuário e a senha ficam nas duas strings seguintes. A configuração inicial usa `127.0.0.1`, porta `3306`, usuário `root` e senha `root`. A senha do banco é diferente da senha para entrar no sistema.
 
 ## 2. Abrir o sistema
 
@@ -30,16 +30,13 @@ No CMD, ainda na pasta `exemplos`:
 php -S localhost:8000
 ```
 
-Abra [http://localhost:8000/](http://localhost:8000/). A home dá as boas-vindas e oferece o botão **Entrar**. Use a conta local de demonstração:
+Abra [http://localhost:8000/](http://localhost:8000/). Na home, clique em **Criar conta**, preencha nome, usuário e senha e salve. O cadastro abre a tela de login: entre com os dados da conta que acabou de criar.
 
-| Campo | Valor |
-|---|---|
-| Usuário | `admin` |
-| Senha | `admin123` |
+Após o login, o menu apresenta **Home**, **Alunos**, **Professores**, **Turmas**, **Usuários** e **Matrículas**, além do nome da conta e do botão **Sair**.
 
-Após o login, o menu apresenta **Home**, **Alunos**, **Professores**, **Turmas**, **Usuários** e **Matrículas**, além do nome da conta e do botão **Sair**. A home e o formulário de login podem ser abertos sem entrar; as páginas e ações dos cadastros e das matrículas exigem uma sessão autenticada.
+A home, o login e o cadastro de uma conta são públicos. A listagem, os detalhes, a edição e a exclusão de usuários continuam exigindo login, assim como os cadastros de alunos, professores, turmas e matrículas. O exemplo não distingue perfis de acesso: todas as contas cadastradas têm acesso às mesmas telas protegidas.
 
-O nome `admin` identifica a conta inicial. O exemplo não distingue perfis de acesso: as contas cadastradas têm acesso às mesmas telas.
+A ação de cadastro usa `password_hash()` para guardar a senha como hash. O login usa `password_verify()` para conferir a senha digitada. O hash contém as informações necessárias à verificação e pode ser usado em outro computador com suporte ao algoritmo; ele não depende da máquina onde foi gerado.
 
 ## 3. Entender a organização
 
@@ -50,7 +47,7 @@ O nome `admin` identifica a conta inicial. O exemplo não distingue perfis de ac
 | [css/](css/), [js/](js/) e [img/](img/) | Pastas para estilos, scripts e imagens |
 | [php/templates/](php/templates/) | Cabeçalho com menu e rodapé compartilhados |
 | [php/verificar_login.php](php/verificar_login.php) | Abre a sessão e redireciona para o login quando não há um usuário autenticado |
-| [php/funcoes.php](php/funcoes.php) | Funções reutilizadas no HTML e no processamento dos formulários |
+| [php/funcoes.php](php/funcoes.php) | Funções para consultar o usuário da sessão, exigir POST e buscar um registro |
 | [php/login/](php/login/) | Formulário de login e ações de entrada e saída |
 | [php/aluno/](php/aluno/), [php/professor/](php/professor/), [php/turma/](php/turma/) e [php/usuario/](php/usuario/) | Um cadastro completo em cada pasta |
 | [php/matricula/](php/matricula/) | Listagem, dois formulários e ações para matricular e desmatricular |
@@ -63,7 +60,7 @@ As páginas e ações protegidas começam com este `require`, antes de qualquer 
 require __DIR__ . '/../verificar_login.php';
 ```
 
-O arquivo verifica a sessão. Se o usuário não estiver autenticado, envia o redirecionamento e encerra a requisição. A home e o formulário de login podem ser abertos sem esse `require`.
+O arquivo verifica a sessão. Se o usuário não estiver autenticado, envia o redirecionamento e encerra a requisição. A home, o formulário de login e os arquivos de criação de usuário podem ser abertos sem esse `require`. A criação de usuário carrega a conexão diretamente na ação.
 
 Os quatro cadastros seguem o mesmo padrão. Para começar a leitura, acompanhe os arquivos do cadastro de alunos:
 
@@ -77,7 +74,9 @@ Os quatro cadastros seguem o mesmo padrão. Para começar a leitura, acompanhe o
 | [editar_action.php](php/aluno/editar_action.php) | Recebe o POST e grava a alteração |
 | [deletar_action.php](php/aluno/deletar_action.php) | Recebe o ID por POST e exclui o registro |
 
-O botão **Excluir** envia um formulário POST. A página usa `include` para montar o cabeçalho e o rodapé.
+O botão **Excluir** envia um formulário POST. A página usa `include` para montar o cabeçalho e o rodapé. As ações fazem os redirecionamentos diretamente com `header()` e encerram o processamento com `exit`.
+
+Para concentrar o estudo no relacionamento N–N, este exemplo local não implementa tokens contra CSRF. Esse token ajuda a impedir ações forjadas que aproveitam a sessão do navegador. Exigir login e usar POST não substituem essa proteção.
 
 ## 4. Experimentar os relacionamentos
 
@@ -88,6 +87,11 @@ O botão **Excluir** envia um formulário POST. A página usa `include` para mon
 5. Em **Web 1**, use **Desmatricular** ao lado de Felipe. Confira que ele ainda está em **Banco de Dados** e no cadastro de alunos.
 6. Clique em **Sair** e tente abrir `/php/turma/listar.php` diretamente. O sistema solicita o login.
 
-Para praticar o CRUD, crie um aluno, veja os detalhes, altere o nome e exclua o registro. Na tela **Usuários**, o mesmo fluxo permite criar outra conta. Deixar a senha em branco na edição mantém a senha atual. Para excluir uma conta que está em uso, entre com outra conta.
+Para praticar o CRUD, crie um aluno, veja os detalhes, altere o nome e exclua o registro. O link **Criar conta** permite cadastrar um usuário sem login. Depois de entrar, a tela **Usuários** permite listar, consultar, editar e excluir contas. Deixar a senha em branco na edição mantém a senha atual. Para excluir uma conta que está em uso, entre com outra conta.
+
+## Referências
+
+- [PHP — password_verify](https://www.php.net/manual/pt_BR/function.password-verify.php)
+- [OWASP — prevenção de CSRF](https://cheatsheetseries.owasp.org/cheatsheets/Cross-Site_Request_Forgery_Prevention_Cheat_Sheet.html)
 
 [Voltar à apostila](../README.md).

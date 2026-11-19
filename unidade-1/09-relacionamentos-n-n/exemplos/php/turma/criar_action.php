@@ -4,4 +4,5 @@ exigir_post();
 
 $comando = $pdo->prepare('INSERT INTO turmas (nome, professor_id) VALUES (?, ?)');
 $comando->execute([$_POST['nome'], $_POST['professor_id']]);
-ir('/php/turma/listar.php');
+header('Location: /php/turma/listar.php', true, 303);
+exit;

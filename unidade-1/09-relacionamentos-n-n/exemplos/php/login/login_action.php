@@ -9,9 +9,11 @@ $consulta->execute([$_POST['login']]);
 $usuario = $consulta->fetch();
 
 if (!$usuario || !password_verify($_POST['senha'], $usuario['senha'])) {
-    ir('/php/login/form.php?erro=1');
+    header('Location: /php/login/form.php?erro=1', true, 303);
+    exit;
 }
 
 session_regenerate_id(true);
 $_SESSION = ['usuario_id' => $usuario['id']];
-ir('/');
+header('Location: /', true, 303);
+exit;

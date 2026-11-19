@@ -10,4 +10,5 @@ if ($_POST['senha'] === '') {
     $comando = $pdo->prepare('UPDATE usuarios SET nome = ?, login = ?, senha = ? WHERE id = ?');
     $comando->execute([$_POST['nome'], $_POST['login'], $senha, $_POST['id']]);
 }
-ir('/php/usuario/listar.php');
+header('Location: /php/usuario/listar.php', true, 303);
+exit;

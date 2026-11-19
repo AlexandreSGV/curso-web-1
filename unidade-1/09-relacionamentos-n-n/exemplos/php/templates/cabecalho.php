@@ -20,12 +20,12 @@ if (!isset($titulo)) {
             | <a href="/php/usuario/listar.php">Usuários</a>
             | <a href="/php/matricula/listar.php">Matrículas</a>
             <form method="post" action="/php/login/logout.php" style="display: inline">
-                <?php campo_token(); ?>
                 — <?= $usuarioLogado['nome'] ?>
                 <button>Sair</button>
             </form>
         <?php else: ?>
             | <a href="/php/login/form.php">Entrar</a>
+            | <a href="/php/usuario/criar_form.php">Criar conta</a>
         <?php endif; ?>
     </nav>
 </header>

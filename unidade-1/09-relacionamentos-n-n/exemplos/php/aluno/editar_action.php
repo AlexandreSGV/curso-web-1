@@ -4,4 +4,5 @@ exigir_post();
 
 $comando = $pdo->prepare('UPDATE alunos SET nome = ? WHERE id = ?');
 $comando->execute([$_POST['nome'], $_POST['id']]);
-ir('/php/aluno/listar.php');
+header('Location: /php/aluno/listar.php', true, 303);
+exit;

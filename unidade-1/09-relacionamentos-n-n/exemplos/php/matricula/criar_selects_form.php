@@ -7,7 +7,6 @@ include __DIR__ . '/../templates/cabecalho.php';
 ?>
 <h1>Matrícula por listas</h1>
 <form method="post" action="criar_action.php">
-    <?php campo_token(); ?>
     <p><label>Aluno:
         <select name="aluno_id" required>
             <option value="">Escolha um aluno</option>

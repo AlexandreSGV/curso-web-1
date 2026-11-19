@@ -25,5 +25,3 @@ INSERT INTO alunos (id, nome) VALUES
 INSERT INTO matriculas (aluno_id, turma_id) VALUES
     (1, 1), (1, 2), (2, 1), (3, 3), (4, 4), (5, 5);
 
-INSERT INTO usuarios (id, nome, login, senha) VALUES
-    (1, 'Administrador', 'admin', '$2y$10$miAPgqiQKXfDoFB.uFAzaOWPx9WWmTuRnhTik.s4TSOT38SdrHFnC');
