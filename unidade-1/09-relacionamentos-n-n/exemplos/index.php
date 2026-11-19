@@ -14,6 +14,6 @@ include __DIR__ . '/php/templates/cabecalho.php';
 <?php if ($usuarioLogado): ?>
     <p>Use o menu para acessar os cadastros e matricular alunos nas turmas.</p>
 <?php else: ?>
-    <p><a href="/php/login/form.php">Entre</a> para acessar os cadastros e as matrículas.</p>
+    <p><a href="/php/usuario/criar_form.php">Crie sua conta</a> ou <a href="/php/login/form.php">entre</a> para acessar os cadastros e as matrículas.</p>
 <?php endif; ?>
 <?php include __DIR__ . '/php/templates/rodape.php'; ?>

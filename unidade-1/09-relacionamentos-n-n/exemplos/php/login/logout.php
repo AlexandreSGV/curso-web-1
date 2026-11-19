@@ -5,4 +5,5 @@ exigir_post();
 $_SESSION = [];
 session_destroy();
 setcookie(session_name(), '', time() - 3600, '/');
-ir('/');
+header('Location: /', true, 303);
+exit;

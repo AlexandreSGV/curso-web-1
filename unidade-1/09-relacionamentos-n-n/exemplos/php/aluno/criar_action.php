@@ -4,4 +4,5 @@ exigir_post();
 
 $comando = $pdo->prepare('INSERT INTO alunos (nome) VALUES (?)');
 $comando->execute([$_POST['nome']]);
-ir('/php/aluno/listar.php');
+header('Location: /php/aluno/listar.php', true, 303);
+exit;

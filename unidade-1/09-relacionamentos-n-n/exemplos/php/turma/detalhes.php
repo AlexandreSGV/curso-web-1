@@ -20,13 +20,11 @@ include __DIR__ . '/../templates/cabecalho.php';
     | <a href="listar.php">Voltar à lista</a>
 </p>
 <form method="post" action="deletar_action.php">
-    <?php campo_token(); ?>
     <button name="id" value="<?= $id ?>">Excluir</button>
 </form>
 
 <h2>Matricular aluno</h2>
 <form method="post" action="/php/matricula/criar_action.php">
-    <?php campo_token(); ?>
     <input type="hidden" name="turma_id" value="<?= $id ?>">
     <label>Aluno:
         <select name="aluno_id" required>
@@ -44,7 +42,6 @@ include __DIR__ . '/../templates/cabecalho.php';
     <?php foreach ($alunos as $aluno): ?>
         <li>
             <form method="post" action="/php/matricula/deletar_action.php">
-                <?php campo_token(); ?>
                 <a href="/php/aluno/detalhes.php?id=<?= $aluno['id'] ?>"><?= $aluno['nome'] ?></a>
                 <input type="hidden" name="aluno_id" value="<?= $aluno['id'] ?>">
                 <input type="hidden" name="turma_id" value="<?= $id ?>">

@@ -5,4 +5,5 @@ exigir_post();
 $id = (int) $_POST['id'];
 $comando = $pdo->prepare('DELETE FROM turmas WHERE id = ?');
 $comando->execute([$id]);
-ir('/php/turma/listar.php');
+header('Location: /php/turma/listar.php', true, 303);
+exit;

@@ -6,7 +6,6 @@ include __DIR__ . '/../templates/cabecalho.php';
 ?>
 <h1>Cadastrar turma</h1>
 <form method="post" action="criar_action.php">
-    <?php campo_token(); ?>
     <p><label>Nome: <input name="nome" maxlength="100" required></label></p>
     <p><label>Professor:
         <select name="professor_id" required>

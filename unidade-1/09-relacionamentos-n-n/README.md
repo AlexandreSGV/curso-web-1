@@ -2,7 +2,7 @@
 
 Ana pode cursar **Web 1** e **Banco de Dados** ao mesmo tempo. A turma de **Web 1**, por sua vez, pode receber Ana, Bruno e outros alunos. Chamamos essa associação de **matrícula**: cada matrícula liga um aluno a uma turma.
 
-Nesta aula, você vai aprender a reconhecer um relacionamento N–N, guardar os vínculos em uma tabela e consultar esses dados nos dois sentidos. O [projeto completo](exemplos/README.md) mostra como fazer isso com PHP puro, PDO e MySQL, reaproveitando os conceitos de [sessão e autenticação](../08-sessoes-autenticacao/) e de [CRUD](../06-crud-php/).
+Nesta aula, você aprende a reconhecer um relacionamento N–N, guardar os vínculos em uma tabela e consultar esses dados nos dois sentidos. O [projeto completo](exemplos/README.md) mostra como fazer isso com PHP puro, PDO e MySQL, reaproveitando os conceitos de [sessão e autenticação](../08-sessoes-autenticacao/) e de [CRUD](../06-crud-php/).
 
 ## Índice
 
@@ -53,9 +53,9 @@ Nos dados iniciais do projeto, Ana tem ID `1` e Bruno tem ID `2`. Na tabela de t
 
 Leia a tabela pelo `aluno_id = 1`: as duas primeiras linhas mostram as turmas de Ana. Agora leia pelo `turma_id = 1`: a primeira e a terceira linhas mostram os alunos de Web 1. **Os mesmos dados respondem às duas perguntas.**
 
-### O que cada chave garante
+### Opção 1: chave primária composta
 
-Trecho de [config/banco.sql](exemplos/config/banco.sql):
+O projeto usa as duas chaves estrangeiras como uma **única chave primária composta**. Trecho de [config/banco.sql](exemplos/config/banco.sql):
 
 ```sql
 PRIMARY KEY (aluno_id, turma_id),
@@ -63,9 +63,59 @@ FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE,
 FOREIGN KEY (turma_id) REFERENCES turmas(id) ON DELETE CASCADE
 ```
 
-- As **chaves estrangeiras** garantem que os IDs apontam para um aluno e uma turma existentes.
-- A **chave primária composta** identifica a matrícula pelo **par inteiro**. Os pares `(1, 1)`, `(1, 2)` e `(2, 1)` podem coexistir. O segundo `(1, 1)` seria uma duplicata. Neste exemplo, não é preciso criar um ID separado para a matrícula.
-- O `ON DELETE CASCADE` remove as matrículas de um aluno ou de uma turma quando o respectivo cadastro é excluído. Excluir uma turma, por exemplo, remove os vínculos dessa turma e preserva os alunos.
+Cada coluna pode repetir seu valor em várias linhas, mas a **combinação das duas não pode se repetir**. Os pares `(1, 1)`, `(1, 2)` e `(2, 1)` são permitidos. Outro `(1, 1)` é uma duplicata.
+
+No contexto deste sistema, isso significa que **um aluno não pode se matricular duas vezes na mesma turma**. A dupla de IDs já identifica a matrícula, sem um ID separado.
+
+As **chaves estrangeiras** garantem que o aluno e a turma existem. O `ON DELETE CASCADE` remove as matrículas de um aluno ou de uma turma quando o respectivo cadastro é excluído. Excluir uma turma remove os vínculos dessa turma e preserva os alunos.
+
+### Opção 2: ID próprio e restrição UNIQUE composta
+
+Outra possibilidade é dar um **ID independente** a cada matrícula. A estrutura abaixo é uma alternativa à tabela do projeto; ela não deve ser executada sobre a tabela já criada:
+
+```sql
+CREATE TABLE matriculas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    aluno_id INT NOT NULL,
+    turma_id INT NOT NULL,
+    UNIQUE (aluno_id, turma_id),
+    FOREIGN KEY (aluno_id) REFERENCES alunos(id) ON DELETE CASCADE,
+    FOREIGN KEY (turma_id) REFERENCES turmas(id) ON DELETE CASCADE
+);
+```
+
+Aqui, `id` identifica o registro. Porém, IDs diferentes não impedem que duas linhas tenham o mesmo aluno e a mesma turma. Por isso, a restrição **`UNIQUE (aluno_id, turma_id)`** mantém a regra de uma matrícula por aluno em cada turma. Ela atua sobre as duas **colunas de chave estrangeira**.
+
+| Estrutura | Como identifica uma matrícula | Como impede o mesmo aluno na mesma turma duas vezes |
+|---|---|---|
+| Chave primária composta | Pelo par `aluno_id, turma_id` | A própria chave primária impede a repetição |
+| ID próprio | Pelo `id` da matrícula | A restrição `UNIQUE (aluno_id, turma_id)` impede a repetição |
+
+### Quando repetir o par faz sentido: médico, consulta e paciente
+
+Um médico atende vários pacientes, e um paciente pode consultar vários médicos. A tabela `consultas` registra esses atendimentos. **O mesmo paciente pode consultar o mesmo médico várias vezes**, em datas diferentes:
+
+| `id` da consulta | `medico_id` | `paciente_id` | `data_hora` |
+|---|---|---|---|
+| 1 | 3 | 8 | 2026-03-10 09:00 |
+| 2 | 3 | 8 | 2026-04-15 14:00 |
+
+Uma chave primária composta **apenas por `(medico_id, paciente_id)`** rejeitaria a segunda consulta. Nesse contexto, um ID próprio permite identificar cada atendimento:
+
+```sql
+CREATE TABLE consultas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    medico_id INT NOT NULL,
+    paciente_id INT NOT NULL,
+    data_hora DATETIME NOT NULL,
+    FOREIGN KEY (medico_id) REFERENCES medicos(id),
+    FOREIGN KEY (paciente_id) REFERENCES pacientes(id)
+);
+```
+
+Esse trecho pressupõe as tabelas `medicos` e `pacientes` com uma coluna `id INT PRIMARY KEY`. Não há `UNIQUE (medico_id, paciente_id)`, pois ele também impediria novos atendimentos do mesmo par. Cada consulta representa uma ocorrência do relacionamento.
+
+**A escolha da chave depende da regra do sistema:** em `matriculas`, o par aluno–turma é único; em `consultas`, o par médico–paciente pode se repetir. O projeto desta aula mantém a primeira opção, com chave primária composta em `matriculas`.
 
 ## 3. Três formas de matricular
 
@@ -132,7 +182,7 @@ Se o botão for o de Ana em Web 1, a [ação de desmatrícula](exemplos/php/matr
 
 ## 6. Executar o projeto completo
 
-Siga o [guia de execução](exemplos/README.md) para criar e popular o banco e abrir a home. O sistema inclui login, logout e cadastros de professores, turmas, alunos e usuários. Os arquivos PHP ficam separados por entidade e usam o mesmo cabeçalho com menu e o mesmo rodapé.
+Siga o [guia de execução](exemplos/README.md) para criar e popular o banco e abrir a home. O sistema inclui criação pública de conta, login, logout e cadastros de professores, turmas, alunos e usuários. Crie uma conta pela home e entre para acessar os cadastros e as matrículas. Os arquivos PHP ficam separados por entidade e usam o mesmo cabeçalho com menu e o mesmo rodapé.
 
 Para conferir na prática, abra os detalhes de **Web 1** e de **Banco de Dados** com o banco recém-populado. Observe em quais turmas Ana e Bruno aparecem. Desmatricule Ana apenas de Web 1 e confira a lista das duas turmas e o cadastro de alunos.
 
@@ -147,6 +197,8 @@ Para conferir na prática, abra os detalhes de **Web 1** e de **Banco de Dados**
 | Desmatricular um aluno | Excluo somente o par em `matriculas` |
 
 ### Referências
+
+- [MySQL — PRIMARY KEY e UNIQUE](https://dev.mysql.com/doc/refman/8.4/en/create-table.html)
 
 - [MySQL — chaves estrangeiras](https://dev.mysql.com/doc/refman/8.4/en/create-table-foreign-keys.html)
 - [MySQL — JOIN](https://dev.mysql.com/doc/refman/8.4/en/join.html)

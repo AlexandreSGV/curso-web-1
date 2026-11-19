@@ -9,7 +9,6 @@ include __DIR__ . '/../templates/cabecalho.php';
 <?php endif; ?>
 <p>Consulte os números em <a href="/php/aluno/listar.php">Alunos</a> e <a href="/php/turma/listar.php">Turmas</a>.</p>
 <form method="post" action="criar_action.php">
-    <?php campo_token(); ?>
     <p><label>ID do aluno: <input type="number" name="aluno_id" min="1" required></label></p>
     <p><label>ID da turma: <input type="number" name="turma_id" min="1" required></label></p>
     <button>Matricular</button>

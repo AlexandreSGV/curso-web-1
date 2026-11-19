@@ -10,6 +10,8 @@ try {
     if ($erro->getCode() !== '23000') {
         throw $erro;
     }
-    ir('/php/professor/detalhes.php?id=' . $id . '&em_uso=1');
+    header('Location: /php/professor/detalhes.php?id=' . $id . '&em_uso=1', true, 303);
+    exit;
 }
-ir('/php/professor/listar.php');
+header('Location: /php/professor/listar.php', true, 303);
+exit;

@@ -8,7 +8,6 @@ include __DIR__ . '/../templates/cabecalho.php';
 ?>
 <h1>Editar turma</h1>
 <form method="post" action="editar_action.php">
-    <?php campo_token(); ?>
     <input type="hidden" name="id" value="<?= $id ?>">
     <p><label>Nome: <input name="nome" maxlength="100" value="<?= $registro['nome'] ?>" required></label></p>
     <p><label>Professor:
