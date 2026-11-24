@@ -17,6 +17,7 @@ Materiais da disciplina de Desenvolvimento Web 1.
 ## Projeto acumulativo
 
 - [Projeto Consultório](projeto-consultorio/)
+- [Atividade prática — Sistema de uma clínica](projeto-consultorio/atividade-clinica.md)
 
 ## Materiais de apoio
 
