@@ -1,0 +1,24 @@
+<?php
+require __DIR__ . '/../verificar_login.php';
+$id = (int) ($_GET['id'] ?? 0);
+$registro = buscar($pdo, 'SELECT nome, professor_id FROM turmas WHERE id = ?', $id);
+$professores = $pdo->query('SELECT id, nome FROM professores ORDER BY nome, id');
+$titulo = 'Editar turma';
+include __DIR__ . '/../templates/cabecalho.php';
+?>
+<h1>Editar turma</h1>
+<form method="post" action="editar_action.php">
+    <input type="hidden" name="id" value="<?= $id ?>">
+    <p><label>Nome: <input name="nome" maxlength="100" value="<?= $registro['nome'] ?>" required></label></p>
+    <p><label>Professor:
+        <select name="professor_id" required>
+            <option value="">Escolha um professor</option>
+            <?php foreach ($professores as $professor): ?>
+                <option value="<?= $professor['id'] ?>" <?= $professor['id'] == $registro['professor_id'] ? 'selected' : '' ?>><?= $professor['nome'] ?></option>
+            <?php endforeach; ?>
+        </select>
+    </label></p>
+    <button>Salvar</button>
+    <a href="listar.php">Voltar à lista</a>
+</form>
+<?php include __DIR__ . '/../templates/rodape.php'; ?>

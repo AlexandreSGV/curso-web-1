@@ -1,0 +1,6 @@
+/alunos/*
+!/alunos/.gitkeep
+/professor/*
+!/professor/.gitkeep
+/turmas/*
+!/turmas/.gitkeep

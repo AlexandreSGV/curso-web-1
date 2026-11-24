@@ -1,0 +1,9 @@
+<?php
+require __DIR__ . '/../verificar_login.php';
+exigir_post();
+
+$_SESSION = [];
+session_destroy();
+setcookie(session_name(), '', time() - 3600, '/');
+header('Location: /', true, 303);
+exit;
