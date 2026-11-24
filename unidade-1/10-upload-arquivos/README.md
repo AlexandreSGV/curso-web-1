@@ -12,7 +12,7 @@ O MySQL pode armazenar os **bytes do arquivo**, ou seja, o conteúdo inteiro da 
 - **Cópias de segurança.** O banco cresce com os arquivos. Fazer backup, restaurar ou manter cópias do banco em outros servidores passa a exigir mais espaço e tempo.
 - **Entrega ao navegador.** Para exibir uma imagem armazenada como BLOB, a aplicação precisa ler os bytes no banco e entregá-los em uma resposta HTTP. Uma galeria pode repetir essa operação para cada foto aberta.
 
-Para fotos de perfil e galerias, a solução prática é guardar o **arquivo** em um armazenamento próprio e gravar no banco o **caminho** e os dados associados. Por exemplo, o MySQL guarda `storage/alunos/a12b.jpg` no cadastro da aluna Ana. O arquivo `a12b.jpg` fica nessa pasta. A página usa o caminho para mostrar a foto. [MySQL — recomendações de desempenho para BLOB](https://dev.mysql.com/doc/refman/8.4/en/optimize-blob.html)
+Para fotos de perfil e galerias, a solução prática é guardar o **arquivo** em um armazenamento próprio e gravar no banco o **caminho** e os dados associados. Por exemplo, o MySQL guarda `storage/alunos/aluno-01.jpg` no cadastro da aluna Ana. O arquivo `aluno-01.jpg` fica nessa pasta. A página usa o caminho para mostrar a foto. [MySQL — recomendações de desempenho para BLOB](https://dev.mysql.com/doc/refman/8.4/en/optimize-blob.html)
 
 ## 2. Onde os arquivos podem ficar?
 
@@ -51,14 +51,18 @@ function salvar_imagem($temporario, $pasta) {
         return null;
     }
 
-    $nome = bin2hex(random_bytes(16)) . '.jpg';
+    $dataHora = date('Ymd_His');
+    $sufixo = bin2hex(random_bytes(8));
+    $nome = $dataHora . '_' . $sufixo . '.jpg';
     $caminho = 'storage/' . $pasta . '/' . $nome;
 
     return move_uploaded_file($temporario, __DIR__ . '/../' . $caminho) ? $caminho : null;
 }
 ```
 
-O PHP gera um nome diferente para cada envio, mesmo quando duas pessoas escolhem arquivos com o mesmo nome no computador. `move_uploaded_file()` move a foto do local temporário para o destino. `__DIR__` indica a pasta do arquivo PHP. Como a função fica em `php/funcoes.php`, `../` volta à raiz do projeto, onde está a pasta `storage/`. A ação usa o caminho devolvido pela função para preencher a coluna do MySQL. [PHP — move_uploaded_file](https://www.php.net/manual/pt_BR/function.move-uploaded-file.php)
+O nome combina a data e a hora do envio com um sufixo aleatório, como `20261124_154230_9ae4c010d728e62f.jpg`. O sufixo diferencia fotos enviadas no mesmo segundo, mesmo quando os arquivos têm o mesmo nome no computador.
+
+`move_uploaded_file()` move a foto do local temporário para o destino. `__DIR__` indica a pasta do arquivo PHP. Como a função fica em `php/funcoes.php`, `../` volta à raiz do projeto, onde está a pasta `storage/`. A ação usa o caminho devolvido pela função para preencher a coluna do MySQL. [PHP — move_uploaded_file](https://www.php.net/manual/pt_BR/function.move-uploaded-file.php)
 
 ## 4. Como o navegador recupera o arquivo?
 
@@ -66,9 +70,9 @@ Quando alguém abre uma página de detalhes, o PHP busca no banco o caminho da i
 
 | Onde o caminho aparece | Exemplo |
 | --- | --- |
-| No MySQL, como caminho relativo à pasta do projeto | `storage/alunos/a12b.jpg` |
-| No HTML, como endereço a partir da raiz do site | `<img src="/storage/alunos/a12b.jpg" alt="Foto de perfil">` |
-| No navegador, como URL completa | `http://localhost:8000/storage/alunos/a12b.jpg` |
+| No MySQL, como caminho relativo à pasta do projeto | `storage/alunos/aluno-01.jpg` |
+| No HTML, como endereço a partir da raiz do site | `<img src="/storage/alunos/aluno-01.jpg" alt="Foto de perfil">` |
+| No navegador, como URL completa | `http://localhost:8000/storage/alunos/aluno-01.jpg` |
 
 No exemplo, o servidor entrega a imagem a partir da pasta `storage/`. Para um documento, a página pode usar o endereço em um link, como `<a href="/storage/documentos/declaracao.pdf">Abrir declaração</a>`.
 
@@ -104,4 +108,4 @@ A edição abre um formulário próprio. Dá para alterar os dados e manter a fo
 
 ## 7. Praticar
 
-Siga o [guia do exemplo completo](exemplos/) para rodar o sistema. Experimente cadastrar um aluno sem foto, colocar uma foto no perfil e adicionar duas imagens à mesma turma. Confira no [SQL do exemplo](exemplos/config/banco.sql) a diferença entre guardar um caminho no próprio cadastro e usar uma tabela com uma linha para cada imagem.
+Siga o [guia do exemplo completo](exemplos/) para rodar o sistema. A carga inicial traz retratos ilustrados nos perfis e três fotos em cada galeria. Experimente cadastrar um aluno sem foto, colocar uma foto no perfil e adicionar uma imagem a uma turma. Confira no [SQL de criação das tabelas](exemplos/config/banco.sql) a diferença entre guardar um caminho no próprio cadastro e usar uma tabela com uma linha para cada imagem.

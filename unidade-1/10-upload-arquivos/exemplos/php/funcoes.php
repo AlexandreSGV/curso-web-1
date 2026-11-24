@@ -38,7 +38,9 @@ function salvar_imagem($temporario, $pasta) {
         return null;
     }
 
-    $nome = bin2hex(random_bytes(16)) . '.jpg';
+    $dataHora = date('Ymd_His');
+    $sufixo = bin2hex(random_bytes(8));
+    $nome = $dataHora . '_' . $sufixo . '.jpg';
     $caminho = 'storage/' . $pasta . '/' . $nome;
 
     return move_uploaded_file($temporario, __DIR__ . '/../' . $caminho) ? $caminho : null;
