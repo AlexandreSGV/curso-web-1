@@ -2,15 +2,9 @@
 
 Este projeto continua o [sistema escolar da Aula 09](../../09-relacionamentos-n-n/exemplos/). O exemplo reúne login, cadastros, matrículas, fotos de perfil e galerias de turma.
 
-## 1. Preparar o banco e as fotos
+## 1. Preparar o banco
 
-Abra o CMD na pasta `exemplos`, onde ficam o `index.php` e a pasta `config/`. Copie as imagens de demonstração para as pastas de armazenamento usadas pelo PHP.
-
-```bat
-xcopy img\demonstracao storage\ /E /Y
-```
-
-Com o MySQL em execução, entre no console.
+Com o MySQL em execução, abra o CMD na pasta `exemplos`, onde ficam o `index.php` e a pasta `config/`. Entre no console do MySQL.
 
 ```bat
 mysql -u root -p --default-character-set=utf8mb4
@@ -24,7 +18,7 @@ SOURCE config/popular_banco.sql;
 EXIT;
 ```
 
-O banco de demonstração começa com 40 alunos e 3 professores com retratos ilustrados, 5 turmas com 3 fotos cada e 6 matrículas. Se você já criou o banco desta aula, basta copiar as imagens e executar `SOURCE config/popular_banco.sql;`.
+Em um banco novo, a carga cria 40 alunos e 3 professores com retratos ilustrados, 5 turmas com 3 fotos cada e 6 matrículas. Os arquivos de demonstração já estão em [storage/](storage/).
 
 A conexão usa o usuário `root` e a senha `root` como valores iniciais. Se a instalação usar outros valores, ajuste [config/conexao.php](config/conexao.php).
 

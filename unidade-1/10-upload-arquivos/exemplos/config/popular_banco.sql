@@ -1,7 +1,9 @@
 USE escola_upload;
 
-INSERT IGNORE INTO professores (id, nome) VALUES
-    (1, 'Helena Costa'), (2, 'Paulo Lima'), (3, 'Marina Rocha');
+INSERT IGNORE INTO professores (id, nome, foto_caminho) VALUES
+    (1, 'Helena Costa', 'storage/professor/professor-01.jpg'),
+    (2, 'Paulo Lima', 'storage/professor/professor-02.jpg'),
+    (3, 'Marina Rocha', 'storage/professor/professor-03.jpg');
 
 INSERT IGNORE INTO turmas (id, nome, professor_id) VALUES
     (1, 'Web 1', 1),
@@ -10,28 +12,50 @@ INSERT IGNORE INTO turmas (id, nome, professor_id) VALUES
     (4, 'Redes de Computadores', 2),
     (5, 'Projeto Integrador', 3);
 
-INSERT IGNORE INTO alunos (id, nome) VALUES
-    (1, 'Ana Souza'), (2, 'Bruno Lima'), (3, 'Carla Mendes'), (4, 'Diego Santos'),
-    (5, 'Érica Oliveira'), (6, 'Felipe Costa'), (7, 'Gabriela Araújo'), (8, 'João Pereira'),
-    (9, 'Isabela Ramos'), (10, 'Lucas Melo'), (11, 'Maria Freitas'), (12, 'Miguel Gomes'),
-    (13, 'Natália Silva'), (14, 'Otávio Barros'), (15, 'Paula Alves'), (16, 'Pedro Rocha'),
-    (17, 'Rafaela Dias'), (18, 'Renato Martins'), (19, 'Sofia Torres'), (20, 'Tiago Ribeiro'),
-    (21, 'Alice Nunes'), (22, 'André Castro'), (23, 'Beatriz Campos'), (24, 'Caio Lopes'),
-    (25, 'Daniela Lima'), (26, 'Eduardo Correia'), (27, 'Fernanda Reis'), (28, 'Gustavo Pinto'),
-    (29, 'Heloísa Brito'), (30, 'Igor Monteiro'), (31, 'Júlia Maciel'), (32, 'Lara Neves'),
-    (33, 'Leonardo Duarte'), (34, 'Lívia Andrade'), (35, 'Marcelo Prado'), (36, 'Nina Moraes'),
-    (37, 'Ricardo Lopes'), (38, 'Samuel Teixeira'), (39, 'Valentina Luz'), (40, 'Vinícius Matos');
+INSERT IGNORE INTO alunos (id, nome, foto_caminho) VALUES
+    (1, 'Ana Souza', 'storage/alunos/aluno-01.jpg'),
+    (2, 'Bruno Lima', 'storage/alunos/aluno-02.jpg'),
+    (3, 'Carla Mendes', 'storage/alunos/aluno-03.jpg'),
+    (4, 'Diego Santos', 'storage/alunos/aluno-04.jpg'),
+    (5, 'Érica Oliveira', 'storage/alunos/aluno-05.jpg'),
+    (6, 'Felipe Costa', 'storage/alunos/aluno-06.jpg'),
+    (7, 'Gabriela Araújo', 'storage/alunos/aluno-07.jpg'),
+    (8, 'João Pereira', 'storage/alunos/aluno-08.jpg'),
+    (9, 'Isabela Ramos', 'storage/alunos/aluno-09.jpg'),
+    (10, 'Lucas Melo', 'storage/alunos/aluno-10.jpg'),
+    (11, 'Maria Freitas', 'storage/alunos/aluno-11.jpg'),
+    (12, 'Miguel Gomes', 'storage/alunos/aluno-12.jpg'),
+    (13, 'Natália Silva', 'storage/alunos/aluno-13.jpg'),
+    (14, 'Otávio Barros', 'storage/alunos/aluno-14.jpg'),
+    (15, 'Paula Alves', 'storage/alunos/aluno-15.jpg'),
+    (16, 'Pedro Rocha', 'storage/alunos/aluno-16.jpg'),
+    (17, 'Rafaela Dias', 'storage/alunos/aluno-17.jpg'),
+    (18, 'Renato Martins', 'storage/alunos/aluno-18.jpg'),
+    (19, 'Sofia Torres', 'storage/alunos/aluno-19.jpg'),
+    (20, 'Tiago Ribeiro', 'storage/alunos/aluno-20.jpg'),
+    (21, 'Alice Nunes', 'storage/alunos/aluno-21.jpg'),
+    (22, 'André Castro', 'storage/alunos/aluno-22.jpg'),
+    (23, 'Beatriz Campos', 'storage/alunos/aluno-23.jpg'),
+    (24, 'Caio Lopes', 'storage/alunos/aluno-24.jpg'),
+    (25, 'Daniela Lima', 'storage/alunos/aluno-25.jpg'),
+    (26, 'Eduardo Correia', 'storage/alunos/aluno-26.jpg'),
+    (27, 'Fernanda Reis', 'storage/alunos/aluno-27.jpg'),
+    (28, 'Gustavo Pinto', 'storage/alunos/aluno-28.jpg'),
+    (29, 'Heloísa Brito', 'storage/alunos/aluno-29.jpg'),
+    (30, 'Igor Monteiro', 'storage/alunos/aluno-30.jpg'),
+    (31, 'Júlia Maciel', 'storage/alunos/aluno-31.jpg'),
+    (32, 'Lara Neves', 'storage/alunos/aluno-32.jpg'),
+    (33, 'Leonardo Duarte', 'storage/alunos/aluno-33.jpg'),
+    (34, 'Lívia Andrade', 'storage/alunos/aluno-34.jpg'),
+    (35, 'Marcelo Prado', 'storage/alunos/aluno-35.jpg'),
+    (36, 'Nina Moraes', 'storage/alunos/aluno-36.jpg'),
+    (37, 'Ricardo Lopes', 'storage/alunos/aluno-37.jpg'),
+    (38, 'Samuel Teixeira', 'storage/alunos/aluno-38.jpg'),
+    (39, 'Valentina Luz', 'storage/alunos/aluno-39.jpg'),
+    (40, 'Vinícius Matos', 'storage/alunos/aluno-40.jpg');
 
 INSERT IGNORE INTO matriculas (aluno_id, turma_id) VALUES
     (1, 1), (1, 2), (2, 1), (3, 3), (4, 4), (5, 5);
-
-UPDATE alunos
-SET foto_caminho = CONCAT('storage/alunos/aluno-', LPAD(id, 2, '0'), '.jpg')
-WHERE id BETWEEN 1 AND 40 AND foto_caminho IS NULL;
-
-UPDATE professores
-SET foto_caminho = CONCAT('storage/professor/professor-', LPAD(id, 2, '0'), '.jpg')
-WHERE id BETWEEN 1 AND 3 AND foto_caminho IS NULL;
 
 INSERT INTO imagens_turma (turma_id, titulo, descricao, tag, caminho)
 SELECT foto.turma_id, foto.titulo, foto.descricao, foto.tag, foto.caminho

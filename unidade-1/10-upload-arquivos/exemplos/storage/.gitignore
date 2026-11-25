@@ -1,6 +1,13 @@
 /alunos/*
 !/alunos/.gitkeep
+!/alunos/aluno-[0-9][0-9].jpg
 /professor/*
 !/professor/.gitkeep
+!/professor/professor-[0-9][0-9].jpg
 /turmas/*
 !/turmas/.gitkeep
+!/turmas/banco-[0-9][0-9].jpg
+!/turmas/logica-[0-9][0-9].jpg
+!/turmas/projeto-[0-9][0-9].jpg
+!/turmas/redes-[0-9][0-9].jpg
+!/turmas/web-[0-9][0-9].jpg
