@@ -57,41 +57,34 @@ INSERT IGNORE INTO alunos (id, nome, foto_caminho) VALUES
 INSERT IGNORE INTO matriculas (aluno_id, turma_id) VALUES
     (1, 1), (1, 2), (2, 1), (3, 3), (4, 4), (5, 5);
 
-INSERT INTO imagens_turma (turma_id, titulo, descricao, tag, caminho)
-SELECT foto.turma_id, foto.titulo, foto.descricao, foto.tag, foto.caminho
-FROM (
-    VALUES
-        ROW(1, 'Código e interface',
-            'Uma aplicação Web e seu código abertos na tela.', 'interface', 'storage/turmas/web-01.jpg'),
-        ROW(1, 'Desenvolvendo uma página',
-            'Um ambiente de trabalho com notebook e monitor para programar.', 'frontend', 'storage/turmas/web-02.jpg'),
-        ROW(1, 'Área de desenvolvimento',
-            'Telas com um editor e ferramentas para acompanhar o desenvolvimento.', 'editor', 'storage/turmas/web-03.jpg'),
-        ROW(2, 'Armazenamento em disco',
-            'Um disco rígido aberto mostra o meio físico usado para guardar dados.', 'armazenamento', 'storage/turmas/banco-01.jpg'),
-        ROW(2, 'Servidores de dados',
-            'Equipamentos instalados em um rack de centro de dados.', 'servidor', 'storage/turmas/banco-02.jpg'),
-        ROW(2, 'Dados em gráficos',
-            'Um painel apresenta informações para consulta e análise.', 'consulta', 'storage/turmas/banco-03.jpg'),
-        ROW(3, 'Planejamento no quadro',
-            'Um esquema no quadro ajuda a organizar etapas antes de programar.', 'planejamento', 'storage/turmas/logica-01.jpg'),
-        ROW(3, 'Anotações e código',
-            'Anotações ao lado do computador ajudam a lembrar o próximo passo.', 'algoritmo', 'storage/turmas/logica-02.jpg'),
-        ROW(3, 'Instruções no editor',
-            'Um editor usa cores para distinguir partes do código.', 'codigo', 'storage/turmas/logica-03.jpg'),
-        ROW(4, 'Switch em uso',
-            'Cabos conectados a um equipamento que liga dispositivos da rede.', 'switch', 'storage/turmas/redes-01.jpg'),
-        ROW(4, 'Cabo Ethernet',
-            'Uma conexão por cabo usada na montagem e manutenção de redes.', 'ethernet', 'storage/turmas/redes-02.jpg'),
-        ROW(4, 'Portas e cabeamento',
-            'Vários cabos organizados nas portas de um equipamento de rede.', 'cabeamento', 'storage/turmas/redes-03.jpg'),
-        ROW(5, 'Ideias no quadro',
-            'Estudantes organizam ideias em conjunto para planejar o trabalho.', 'planejamento', 'storage/turmas/projeto-01.jpg'),
-        ROW(5, 'Trabalho em equipe',
-            'Estudantes colaboram durante uma atividade em sala.', 'equipe', 'storage/turmas/projeto-02.jpg'),
-        ROW(5, 'Apresentação do projeto',
-            'Uma estudante apresenta seu trabalho a colegas e a um professor.', 'apresentacao', 'storage/turmas/projeto-03.jpg')
-) AS foto (turma_id, titulo, descricao, tag, caminho)
-WHERE NOT EXISTS (
-    SELECT 1 FROM imagens_turma WHERE caminho = foto.caminho
-);
+INSERT INTO imagens_turma (turma_id, titulo, descricao, tag, caminho) VALUES
+    (1, 'Código e interface',
+     'Uma aplicação Web e seu código abertos na tela.', 'interface', 'storage/turmas/web-01.jpg'),
+    (1, 'Desenvolvendo uma página',
+     'Um ambiente de trabalho com notebook e monitor para programar.', 'frontend', 'storage/turmas/web-02.jpg'),
+    (1, 'Área de desenvolvimento',
+     'Telas com um editor e ferramentas para acompanhar o desenvolvimento.', 'editor', 'storage/turmas/web-03.jpg'),
+    (2, 'Armazenamento em disco',
+     'Um disco rígido aberto mostra o meio físico usado para guardar dados.', 'armazenamento', 'storage/turmas/banco-01.jpg'),
+    (2, 'Servidores de dados',
+     'Equipamentos instalados em um rack de centro de dados.', 'servidor', 'storage/turmas/banco-02.jpg'),
+    (2, 'Dados em gráficos',
+     'Um painel apresenta informações para consulta e análise.', 'consulta', 'storage/turmas/banco-03.jpg'),
+    (3, 'Planejamento no quadro',
+     'Um esquema no quadro ajuda a organizar etapas antes de programar.', 'planejamento', 'storage/turmas/logica-01.jpg'),
+    (3, 'Anotações e código',
+     'Anotações ao lado do computador ajudam a lembrar o próximo passo.', 'algoritmo', 'storage/turmas/logica-02.jpg'),
+    (3, 'Instruções no editor',
+     'Um editor usa cores para distinguir partes do código.', 'codigo', 'storage/turmas/logica-03.jpg'),
+    (4, 'Switch em uso',
+     'Cabos conectados a um equipamento que liga dispositivos da rede.', 'switch', 'storage/turmas/redes-01.jpg'),
+    (4, 'Cabo Ethernet',
+     'Uma conexão por cabo usada na montagem e manutenção de redes.', 'ethernet', 'storage/turmas/redes-02.jpg'),
+    (4, 'Portas e cabeamento',
+     'Vários cabos organizados nas portas de um equipamento de rede.', 'cabeamento', 'storage/turmas/redes-03.jpg'),
+    (5, 'Ideias no quadro',
+     'Estudantes organizam ideias em conjunto para planejar o trabalho.', 'planejamento', 'storage/turmas/projeto-01.jpg'),
+    (5, 'Trabalho em equipe',
+     'Estudantes colaboram durante uma atividade em sala.', 'equipe', 'storage/turmas/projeto-02.jpg'),
+    (5, 'Apresentação do projeto',
+     'Uma estudante apresenta seu trabalho a colegas e a um professor.', 'apresentacao', 'storage/turmas/projeto-03.jpg');
